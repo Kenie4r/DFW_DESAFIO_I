@@ -13,12 +13,51 @@ import javax.mail.internet.MimeMessage;
 
 public class Email {
 	public static void main(String[] params) {
-		Mensaje("knthnolasco@gmail.com", "", ""); 
+		dependientePass("knthnolasco@gmail.com", "kenie4r", "hn4556", "Cupones.com"); 
 	}
-	
+	public static boolean tokenUsuario(String receptor, String codigo) {
+		try {
+			String html = "<h2 style='text-align:center; gap: 10px; '><img style='width: 25px'src='https://cdn-icons-png.flaticon.com/512/3706/3706131.png'> LA CUPONERA </h2>"
+					+ " <p>Se ha creado un nuevo usuario con este correo, si no has sido tu hacer caso omiso del código de confirmación de este correo. </p>"
+					+ "<h3>Código de confirmación/h3><br>"
+					+ "<h4 style='padding=1.5em; background-color: gray; color: black; font-weight: bolder; text-aling: center; '>"
+					+ codigo+"</h4>"; 
+			Mensaje(receptor, "Nuevo usuario creado, código de confirmación" , html); 
+			
+			return true; 
+		}catch(Exception ex) {
+			return false; 
+		}
+	}
+	public static boolean dependientePass(String receptor, String usuario, String codigo, String empresa) {
+		try {
+			String html = "<h2 style='text-align:center; gap: 10px; '><img style='width: 25px'src='https://cdn-icons-png.flaticon.com/512/3706/3706131.png'> LA CUPONERA </h2>"
+					+ " <p>Se ha creado un nuevo usuario de parte de la empresa <b>"+empresa+"</b>, para poder acceder a tu cuenta de dependiente de sucursal usa los siguiente datos. (Si existe error al ingresar contactarse con la empresa representante) </p>"
+					+ "<h3>Datos para inicio de sesión:  </h3><br>"
+					+ "<h4 style='padding=1.5em; background-color: gray; color: black; font-weight: bolder; text-aling: center; '>"
+					+ "Usuario: tu correo<br>Contraseña: "+codigo+"</h4>"; 
+			Mensaje(receptor, "Nuevo usuario creado para dependientes" , html); 
+			
+			return true; 
+		}catch(Exception ex) {
+			return false; 
+		}
+		
+	}
+	public static boolean recuperarPass(String receptor, String usuario, String codigo) {
+		try {
+			String html = "<h2 style='text-align:center; gap: 5px; '><img style='width: 50px'src='https://cdn-icons-png.flaticon.com/512/3706/3706131.png'> LA CUPONERA </h2> <p>Se ha cambiado la contraseña ha una de respaldo, si tu no has pedido la contraseña, por favor verificar todos tus datos. </p>"
+					+ "<h3>Contraseña de recuperación</h3><br><h4 style='padding=1.5em; background-color: gray; color: black; font-weight: bolder; text-aling: center; '>"+codigo+"</h4>"; 
+			Mensaje(receptor, "Contraseña de recuperación." , html); 
+			
+			return true; 
+		}catch(Exception ex) {
+			return false; 
+		}
+	}
 
 	
-	public static void Mensaje(String receptor, String tema, String cuerpo) {
+	private static void Mensaje(String receptor, String tema, String cuerpo) {
 		String enviado = "cuponera2022@gmail.com";
 		String pass = "gnpguwjoonzvnxop"; 
 		String host   = "smtp.gmail.com"; 
@@ -49,9 +88,9 @@ public class Email {
 			mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(receptor));
 			
 			
-			mensaje.setSubject("Prueba");
+			mensaje.setSubject(tema);
 			
-			mensaje.setText("Es solo una prueba de esta libreria");
+			mensaje.setContent(cuerpo, "text/html");
 			
 			Transport.send(mensaje);
 			
