@@ -12,9 +12,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class Email {
-	public static void main(String[] params) {
-		dependientePass("knthnolasco@gmail.com", "kenie4r", "hn4556", "Cupones.com"); 
-	}
 	public static boolean tokenUsuario(String receptor, String codigo) {
 		try {
 			String html = "<h2 style='text-align:center; gap: 10px; '><img style='width: 25px'src='https://cdn-icons-png.flaticon.com/512/3706/3706131.png'> LA CUPONERA </h2>"
