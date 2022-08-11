@@ -1,4 +1,4 @@
-package Beans;
+package www.sv.cuponera.beans;
 
 public class UsuarioBeans {
     String idUsuario,Username,Nombre,Apellido,Password,IdRol,IdEmpresa,eMail;

@@ -1,4 +1,4 @@
-package View;
+package www.sv.cuponera.view;
 import java.util.ArrayList;
 public class CreateMenu {
 

@@ -1,13 +1,17 @@
-package Controller;
-
-import Beans.UsuarioBeans;
-import Model.ClienteRegistroModel;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+package www.sv.cuponera.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import www.sv.cuponera.beans.UsuarioBeans;
+import www.sv.cuponera.modelo.ClienteRegistroModel;
 
 @WebServlet(name = "ClienteRegistroController", value = "/ClienteRegistroController")
 public class ClienteRegistroController extends HttpServlet {

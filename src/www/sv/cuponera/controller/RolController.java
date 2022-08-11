@@ -1,16 +1,19 @@
-package Controller;
+package www.sv.cuponera.controller;
 
-import Beans.RolBean;
-import Beans.UsuarioBeans;
-import Model.RolModel;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServlet;
+
+import www.sv.cuponera.beans.RolBean;
+import www.sv.cuponera.modelo.RolModel;
 
 @WebServlet(name = "RolController", value = "/RolController")
 public class RolController extends HttpServlet {

@@ -1,4 +1,4 @@
-package Model;
+package www.sv.cuponera.modelo;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

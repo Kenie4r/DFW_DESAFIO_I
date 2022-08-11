@@ -1,10 +1,11 @@
-package Controller;
+package www.sv.cuponera.controller;
 
-import Beans.CuponBean;
-import Model.Conection;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import www.sv.cuponera.beans.CuponBean;
+import www.sv.cuponera.modelo.Conection;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;

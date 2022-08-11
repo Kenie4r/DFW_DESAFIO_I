@@ -1,11 +1,11 @@
-package Model;
-
-import Beans.UsuarioBeans;
+package www.sv.cuponera.modelo;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import www.sv.cuponera.beans.UsuarioBeans;
 
 public class ClienteRegistroModel extends Conection{
     public int insertarCliente(UsuarioBeans usuario) throws SQLException{
@@ -33,7 +33,7 @@ public class ClienteRegistroModel extends Conection{
     public boolean verificarLogin(UsuarioBeans usuarioBeans) throws SQLException{
         ArrayList info= new ArrayList<>();
         boolean existe=false;
-        String sql="select * from usuarios where `e-mail`=? and Pass=?";
+        String sql="select * from usuarios where `email`=? and Pass=?";
         this.conectar();
         st=conexion.prepareStatement(sql);
         st.setString(1,usuarioBeans.geteMail());

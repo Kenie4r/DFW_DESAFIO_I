@@ -1,10 +1,10 @@
-package Model;
-
-import Beans.RolBean;
+package www.sv.cuponera.modelo;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import www.sv.cuponera.beans.RolBean;
 
 public class RolModel  extends Conection{
     public List<RolBean>  listaRol() throws SQLException{

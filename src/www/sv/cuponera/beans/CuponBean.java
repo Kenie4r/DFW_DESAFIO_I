@@ -1,4 +1,4 @@
-package Beans;
+package www.sv.cuponera.beans;
 
 public class CuponBean {
     String UsuarioID,OfertaID_CodigoCupon,FechaCompra,Estado,FechaUso,Cantidad;

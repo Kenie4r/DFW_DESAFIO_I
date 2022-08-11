@@ -1,4 +1,4 @@
-package Beans;
+package www.sv.cuponera.beans;
 
 public class RolBean {
     String name,idRol,Nombre;
