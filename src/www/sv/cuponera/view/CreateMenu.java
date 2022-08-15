@@ -2,44 +2,29 @@ package www.sv.cuponera.view;
 import java.util.ArrayList;
 public class CreateMenu {
 
-        public static  String Menu(int Active, int rol){
+        public static  String Menu(int Active, int rol, String[] datos){
             int[] casos = {
-                    1,-1,-1,-1,-1,-1,-1,1
-            };
+                    1, -1 , -1, -1, -1, -1, -1, -1
+            }; 
             switch (rol){
-                case 6:
-                    for (int index = 0; index<casos.length; index++){
-                        casos[index] = 1;
-                    }
-                    break;
-                case 7:
-                    casos[1]= 1;
-                    casos[4] = 1;
-                    casos[7] = 1;
-                    break;
-                case 8:
-                    casos[4] = 1;
-                    casos[5] = 1;
-                    break;
-                case 9:
-                    casos[2] = 1;
-                    casos[3] = 1;
-                    casos[4] = 1;
-                    casos[5] = 1;
-                    break;
-                case 10:
-                    casos[3] = 1;
-                    casos[4] = 1;
-                    break;
+            	case 1: 
+            		casos[2] = 1; 
+            		casos[4] = 1; 
+            	break ;
+            	case 2: 
+            		casos[1] = 1; 
+            		casos[3] = 1; 
+            		
+            		break;
+            	case 3: 
+            		casos[5] = 1; 
+            		casos[7] = 1; 
+            		break; 
             }
-            String[] iconos = {
-                    "icon-home",
-                    "icon-paperclip",
-                    "icon-file-minus","icon-inbox","icon-file","icon-tool","icon-users","icon-log-out"
-            };
+
             String[] titulos = {
-                    "Inicio" , "Solicitudes", "Administracion de solicitudes", "Casos",
-                    "Bitacoras", "Testeo", "Usuarios", "Salir"
+                    "Inicio" , "Mis ofertas", "Empresas","Usuarios de empresa", "Ofertas",
+                    "Mis compras", "Validar ofertas", "Busqueda de Cupones"
 
             };
             String[] Links = {
@@ -48,102 +33,66 @@ public class CreateMenu {
                     "../bitacora/index.jsp", "../usuarios/probador.jsp",
                     "../usuarios/index.jsp", "../Logout.jsp?LogOut=true"
             };
-            String menu = " <div class='navigation'>\n" +
-                    "        <ul>\n";
-            for(int index = 0; index<iconos.length; index++){
-                if(casos[index]==1){
-                    if(Active == index){
-                        menu+= "<li class='list active'>\n" +
-                                "                <a href='"+Links[index]+"'>\n" +
-                                "                    <span class='icon'><span class='"+ iconos[index]+"'></span></span>\n" +
-                                "                    <span class='title'>"+titulos[index]+"</span>\n" +
-                                "                </a>\n" +
-                                "            </li>\n";
-                    }else{
-                        menu+= "<li class='list'>\n" +
-                                "              <a href='"+Links[index]+"'>\n" +
-                                "                    <span class='icon'><span class='"+ iconos[index]+"'></span></span>\n" +
-                                "                    <span class='title'>"+titulos[index]+"</span>\n" +
-                                "                </a>\n" +
-                                "            </li>\n";
-                    }
-                }
-            }
-            menu+="</ul></div>   <div class='toggle'>\n" +
-                    "        <span class='icon-menu open'></span>\n" +
-                    "        <span class='icon-x close'></span>\n" +
-                    "    </div>\n     <div class='bg-menu'></div>" +
-                    "    <script>\n" +
-                    "        let toggle = document.querySelector('.toggle')\n" +
-                    "        let nav = document.querySelector('.navigation')\n" +
-                    "        toggle.addEventListener('click', (e)=>{\n" +
-                    "            toggle.classList.toggle('active'); \n" +
-                    "            nav.classList.toggle('active');\n" +
-                    "        })\n" +
-                    "    </script>";
+            String menu = "  <nav class=\"bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900\">\r\n" + 
+            		"        <div class=\"container flex flex-wrap justify-between items-center mx-auto\">\r\n" + 
+            		"            <a href=\"index.jsp\" class=\"flex items-center\">\r\n" + 
+            		"                <img src=\"https://cdn-icons-png.flaticon.com/512/3706/3706131.png\" class=\"mr-3 h-6 sm:h-9\" alt=\"Flowbite Logo\">\r\n" + 
+            		"                <span class=\"self-center text-xl font-semibold whitespace-nowrap dark:text-white\">La Cuponera</span>\r\n" + 
+            		"            </a>\r\n" + 
+            		"            <div class=\"flex items-center md:order-2\">\r\n" + 
+            		"                <button type=\"button\" class=\"flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600\" id=\"user-menu-button\" aria-expanded=\"false\" data-dropdown-toggle=\"user-dropdown\" data-dropdown-placement=\"bottom\">\r\n" + 
+            		"                    <span class=\"sr-only\">Open user menu</span>\r\n" + 
+            		"                    <img class=\"w-8 h-8 rounded-full\" src=\"https://cdn-icons-png.flaticon.com/512/149/149071.png\" alt=\"user photo\">\r\n" + 
+            		"                 </button>\r\n" + 
+            		"        <!-- Dropdown menu -->\r\n" + 
+            		"        <div class=\"z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 block\" id=\"user-dropdown\" data-popper-reference-hidden=\"\" data-popper-escaped=\"\" data-popper-placement=\"bottom\" style=\"position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(585px, 82px);\">\r\n" + 
+            		"          <div class=\"py-3 px-4\">\r\n" + 
+            		"            <span class=\"block text-sm text-gray-900 dark:text-white\">\r\n" + 
+            					datos[0]+
+            		"            </span>\r\n" + 
+            		"            <span class=\"block text-sm font-medium text-gray-500 truncate dark:text-gray-400\">"+datos[1]+"</span>\r\n" + 
+            		"          </div>\r\n" + 
+            		"          <ul class=\"py-1\" aria-labelledby=\"user-menu-button\">\r\n" + 
+            		"            <li>\r\n" + 
+            		"              <a href=\"#\" class=\"block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white\">Mi cuenta</a>\r\n" + 
+            		"            </li>\r\n" + 
+            		"            <li>\r\n" + 
+            		"              <a href=\"#\" class=\"block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white\">Mis compras</a>\r\n" + 
+            		"            </li>\r\n" + 
+            		"        \r\n" + 
+            		"            <li>\r\n" + 
+            		"              <a href=\"\" class=\"block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white\">Salir</a>\r\n" + 
+            		"            </li>\r\n" + 
+            		"          </ul>\r\n" + 
+            		"        </div>\r\n" + 
+            		"        <button data-collapse-toggle=\"mobile-menu-2\" type=\"button\" class=\"inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600\" aria-controls=\"mobile-menu-2\" aria-expanded=\"false\">\r\n" + 
+            		"          <span class=\"sr-only\">Abrir menu</span>\r\n" + 
+            		"          <svg class=\"w-6 h-6\" aria-hidden=\"true\" fill=\"currentColor\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"><path fill-rule=\"evenodd\" d=\"M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z\" clip-rule=\"evenodd\"></path></svg>\r\n" + 
+            		"      </button>\r\n" + 
+            		"    </div>\r\n" + 
+            		"    <div class=\"hidden justify-between items-center w-full md:flex md:w-auto md:order-1\" id=\"mobile-menu-2\">\r\n" + 
+            		"      <ul class=\"flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700\">\r\n"; 
+	            for(int index = 0; index<titulos.length; index++){
+	                if(casos[index]==1){
+	                    if(Active == index){
+	                        menu+= 	"<li>\r\n" + 
+	                        		"<a href=\"#\" class=\"block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white\" aria-current=\"page\">"+titulos[index]+"</a>\r\n" + 
+	                        		"</li>\r\n"; 
+	                    }else{
+	                        menu+= "        <li>\r\n" + 
+	                        		"          <a href=\"#\" class=\"block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700\">"+titulos[index]+"</a>\r\n" + 
+	                        		"        </li>\r\n";
+	                    }
+	                }
+	            } 
+            	menu +="       \r\n" + 
+            		"      </ul>\r\n" + 
+            		"    </div>\r\n" + 
+            		"    </div>\r\n" + 
+            		"  </nav>";
+          
             return menu;
         }
-        public static  String Menudash( int rol){
-            int[] casos = {
-                    1,-1,-1,-1,-1,-1,-1,1
-            };
-            switch (rol){
-                case 6:
-                    for (int index = 0; index<casos.length; index++){
-                        casos[index] = 1;
-                    }
-                    break;
-                case 7:
-                    casos[1]= 1;
-                    casos[4] = 1;
-                    casos[7] = 1;
-                    break;
-                case 8:
-                    casos[4] = 1;
-                    casos[5] = 1;
-                    break;
-                case 9:
-                    casos[2] = 1;
-                    casos[3] = 1;
-                    casos[4] = 1;
-                    casos[5] = 1;
-                    break;
-                case 10:
-                    casos[3] = 1;
-                    casos[4] = 1;
-                    break;
-            }
-            String[] iconos = {
-                    "icon-home",
-                    "icon-paperclip",
-                    "icon-file-minus","icon-inbox","icon-file","icon-tool","icon-users","icon-log-out"
-            };
-            String[] titulos = {
-                    "Inicio" , "Solicitudes", "Administracion de solicitudes", "Casos",
-                    "Bitacoras", "Testeo", "Usuarios", "Salir"
-
-            };
-            String[] Links = {
-                    "../index.jsp", "../solicitudes/solicitudes.jsp",
-                    "../solicitudes/solicitudes_admin.jsp", "../casos/index.jsp",
-                    "../bitacora/index.jsp", "../usuarios/probador.jsp",
-                    "../usuarios/index.jsp", "../Logout.jsp?LogOut=true"
-            };
-            String menu = "";
-            for(int index = 0; index<iconos.length; index++){
-                if(casos[index]==1){
-
-                    menu+= "<div class=\"option\">\n" +
-                            "<a href="+Links[index]+">\n" +
-                            "<span class="+iconos[index]+"> </span>\n" +
-                            "<h3>\n" +titulos[index]+
-                            "</h3>\n" +
-                            "</a>\n" +
-                            "</div>";
-
-                }
-            }
-            return menu;
-        }
+        
     }
 
