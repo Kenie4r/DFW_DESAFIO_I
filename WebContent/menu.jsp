@@ -4,11 +4,13 @@
 if(session.getAttribute("idUsuario")!=null){
 	String[] datos = {
 			session.getAttribute("username").toString(), 
-			session.getAttribute("email").toString()	}; 
+			session.getAttribute("email").toString(), 
+			request.getContextPath()}; 
 	out.print(CreateMenu.Menu(-1,Integer.parseInt(session.getAttribute("idRol").toString())  ,datos));   
-
+	
 }else{ 
-	response.sendRedirect("index.jsp"); 
+	out.print("hola adios"); 
+	response.sendRedirect( request.getContextPath()+ "/index.jsp"); 
 }
  
  

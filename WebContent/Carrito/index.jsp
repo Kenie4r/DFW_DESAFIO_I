@@ -7,151 +7,93 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
 <head>
-    <title>Carrito de Compras</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="css/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi carrito de compras</title>
+   <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.2/dist/flowbite.min.css" />
+    <script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
+<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  
+  <style>
+    #summary {
+      background-color: #f6f6f6;
+    }
+  </style>
 </head>
-<body>
-<header>
 
-</header>
-<section class="h-100 h-custom" style="background-color: #eee;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col">
-                <div class="card">
-                    <div class="card-body p-4">
+<body class="bg-gray-100">
+	<jsp:include page="/menu.jsp"/>
 
-                        <div class="row">
-
-                            <div class="col-lg-7">
-                                <h5 class="mb-3"><a href="#!" class="text-body"><i
-                                        class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
-                                <hr>
-
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <div>
-                                        <p class="mb-1">Shopping cart</p>
-                                        <p class="mb-0">You have 4 items in your cart</p>
-                                    </div>
-                                    <div>
-                                        <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"
-                                                                                                    class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p>
-                                    </div>
-                                </div>
-                                <%-- CUpones puestos--%>
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="d-flex flex-row align-items-center">
-                                                <div>
-                                                    <img
-                                                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
-                                                            class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
-                                                </div>
-                                                <div class="ms-3">
-                                                    <%-- CUpon titulo--%>
-                                                    <h5>Cupon Iphone 11 pro</h5>
-                                                        <%-- CUpon descripcion--%>
-                                                    <p class="small mb-0">50% de descuento</p>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-row align-items-center">
-                                                <div style="width: 50px;">
-                                                    <select>
-                                                        <c:forEach var="i" begin="1" end="10">
-                                                            <option>${i}</option>
-                                                        </c:forEach>
-
-                                                    </select>
-                                                </div>
-                                                <div style="width: 80px;">
-                                                    <h5 class="mb-0">$0</h5>
-                                                </div>
-                                                <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <div class="col-lg-5">
-
-                                <div class="card bg-primary text-white rounded-3">
-                                    <%-- Tarjeta de credito--%>
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center mb-4">
-                                            <h5 class="mb-0">Detalles de la tarjeta</h5>
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                                                 class="img-fluid rounded-3" style="width: 45px;" alt="Avatar">
-                                        </div>
-                                        <%-- Formulario--%>
-                                        <form class="mt-4" action="${pageContext.request.contextPath}/CarritoController" >
-                                            <input type="text" name="op" value="transation" hidden>
-                                            <div class="form-outline form-white mb-4">
-                                                <input type="text" id="typeName" name="cardName" class="form-control form-control-lg" siez="17"
-                                                       placeholder="Cardholder's Name" />
-                                                <label class="form-label" for="typeName">Nombre de propietario</label>
-                                            </div>
-
-                                            <div class="form-outline form-white mb-4">
-                                                <input type="text" name="cardNum" id="typeText" class="form-control form-control-lg" siez="17"
-                                                       placeholder="1234 5678 9012 3457" minlength="19" maxlength="19" />
-                                                <label class="form-label" for="typeText">Numero de Tarjeta</label>
-                                            </div>
-
-                                            <div class="row mb-4">
-                                                <div class="col-md-6">
-                                                    <div class="form-outline form-white">
-                                                        <input type="text" id="typeExp" name="expDate" class="form-control form-control-lg"
-                                                               placeholder="MM/YYYY" size="7" id="exp" minlength="7" maxlength="7" />
-                                                        <label class="form-label" for="typeExp">Fecha de Expiracion </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-outline form-white">
-                                                        <input type="password" id="typeText" name="Cvv" class="form-control form-control-lg"
-                                                               placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
-                                                        <label class="form-label" for="typeText">Cvv</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-                                        <hr class="my-4">
-
-                                        <div class="d-flex justify-content-between">
-                                            <p class="mb-2">Subtotal</p>
-                                            <p class="mb-2">$4798.00</p>
-                                        </div>
-
-                                        <div class="d-flex justify-content-between mb-4">
-                                            <p class="mb-2">Total(Incl. taxes)</p>
-                                            <p class="mb-2">$4818.00</p>
-                                        </div>
-                                            <input type="submit" value="Enviar">
-                                        </form>
-                                    </div>
-                                    <c:set var="lista" property="exito"></c:set>
-                                    <c:forEach items="${requestScope.exito}" var="lista" >
-                                        <p>${lista}</p>
-                                    </c:forEach>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+  <div class="container mx-auto mt-10">
+    <div class="flex shadow-md my-10">
+      <div class="w-3/4 bg-white px-10 py-10">
+        <div class="flex justify-between border-b pb-8">
+          <h1 class="font-semibold text-2xl">Ofertas seleccionadas</h1>
+          <h2 class="font-semibold text-2xl">0 Ofertas</h2>
         </div>
+        <div class="flex mt-10 mb-5">
+          <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Nombre de Oferta</h3>
+          <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Cantidad</h3>
+          <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Precio</h3>
+          <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
+        </div>
+        <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+          <div class="flex w-2/5"> <!-- product -->
+            <div class="w-20">
+              <img class="h-24" src="https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z" alt="oferta">
+            </div>
+            <div class="flex flex-col justify-between ml-4 flex-grow">
+              <span class="font-bold text-sm">INombre de Oferta</span>
+              <span class="text-red-500 text-xs">Nombre de empresa</span>
+              <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Eliminar</a>
+            </div>
+          </div>
+          <div class="flex justify-center w-1/5">
+            <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
+            </svg>
+
+            <input class="mx-2 border text-center w-8" type="text" value="1">
+
+            <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
+              <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
+            </svg>
+          </div>
+          <span class="text-center w-1/5 font-semibold text-sm">$0.00</span>
+          <span class="text-center w-1/5 font-semibold text-sm">$0.00</span>
+        </div>
+
+        
+
+        <a href="#" class="flex font-semibold text-indigo-600 text-sm mt-10">
+      
+          <svg class="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z"/></svg>
+          Continuar comprando
+        </a>
+      </div>
+
+      <div id="summary" class="w-1/4 px-8 py-10">
+        <h1 class="font-semibold text-2xl border-b pb-8">Resumen de compra</h1>
+        <div class="flex justify-between mt-10 mb-5">
+          <span class="font-semibold text-sm uppercase">0 Ofertas</span>
+          <span class="font-semibold text-sm">$0.0</span>
+        </div>
+        <div>
+          <label class="font-medium inline-block mb-3 text-sm uppercase">Metodo de Pago</label>
+          <select class="block p-2 text-gray-600 w-full text-sm">
+            <option>Tarjeta #12</option>
+          </select>
+        </div>
+    
+        <div class="border-t mt-8">
+          <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+            <span>Precio total</span>
+            <span>$0</span>
+          </div>
+          <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Finalizar compra</button>
+        </div>
+      </div>
+
     </div>
-</section>
+  </div>
 </body>
-</html>

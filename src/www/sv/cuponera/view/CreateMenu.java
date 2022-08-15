@@ -28,10 +28,10 @@ public class CreateMenu {
 
             };
             String[] Links = {
-                    "../index.jsp", "../solicitudes/solicitudes.jsp",
-                    "../solicitudes/solicitudes_admin.jsp", "../casos/index.jsp",
-                    "../bitacora/index.jsp", "../usuarios/probador.jsp",
-                    "../usuarios/index.jsp", "../Logout.jsp?LogOut=true"
+                    datos[2] + "/inicio.jsp",  datos[2] +"/ofertas/misOfertas.jsp",
+                    datos[2] +"/empresas/index.jsp",  datos[2] +"/empresas/UsuariosEmpresa.jsp",
+                    datos[2] +"/ofertas/index.jsp",  datos[2] +"/compras/misCompras.jsp",
+                    datos[2] +"/ofertas/index.jsp",  datos[2] +"/cupones/cupones"
             };
             String menu = "  <nav class=\"bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900\">\r\n" + 
             		"        <div class=\"container flex flex-wrap justify-between items-center mx-auto\">\r\n" + 
@@ -61,8 +61,11 @@ public class CreateMenu {
             		"            </li>\r\n" + 
             		"        \r\n" + 
             		"            <li>\r\n" + 
-            		"              <a href=\"\" class=\"block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white\">Salir</a>\r\n" + 
+            		"              <a href=\""+datos[2]+"/Carrito/index.jsp\" class=\"block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white\">Carrito</a>\r\n" + 
             		"            </li>\r\n" + 
+            	    "<li>\r\n" + 
+             		"              <a href=\""+datos[2]+"/cerrar.jsp\" class=\"block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white\">Salir</a>\r\n" + 
+             		"            </li>\r\n" + 
             		"          </ul>\r\n" + 
             		"        </div>\r\n" + 
             		"        <button data-collapse-toggle=\"mobile-menu-2\" type=\"button\" class=\"inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600\" aria-controls=\"mobile-menu-2\" aria-expanded=\"false\">\r\n" + 
@@ -76,11 +79,11 @@ public class CreateMenu {
 	                if(casos[index]==1){
 	                    if(Active == index){
 	                        menu+= 	"<li>\r\n" + 
-	                        		"<a href=\"#\" class=\"block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white\" aria-current=\"page\">"+titulos[index]+"</a>\r\n" + 
+	                        		"<a href=\""+Links[index]+"\" class=\"block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white\" aria-current=\"page\">"+titulos[index]+"</a>\r\n" + 
 	                        		"</li>\r\n"; 
 	                    }else{
 	                        menu+= "        <li>\r\n" + 
-	                        		"          <a href=\"#\" class=\"block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700\">"+titulos[index]+"</a>\r\n" + 
+	                        		"          <a href=\""+Links[index]+"\" class=\"block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700\">"+titulos[index]+"</a>\r\n" + 
 	                        		"        </li>\r\n";
 	                    }
 	                }
