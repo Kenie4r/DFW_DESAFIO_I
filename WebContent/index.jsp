@@ -12,7 +12,7 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/28279bfb40.js" crossorigin="anonymous"></script>
 
-<title>Página principal - La Cuponera SV</title>
+<title>Página principal - La Cuponera</title>
 </head>
 <body>
 <header>
