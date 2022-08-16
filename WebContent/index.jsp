@@ -108,7 +108,6 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
             <i class="fas fa-envelope" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Repetir contraseña:</label>
             <input type="password" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
           </div>
-          <label for="basic-url" class="form-label"><b>ATENCIÓN:</b> Un codigo de verificación será enviado a tu correo para iniciar sesión.</label>
           <div class="modal-footer">
       <button type="submit" class="btn btn-outline-success" >Aceptar</button>
         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" >Cancelar</button>
