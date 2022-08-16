@@ -101,11 +101,11 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
             <input type="email" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
           </div>
           <div class="mb-3">
-            <i class="fas fa-envelope" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Contraseña:</label>
+            <i class="fas fa-lock" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Contraseña:</label>
             <input type="password" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
           </div>
           <div class="mb-3">
-            <i class="fas fa-envelope" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Repetir contraseña:</label>
+            <i class="fas fa-lock" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Repetir contraseña:</label>
             <input type="password" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
           </div>
           <div class="modal-footer">
