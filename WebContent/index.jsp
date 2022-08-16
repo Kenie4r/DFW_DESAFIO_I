@@ -12,7 +12,7 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/28279bfb40.js" crossorigin="anonymous"></script>
 
-<title>Página principal - La Cuponera</title>
+<title>Página principal - La Cuponera SV</title>
 </head>
 <body>
 <header>
@@ -28,8 +28,7 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
   
 <c:choose>
 <c:when test="${session.getAttribute(idUsuario) != null}">
-    ¡Hola de nuevo, ${session.getAttribute(username)}!
-    <a href="cerrar.jsp" class="link-danger" style="cursor: pointer">Cerrar sesión</a> <i class="fas fa-sign-out-alt" style="color: #dc3545"></i>
+    ¡Hola de nuevo, <span style="color:#75d3f1">@${session.getAttribute(username)}!</span>
 </c:when>
 <c:when test="${session.getAttribute(idUsuario) == null}">
     Para comenzar debes<button type="button" style="border: none; background-color: #f7f7f7; text-decoration: underline #75d3f1" class="link-info" data-bs-toggle="modal" data-bs-target="#login">Iniciar sesión</button><i class="fas fa-sign-in-alt" style="color: #75d3f1"></i>
@@ -96,7 +95,7 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
             <i class="fas fa-user" style="color: #fed88d"></i> <label for="recipient-name" class="col-form-label">Apellidos:</label>
             <input type="text" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
           </div>
-          <label for="basic-url" class="form-label"><b>ATENCIÓN:</b> Un link será enviado al correo electrónico para confirmar la contraseña del perfil</label>
+          <label for="basic-url" class="form-label"><b>ATENCIÓN:</b> Tu usuario y una contraseña temproral será enviado tu correo para iniciar sesión por primera vez.</label>
           <div class="mb-3">
             <i class="fas fa-envelope" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Correo electrónico:</label>
             <input type="email" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
