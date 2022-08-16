@@ -1,69 +1,113 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Fernando
-  Date: 9/8/2022
-  Time: 23:04
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iniciar sesion</title>
-  <meta name="author" content="David Grzyb">
-  <meta name="description" content="">
+<meta charset="ISO-8859-1">
 
-  <!-- Tailwind -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-  <style>
-    @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/28279bfb40.js" crossorigin="anonymous"></script>
 
-    .font-family-karla {
-      font-family: karla;
-    }
-  </style>
+<title>Página principal - La Cuponera SV</title>
 </head>
-<body class="bg-white font-family-karla h-screen">
-
-<div class="w-full flex flex-wrap">
-
-  <!-- Login Section -->
-  <div class="w-full md:w-1/2 flex flex-col">
-
-    <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-24">
-		<img src="https://cdn-icons-png.flaticon.com/512/3706/3706131.png" style="width: 50px" />
-    </div>
-
-    <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
-      <p class="text-center text-3xl">Bienvenido.</p>
-      <form class="flex flex-col pt-3 md:pt-8" action="${pageContext.request.contextPath}/ClienteRegistroController" method="post">
-        <input type="text" name="op" value="login" hidden>
-        <div class="flex flex-col pt-4">
-          <label for="email" class="text-lg">Email</label>
-          <input type="email" name="email" id="email" placeholder="tu@email.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
-        </div>
-
-        <div class="flex flex-col pt-4">
-          <label for="password" class="text-lg">Contraseña</label>
-          <input type="password" name="password" id="password" placeholder="Contraseña" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline">
-        </div>
-
-        <input type="submit" value="Log In" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8">
-      </form>
-      <p>${requestScope.fracaso}</p>
-      <p>${requestScope.exito}</p>
-      <div class="text-center pt-12 pb-12">
-        <p>No tienes cuenta? <a href="register.jsp" class="underline font-semibold">Registrate</a></p>
-      </div>
-    </div>
+<body>
+<header>
+ <jsp:include page="/menu.jsp"></jsp:include>
+</header>
+<br>
+<h1 class="text-center">¡Bienvenido(a) a <span style="color: #fed88d">La Cuponera!</span></h1>
+<br>
+<img src="Resources/dashboard.svg" height="250px" class="rounded mx-auto d-block" alt="...">
+<br>
+<div class="card" style="margin-left: 20vw; margin-right: 20vw; ">
+  <div class="card-header">
+  
+<c:choose>
+<c:when test="${session.getAttribute(idUsuario) != null}">
+    ¡Hola de nuevo, ${session.getAttribute(username)}!
+    <a href="cerrar.jsp" class="link-danger" style="cursor: pointer">Cerrar sesión</a> <i class="fas fa-sign-out-alt" style="color: #dc3545"></i>
+</c:when>
+<c:when test="${session.getAttribute(idUsuario) == null}">
+    Para comenzar debes<button type="button" style="border: none; background-color: #f7f7f7; text-decoration: underline #75d3f1" class="link-info" data-bs-toggle="modal" data-bs-target="#login">Iniciar sesión</button><i class="fas fa-sign-in-alt" style="color: #75d3f1"></i>
+    ¿Eres un(a) cliente y no tienes cuenta?<button type="button" style="border: none; background-color: #f7f7f7; text-decoration: underline #75d3f1" class="link-info" data-bs-toggle="modal" data-bs-target="#signup">Registrarse</button><i class="fas fa-user-plus" style="color: #75d3f1"></i>
+     
+</c:when>
+</c:choose>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">¿La Cuponera?</h5>
+    <p class="card-text">A tráves de este sitio puedes ver y gestionar de una forma optima todos las ofertas de distintos negocios.
+    Ingresa a todas las opciones desde el menú principal.</p>
 
   </div>
+</div>
+<br>
+<!-- Modal desplegalable de Inicio de sesión -->
+<div class="modal fade" id="login" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Iniciar sesión</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <i class="fas fa-user" style="color: #fed88d"></i> <label for="recipient-name" class="col-form-label">Usuario o correo electrónico:</label>
+            <input type="text" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <i class="fas fa-lock" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Contraseña:</label>
+            <input type="password" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
+          </div>
+          <div class="modal-footer">
+      <button type="submit" class="btn btn-success">Ingresar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <!-- Image Section -->
-  <div class="w-1/2 shadow-2xl">
-    <img class="object-cover w-full h-screen hidden md:block" src="https://source.unsplash.com/IXUM4cJynP0">
+<!-- Modal desplegalable de Inicio de sesión -->
+<div class="modal fade" id="signup" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registro de cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <i class="fas fa-at" style="color: #fed88d"></i> <label for="recipient-name" class="col-form-label">Usuario:</label>
+            <input type="text" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <i class="fas fa-user" style="color: #fed88d"></i> <label for="recipient-name" class="col-form-label">Nombres:</label>
+            <input type="text" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <i class="fas fa-user" style="color: #fed88d"></i> <label for="recipient-name" class="col-form-label">Apellidos:</label>
+            <input type="text" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
+          </div>
+          <label for="basic-url" class="form-label"><b>ATENCIÓN:</b> Un link será enviado al correo electrónico para confirmar la contraseña del perfil</label>
+          <div class="mb-3">
+            <i class="fas fa-envelope" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Correo electrónico:</label>
+            <input type="email" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
+          </div>
+          <div class="modal-footer">
+      <button type="submit" class="btn btn-success">Aceptar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 
