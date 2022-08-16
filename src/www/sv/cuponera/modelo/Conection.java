@@ -10,11 +10,16 @@ import java.util.logging.Logger;
 
 
 public class Conection {
-    protected static Connection conexion=null;
-    protected PreparedStatement st;
+    protected  Connection conexion=null;
+    protected  PreparedStatement st;
     protected CallableStatement cs;
     protected ResultSet rs;
-    public void conectar(){
+    public Conection() {
+    	rs  =null; 
+    	cs = null; 
+    	st = null; 
+	}
+	public void conectar(){
         try {
             if(conexion==null || conexion.isClosed()){
                 //Obtenemos la conexion del pool de conexiones

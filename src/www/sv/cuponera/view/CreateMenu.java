@@ -4,7 +4,7 @@ public class CreateMenu {
 
         public static  String Menu(int Active, int rol, String[] datos){
             int[] casos = {
-                    1, -1 , -1, -1, -1, -1, -1, -1
+                    1, -1 , -1, -1, -1, -1, -1, -1, -1
             }; 
             switch (rol){
             	case 1: 
@@ -14,24 +14,23 @@ public class CreateMenu {
             	case 2: 
             		casos[1] = 1; 
             		casos[3] = 1; 
-            		
             		break;
             	case 3: 
             		casos[5] = 1; 
-            		casos[7] = 1; 
+            		casos[8] = 1;
             		break; 
             }
 
             String[] titulos = {
                     "Inicio" , "Mis ofertas", "Empresas","Usuarios de empresa", "Ofertas",
-                    "Mis compras", "Validar ofertas", "Busqueda de Cupones"
+                    "Mis compras", "Validar ofertas", "Busqueda de Cupones", "Busqueda de Ofertas"
 
             };
             String[] Links = {
                     datos[2] + "/inicio.jsp",  datos[2] +"/ofertas/misOfertas.jsp",
                     datos[2] +"/empresas/index.jsp",  datos[2] +"/empresas/UsuariosEmpresa.jsp",
                     datos[2] +"/ofertas/index.jsp",  datos[2] +"/compras/misCompras.jsp",
-                    datos[2] +"/ofertas/index.jsp",  datos[2] +"/cupones/cupones"
+                    datos[2] +"/ofertas/index.jsp",  datos[2] +"/cupones/cupones", datos[2] + "/ofertas"
             };
             String menu = "  <nav class=\"bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900\">\r\n" + 
             		"        <div class=\"container flex flex-wrap justify-between items-center mx-auto\">\r\n" + 
