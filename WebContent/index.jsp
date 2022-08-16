@@ -75,7 +75,7 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
   </div>
 </div>
 
-<!-- Modal desplegalable de Inicio de sesión -->
+<!-- Modal desplegalable para registro de cliente -->
 <div class="modal fade" id="signup" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -96,11 +96,19 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
             <i class="fas fa-user" style="color: #fed88d"></i> <label for="recipient-name" class="col-form-label">Apellidos:</label>
             <input type="text" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
           </div>
-          <label for="basic-url" class="form-label"><b>ATENCIÓN:</b> Tu usuario y una contraseña temproral será enviado tu correo para iniciar sesión por primera vez.</label>
           <div class="mb-3">
             <i class="fas fa-envelope" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Correo electrónico:</label>
             <input type="email" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
           </div>
+          <div class="mb-3">
+            <i class="fas fa-envelope" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Contraseña:</label>
+            <input type="password" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <i class="fas fa-envelope" style="color: #fed88d"></i> <label for="message-text" class="col-form-label">Repetir contraseña:</label>
+            <input type="password" placeholder="Escribe aquí..." class="form-control" id="recipient-name">
+          </div>
+          <label for="basic-url" class="form-label"><b>ATENCIÓN:</b> Un codigo de verificación será enviado a tu correo para iniciar sesión.</label>
           <div class="modal-footer">
       <button type="submit" class="btn btn-outline-success" >Aceptar</button>
         <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" >Cancelar</button>
@@ -110,6 +118,6 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
     </div>
   </div>
 </div>
-
+    
 </body>
 </html>
