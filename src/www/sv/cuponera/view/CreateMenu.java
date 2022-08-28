@@ -2,7 +2,7 @@ package www.sv.cuponera.view;
 import java.util.ArrayList;
 public class CreateMenu {
 
-        public static  String Menu(int Active, int rol, String[] datos){
+        public static  String Menu(int Active, int rol, String[] datos ){
             int[] casos = {
                     1, -1 , -1, -1, -1, -1, -1, -1, -1
             }; 
