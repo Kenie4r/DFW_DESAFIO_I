@@ -16,7 +16,7 @@ public class Email {
 		try {
 			String html = "<h2 style='text-align:center; gap: 10px; '><img style='width: 25px'src='https://cdn-icons-png.flaticon.com/512/3706/3706131.png'> LA CUPONERA </h2>"
 					+ " <p>Se ha creado un nuevo usuario con este correo, si no has sido tu hacer caso omiso del código de confirmación de este correo. </p>"
-					+ "<h3>Código de confirmación/h3><br>"
+					+ "<h3>Código de confirmación</h3><br>"
 					+ "<h4 style='padding=1.5em; background-color: gray; color: black; font-weight: bolder; text-aling: center; '>"
 					+ codigo+"</h4>"; 
 			Mensaje(receptor, "Nuevo usuario creado, código de confirmación" , html); 

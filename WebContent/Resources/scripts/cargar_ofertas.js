@@ -55,7 +55,7 @@ document.addEventListener("click", (e)=>{
 					//eliminar
 					eliminarOferta(idTag[1])
 					llenarcammpos();
-
+					irCarrito()
 				}
 			}else if(target.id.includes("plus")){
 				cantidad++; 
@@ -77,7 +77,7 @@ document.addEventListener("click", (e)=>{
 		if(idTag.id.includes("eliminar")){
 			eliminarOferta(idTag[1])
 			llenarcammpos();
-
+			irCarrito()
 		}
 	}
 })
@@ -111,7 +111,6 @@ function eliminarOferta(codigo){
 	}
 	
 	localStorage.setItem("carritoCupones", JSON.stringify(ofertasSelect))
-	window.location.reload()
 }
 
 

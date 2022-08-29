@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -80,9 +81,16 @@ protected void listar(HttpServletRequest request, HttpServletResponse response)t
 	String codes = request.getParameter("ofertas"); 	
 	OfertaModel ofertas = new OfertaModel(); 
 	try {
-		List<OfertaBean> lista = ofertas.listadoOfertaCarrito(codes);
+		List<OfertaBean> lista = new ArrayList<>();
+
+		String[] codesSplit = codes.split(","); 
+		for(String codigo : codesSplit) {
+	
+			lista.add(ofertas.OfertaCarrito(codigo)); 
+		}
 		
-		request.setAttribute("Ofertas", lista);
+		System.out.print(lista.size());
+		request.setAttribute("componentes", lista);
 		request.getRequestDispatcher("Carrito/index.jsp").forward(request, response);
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block

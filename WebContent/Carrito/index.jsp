@@ -39,12 +39,41 @@
           <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Precio</h3>
           <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
         </div>
-        <div id='cart-div'></div>
-        <c:forEach items="${requestScope.Ofertas}" var="ofe">
+        <div id='cart-div'>
+        <c:choose>
+	        <c:when test="${not empty componentes}">
+	        		<c:forEach items="${componentes}" var='oferta'>
+	        					<div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5" id='product_${oferta.getIdOferta()}'> 
+						          <div class="flex w-2/5"> <!-- product -->
+						            <div class="flex flex-col justify-between ml-4 flex-grow"> 
+						              <span class="font-bold text-sm">${oferta.getNombreOferta()}</span> 
+						              <span class="text-red-500 text-xs">${oferta.getDescripcion()}</span> 
+						              <a href="#" id='eliminar_${oferta.getIdOferta()}'class="font-semibold hover:text-red-500 text-gray-500 text-xs">Eliminar</a> 
+						            </div> 
+						          </div> 
+						          <div class="flex justify-center w-1/5"> 
+						            <img src='https://www.svgrepo.com/show/25409/minus-sign-of-a-line-in-horizontal-position.svg ' id='minus_${oferta.getIdOferta()}' class=" object-contain	 cursor-pointer	 fill-current text-gray-600 w-4 mx-3"/> 
+									<input type='hidden' id='id_${oferta.getIdOferta()}' value='${oferta.getIdOferta()}'/> 
+									<input type='hidden'  id='precio_${oferta.getIdOferta()}' value='${oferta.getPrecioOfertado()}'/> 
+									<input type='hidden' id='total_${oferta.getIdOferta()}' value='${oferta.getPrecioOfertado()}' class='totales'>
+						            <input id='cantidad_${oferta.getIdOferta()}'class="mx-2 border text-center w-10" type="text" value="1" readonly>  
+						            <img src='https://www.freeiconspng.com/thumbs/plus-icon/plus-icon-black-2.png'  id='plus_${oferta.getIdOferta()}'  class=" object-contain	cursor-pointer	fill-current text-gray-600 w-4 mx-3"/>  
+						          </div> 
+						          <span class="text-center w-1/5 font-semibold text-sm">${oferta.getPrecioOfertado()}</span> 
+						          <span class="text-center w-1/5 font-semibold text-sm" id='totalSpan_${oferta.getIdOferta()}'>${oferta.getPrecioOfertado()}</span> 
+						       </div> 
+	        	
+	        	</c:forEach>
+	        
+	        
+	        </c:when>
+	        <c:otherwise>
+	        	<h1>No se ha encontrado ninguna oferta seleccionada actualmente</h1>
+	        </c:otherwise>
+        </c:choose>
         
-        	a
-        </c:forEach>
         
+        </div>
 
         
 

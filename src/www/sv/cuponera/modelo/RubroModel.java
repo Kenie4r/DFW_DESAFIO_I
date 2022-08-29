@@ -17,7 +17,7 @@ public class RubroModel  extends Conection{
 			rs=st.executeQuery();
 			while(rs.next()) {
 				RubrosBean bean=new RubrosBean();
-				bean.setId(rs.getString(1));
+				bean.setIdRubro(Integer.parseInt(rs.getString(1)));
 				bean.setNombre(rs.getString(2));
 				bean.setDescripcion(rs.getString(2));
 				lista.add(bean);
