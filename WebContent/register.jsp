@@ -32,9 +32,9 @@
     <!-- Register Section -->
     <div class="w-full md:w-1/2 flex flex-col">
 
-        <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-12">
-            <a href="#" class="bg-black text-white font-bold text-xl p-4" alt="Logo">Logo</a>
-        </div>
+          <div class="flex justify-center md:justify-start pt-12 md:pl-12 md:-mb-24">
+		<img src="https://cdn-icons-png.flaticon.com/512/3706/3706131.png" style="width: 50px" />
+    </div>
 
         <div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
             <p class="text-center text-3xl">Join Us.</p>
@@ -73,7 +73,7 @@
             <p>${requestScope.fracaso}</p>
             <p>${requestScope.exito}</p>
             <div class="text-center pt-12 pb-12">
-                <p>Already have an account? <a href="login.jsp" class="underline font-semibold">Log in here.</a></p>
+                <p>Already have an account? <a href="index.jsp" class="underline font-semibold">Log in here.</a></p>
             </div>
         </div>
 

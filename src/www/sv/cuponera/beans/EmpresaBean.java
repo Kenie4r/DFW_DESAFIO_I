@@ -1,6 +1,7 @@
 package www.sv.cuponera.beans;
 
 public class EmpresaBean {
+
 	private String IdEmpresa;
 	private String nombreEmpresa;
 	private String Ubicacion;	
@@ -52,6 +53,7 @@ public class EmpresaBean {
 	}
 
 	public String getUbicacion() {
+
 		return Ubicacion;
 	}
 

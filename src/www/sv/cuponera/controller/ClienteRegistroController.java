@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import www.sv.cuponera.beans.UsuarioBeans;
 import www.sv.cuponera.modelo.ClienteRegistroModel;
 
-@WebServlet(name = "ClienteRegistroController", value = "/ClienteRegistroController")
+@WebServlet(name = "ClienteRegistroController", urlPatterns = "/ClienteRegistroController")
 public class ClienteRegistroController extends HttpServlet {
     ClienteRegistroModel model=new ClienteRegistroModel();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
@@ -48,7 +48,7 @@ public class ClienteRegistroController extends HttpServlet {
             usuarioBeans.setPassword(passEncrypt);
             if (model.insertarCliente(usuarioBeans)>0){
                 request.setAttribute("exito","Ingrese sus credenciales");
-                request.getRequestDispatcher("login.jsp").forward(request,response);
+                request.getRequestDispatcher("index.jsp").forward(request,response);
             }else {
                 request.setAttribute("fracaso","no se pudo crear el usuario");
                 request.getRequestDispatcher("register.jsp").forward(request,response);
@@ -71,11 +71,11 @@ public class ClienteRegistroController extends HttpServlet {
                 session.setAttribute("idUsuario",usuarioBeans.getIdUsuario());
                 session.setAttribute("email",usuarioBeans.geteMail());
                 session.setAttribute("idEmpresa",usuarioBeans.getIdEmpresa());
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("inicio.jsp");
 
             }else{
                 request.setAttribute("fracaso","Las credenciales estan equivocadas intente de nuevo");
-                request.getRequestDispatcher("login.jsp").forward(request,response);
+                request.getRequestDispatcher("index.jsp").forward(request,response);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
