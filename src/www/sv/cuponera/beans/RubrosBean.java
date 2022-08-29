@@ -1,24 +1,29 @@
 package www.sv.cuponera.beans;
 
 public class RubrosBean {
-	private String id;
-	private String nombre;
-	private String descripcion;
-	public String getId() {
-		return id;
+	String nombre, descripcion;
+	int idRubro;
+
+	public int getIdRubro() {
+		return idRubro;
 	}
-	public void setId(String id) {
-		this.id = id;
+
+	public void setIdRubro(int idRubro) {
+		this.idRubro = idRubro;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
