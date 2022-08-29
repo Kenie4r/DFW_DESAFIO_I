@@ -1,3 +1,4 @@
+
 document.getElementById("ofertas").addEventListener("click", (e)=>{
     let tag = e.target; 
     if(tag.nameTag = "A" && tag.id.includes("cart")){
@@ -24,8 +25,17 @@ document.getElementById("ofertas").addEventListener("click", (e)=>{
 
 
         }
+        let jsod = JSON.parse(localStorage.getItem("carritoCupones")); 
+        let array = new Array(); 
+        for(let key in jsod){
+        	array.push(jsod[key])
+        }
+        console.log(array)
+        llenarcammpos();
+
+       // let urlForCart = "http://"+location.hostname+":"+location.port+"/LaCuponera/carrito?ofertas="+array
         if(added){
-   
+        
             Swal.fire({
                 title: 'Error', 
                 text: 'Ya has seleccionado esta oferta anteriormente, para modificarla puede ir a ver tu carrito',
@@ -36,6 +46,9 @@ document.getElementById("ofertas").addEventListener("click", (e)=>{
                }).then((result)=>{
             	   if(result.isConfirmed){
             		   //pasar al carrito
+            		   
+            		 //window.location.href = urlForCart
+            		   irCarrito()
             	   }
                })
         }else{
@@ -49,6 +62,9 @@ document.getElementById("ofertas").addEventListener("click", (e)=>{
                }).then((result)=>{
             	   if(result.isConfirmed){
             		   //pasar al carrito
+            		   //window.location.href = urlForCart
+            		   irCarrito()
+
             	   }
                })
         }

@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <%--
   Created by IntelliJ IDEA.
   User: Fernando
@@ -14,7 +14,8 @@
    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.2/dist/flowbite.min.css" />
     <script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-  
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
   <style>
     #summary {
       background-color: #f6f6f6;
@@ -30,7 +31,7 @@
       <div class="w-3/4 bg-white px-10 py-10">
         <div class="flex justify-between border-b pb-8">
           <h1 class="font-semibold text-2xl">Ofertas seleccionadas</h1>
-          <h2 class="font-semibold text-2xl">0 Ofertas</h2>
+          <h2 class="font-semibold text-2xl"><span id='cantidad_total'></span> Ofertas</h2>
         </div>
         <div class="flex mt-10 mb-5">
           <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Nombre de Oferta</h3>
@@ -38,30 +39,12 @@
           <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Precio</h3>
           <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
         </div>
-        <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-          <div class="flex w-2/5"> <!-- product -->
-            <div class="w-20">
-              <img class="h-24" src="https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z" alt="oferta">
-            </div>
-            <div class="flex flex-col justify-between ml-4 flex-grow">
-              <span class="font-bold text-sm">INombre de Oferta</span>
-              <span class="text-red-500 text-xs">Nombre de empresa</span>
-              <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Eliminar</a>
-            </div>
-          </div>
-          <div class="flex justify-center w-1/5">
-            <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
-            </svg>
-
-            <input class="mx-2 border text-center w-8" type="text" value="1">
-
-            <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
-              <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
-            </svg>
-          </div>
-          <span class="text-center w-1/5 font-semibold text-sm">$0.00</span>
-          <span class="text-center w-1/5 font-semibold text-sm">$0.00</span>
-        </div>
+        <div id='cart-div'></div>
+        <c:forEach items="${requestScope.Ofertas}" var="ofe">
+        
+        	a
+        </c:forEach>
+        
 
         
 
@@ -75,8 +58,8 @@
       <div id="summary" class="w-1/4 px-8 py-10">
         <h1 class="font-semibold text-2xl border-b pb-8">Resumen de compra</h1>
         <div class="flex justify-between mt-10 mb-5">
-          <span class="font-semibold text-sm uppercase">0 Ofertas</span>
-          <span class="font-semibold text-sm">$0.0</span>
+          <span class="font-semibold text-sm uppercase"><span id='of-c'>0</span> Ofertas</span>
+          <span class="font-semibold text-sm" id='stotal-2'>$0.0</span>
         </div>
         <div>
           <label class="font-medium inline-block mb-3 text-sm uppercase">Metodo de Pago</label>
@@ -88,12 +71,14 @@
         <div class="border-t mt-8">
           <div class="flex font-semibold justify-between py-6 text-sm uppercase">
             <span>Precio total</span>
-            <span>$0</span>
+            <span id='stotal'>$0</span>
           </div>
-          <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Finalizar compra</button>
+          <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full" id='pay'>Finalizar compra</button>
         </div>
       </div>
 
     </div>
   </div>
+   <script src="Resources/scripts/cargar_ofertas.js"></script>
+  
 </body>
