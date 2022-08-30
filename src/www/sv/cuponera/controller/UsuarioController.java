@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import www.sv.cuponera.modelo.ClienteRegistroModel;
+import www.sv.cuponera.utils.cesarCipher;
 
 /**
  * Servlet implementation class UsuarioController
@@ -51,8 +52,52 @@ public class UsuarioController extends HttpServlet {
 			case "passV": 
 				passVerification(request, response); 
 			break; 
+			case "passCH":
+				passChange(request, response); 
+				break; 
+			case "passVer":
+				obtenerPass(request,response); 
+				break; 
 		}
 	}
+	private void obtenerPass(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try (PrintWriter out = response.getWriter()) {
+			ClienteRegistroModel model = new ClienteRegistroModel(); 
+			String pass = request.getParameter("pass"); 
+			String codigo = request.getParameter("codigo"); 
+			String result;
+			result = model.getPassword(codigo); 
+			if(result.equals( cesarCipher.cipher(pass))) {
+				out.print("pass correcta");
+			}else {
+				out.print("pass incorrecta"); 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+
+	private void passChange(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+		try (PrintWriter out = response.getWriter()) {
+			ClienteRegistroModel model = new ClienteRegistroModel(); 
+			String pass = request.getParameter("pass"); 
+			String codigo = request.getParameter("codigo"); 
+			pass = cesarCipher.cipher(pass); 
+			int result;
+			result = model.setPasstoNew(codigo, pass); 
+			if(result>0) {
+				out.print("actualizado");
+			}else {
+				out.print("pass incorrecta"); 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+
 	public void passVerification(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		try (PrintWriter out = response.getWriter()) {
 			ClienteRegistroModel model = new ClienteRegistroModel(); 
@@ -62,7 +107,7 @@ public class UsuarioController extends HttpServlet {
 			if(result>0) {
 				HttpSession ss = request.getSession(); 
 				ss.setAttribute("passinit", null);
-				out.print("Se ha confirmado el código");
+				out.print("Se ha confirmado el codigo");
 			}else {
 				out.print("No se ha podido confirmar la cuenta, vuelve a intentarlo"); 
 			}

@@ -58,7 +58,7 @@ public class ClienteRegistroController extends HttpServlet {
             usuarioBeans.setApellido(request.getParameter("apellido"));
             usuarioBeans.setNombre(request.getParameter("name"));
             usuarioBeans.seteMail(request.getParameter("email"));
-            usuarioBeans.setIdEmpresa("NUL100");usuarioBeans.setIdRol("4");
+            usuarioBeans.setIdEmpresa("NUL100");usuarioBeans.setIdRol("3");
             String passEncrypt= request.getParameter("password");
             String passEncrypt2= request.getParameter("password2");
             usuarioBeans.setUsername(request.getParameter("username"));

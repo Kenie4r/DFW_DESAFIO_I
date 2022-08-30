@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import www.sv.cuponera.beans.UsuarioBeans;
+import www.sv.cuponera.utils.cesarCipher;
 
 public class ClienteRegistroModel extends Conection{
     public int insertarCliente(UsuarioBeans usuario) throws SQLException{
@@ -17,7 +18,7 @@ public class ClienteRegistroModel extends Conection{
             st.setString(1,usuario.getUsername());
             st.setString(2,usuario.getNombre());
             st.setString(3,usuario.getApellido());
-            st.setString(4,usuario.getPassword());
+            st.setString(4,cesarCipher.cipher((usuario.getPassword())));
             st.setString(5,usuario.geteMail());
             st.setString(6,usuario.getIdRol());
             st.setString(7,usuario.getIdEmpresa());
@@ -32,14 +33,14 @@ public class ClienteRegistroModel extends Conection{
             return 0;
         }
     }
-    public boolean verificarLogin(UsuarioBeans usuarioBeans) throws SQLException{
+	public boolean verificarLogin(UsuarioBeans usuarioBeans) throws SQLException{
         ArrayList info= new ArrayList<>();
         boolean existe=false;
         String sql="SELECT COUNT(*) FROM usuarios WHERE Email=? AND Pass=?";
         this.conectar();
         st=conexion.prepareStatement(sql);
         st.setString(1,usuarioBeans.geteMail());
-        st.setString(2,usuarioBeans.getPassword());
+        st.setString(2,cesarCipher.cipher(usuarioBeans.getPassword()));
         rs= st.executeQuery();
         if (rs.next()){
             existe=true;
@@ -123,7 +124,7 @@ public class ClienteRegistroModel extends Conection{
         this.conectar();
         st=conexion.prepareStatement(sql);
         st.setString(1,usuarioBeans.geteMail());
-        st.setString(2,usuarioBeans.getPassword());
+        st.setString(2,cesarCipher.cipher(usuarioBeans.getPassword()));
         rs= st.executeQuery();
         if (rs.next()){
             existe=true;
@@ -153,5 +154,31 @@ public class ClienteRegistroModel extends Conection{
 	        st.setString(1,codigo);
 	        result = st.executeUpdate(); 
 	        return result; 
+	}
+	public String getPassword(String codigo) throws SQLException {
+		String sql ="SELECT Pass FROM usuarios WHERE idUsuario = ?"; 
+		this.conectar();
+		String pass=""; 
+		st = conexion.prepareStatement(sql); 
+		st.setString(1, codigo);
+		rs = st.executeQuery(); 
+		while(rs.next()) {
+			pass= rs.getString("Pass");
+			this.desconectar();
+			return pass; 
+		}
+		this.desconectar();
+		return pass; 
+	}
+	public int setPasstoNew(String codigo, String pass) throws SQLException {
+	 	String sql="UPDATE usuarios SET Pass = ? WHERE idUsuario = ?";
+        this.conectar();
+        int result = 0; 
+        pass = cesarCipher.cipher(pass); 
+        st=conexion.prepareStatement(sql);
+        st.setString(1, pass);
+        st.setString(2,codigo);
+        result = st.executeUpdate(); 
+        return result; 
 	}
 }

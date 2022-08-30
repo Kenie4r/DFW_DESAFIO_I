@@ -10,24 +10,28 @@
 		int rol = Integer.parseInt((String)session.getAttribute("idRol")); 
 		
 		 int[] casos = {
-                    1, -1 , -1, -1, -1, -1, -1, -1, -1
+                    1, -1 , -1, -1, -1, -1, -1, -1, -1, -1 , -1
             }; 
 		String url = "http://localhost:8080/LaCuponera/"; 
             String[] titulos = {
                     "Inicio" , "Mis ofertas", "Empresas","Usuarios de empresa", "Ofertas",
-                    "Mis compras", "Validar ofertas", "Busqueda de Cupones", "Busqueda de Ofertas"
+                    "Mis compras", "Validar ofertas", "Busqueda de Cupones", "Busqueda de Ofertas","Usuarios", 
+                    "Rubros"
 
             };
             String[] Links = {
                     url + "/inicio.jsp",  url +"/ofertas/misOfertas.jsp",
                     url +"/empresas/index.jsp",   url +"/empresas/UsuariosEmpresa.jsp",
                     url +"/ofertas/index.jsp",   url +"/compras/misCompras.jsp",
-                    url +"/ofertas/index.jsp",   url +"/cupones/cupones",  url + "/ofertas"
+                    url +"/ofertas/index.jsp",   url +"/cupones/cupones",  url + "/ofertas", 
+                    url+ "/usuarios.do", url+"/rubros.do?op=listar"
             };
             switch (rol){
         	case 1: 
         		casos[2] = 1; 
         		casos[4] = 1; 
+        		casos[9] = 1; 
+        		casos[10] = 1; 
         	break ;
         	case 2: 
         		casos[1] = 1; 
@@ -144,8 +148,9 @@ if(session.getAttribute("passinit")!=null){
 				}, 
 				closeOnConfirm: 'false',
 				allowEscapeKey: false,
-				allowOutsideClick: false
-
+				allowOutsideClick: false,
+				showDenyButton: true,
+				denyButtonText: 'Cerrar sesión'
 			}).then((result)=>{
 				if(result.isConfirmed){
 					if($("#swal2-input").val() == $("#userToken").val()){
@@ -153,18 +158,39 @@ if(session.getAttribute("passinit")!=null){
 							"op": "passV",
 							"codigo": $("#userID").val() 
 						}, function(result){
-							Swal.fire(result)
+							if(result=="Se ha confirmado el codigo"){
+								Swal.fire({
+									title: '¡Completado!',
+									icon: 'success', 
+									text: 'Se completo la verificación de cuenta, ¡Ya puedes usar tu cuenta de manera completa!', 
+									confirmButtonText: 'Aceptar'
+								})
+
+							}else{
+								Swal.fire({
+									title: 'Error',
+									text: 'No se ha podido comprobar la clave, vuelve a intentarlo luego', 
+									allowEscapeKey: false,
+									allowOutsideClick: false,
+									icon: 'error'
+								}).then((result)=>{
+									window.location.reload(); 
+								})
+							}
 						})
 					}else{
 						Swal.fire({
 							title: 'Error',
-							text: 'Clave incorrtecta vuelve a intentarlo', 
+							text: 'No se ha podido comprobar la clave, vuelve a intentarlo luego', 
 							allowEscapeKey: false,
-							allowOutsideClick: false
+							allowOutsideClick: false,
+							icon: 'error'
 						}).then((result)=>{
 							window.location.reload(); 
 						})
 					}
+				}else{
+					window.location.href = 'http://localhost:8080/LaCuponera/ClienteRegistroController?op=logout'
 				}
 			})
 		</script>
