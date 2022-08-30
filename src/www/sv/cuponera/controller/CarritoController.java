@@ -78,7 +78,7 @@ protected void obtener(HttpServletRequest request, HttpServletResponse response)
 
 }
 protected void listar(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-	String codes = request.getParameter("ofertas"); 	
+	String codes = (request.getParameter("ofertas")!=null)?request.getParameter("ofertas"):""; 	
 	OfertaModel ofertas = new OfertaModel(); 
 	try {
 		List<OfertaBean> lista = new ArrayList<>();

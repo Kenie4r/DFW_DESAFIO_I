@@ -7,6 +7,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
+<c:set var="initRol" scope="session" value="${pageContext.session.getAttribute('username') }" />
+<c:if test="${empty initRol}">
+		<c:redirect url="${pageContext.request.contextPath}/.."></c:redirect>
+</c:if>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

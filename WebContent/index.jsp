@@ -2,6 +2,10 @@
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<c:set var="initRol" scope="session" value="${contextPage.session.getAttribute('idRol') }" />
+<c:if test="${initRol != null}">
+	<<c:redirect url="${pageContext.request.contextPath}/../inicio.jsp"></c:redirect>
+</c:if>
 <html>
 <head>
 <meta charset="ISO-8859-1">

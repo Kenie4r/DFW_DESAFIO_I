@@ -1,6 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
+
+<c:set var="initRol" scope="session" value="${pageContext.session.getAttribute('username') }" />
+<c:if test="${empty initRol}">
+		<c:redirect url="${pageContext.request.contextPath}/.."></c:redirect>
+</c:if>
 <html>
 <head>
     <title>Inicio La Cuponera</title>
@@ -15,10 +20,10 @@
 			<jsp:include page="/menu.jsp"/>
 	</nav>
 	<section class=" bg-white" style="height:95vh;">
-		<div class="max-w-7xl px-5 py-12 flex flex-col space-y-5 w-full h-full items-center justify-center mx-auto">
-			<div class="flex h-full w-full  rounded-md shadow-md	">
+		<div class="max-w-7xl px-5 py-12 flex flex-col space-y-5 w-full h-full items-center justify-center mx-auto" >
+			<div class="flex h-full w-full  rounded-md shadow-md	" >
 			
-				<div class="w-full  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+				<div class="w-full  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700" >
 				    <div class="flex flex-col w-full justify-end px-4 pt-4">
 				        <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5 max-w-min" type="button">
 				            <span class="sr-only">Ajustes</span>
@@ -42,7 +47,7 @@
 				        <span class="text-sm text-gray-500 dark:text-gray-400">${pageContext.session.getAttribute("username") }</span>
 				        <div class="flex mt-4 space-x-3 md:mt-6">
 				            <a href="#" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Toda mi información</a>
-				            <a href="#" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Cambiar contraseña</a>
+				            <a href="#" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700" id='btn_passch'>Cambiar contraseña</a>
 				        </div>
 				    </div>
 				</div>
@@ -81,5 +86,8 @@
 			</div>
 		</div>
 	</section> 
+	
+	
+	<script type="text/javascript" src="Resources/scripts/user_control.js"></script>
 </body>
 </html>
