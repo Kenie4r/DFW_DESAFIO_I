@@ -83,12 +83,13 @@ protected void listar(HttpServletRequest request, HttpServletResponse response)t
 	try {
 		List<OfertaBean> lista = new ArrayList<>();
 
-		String[] codesSplit = codes.split(","); 
-		for(String codigo : codesSplit) {
-	
-			lista.add(ofertas.OfertaCarrito(codigo)); 
-		}
+		if(codes.length()!=0) {
+			String[] codesSplit = codes.split(","); 
+			for(String codigo : codesSplit) {
 		
+				lista.add(ofertas.OfertaCarrito(codigo)); 
+			}
+		}
 		System.out.print(lista.size());
 		request.setAttribute("componentes", lista);
 		request.getRequestDispatcher("Carrito/index.jsp").forward(request, response);

@@ -7,19 +7,19 @@ document.getElementById("ofertas").addEventListener("click", (e)=>{
         let added = false; 
        // let localStorageCart = window.localStorage();  
         if(localStorage.getItem("carritoCupones")===null){
-            let jsodCompra = {'producto1' : idCompra}
+        	let aName = "producto"+idCompra; 
+            let jsodCompra = {aName: idCompra}
             localStorage.setItem("carritoCupones", JSON.stringify(jsodCompra))
         }else{
             let c = 1; 
             let jsodCompra = JSON.parse(localStorage.getItem("carritoCupones")); 
             for(const item in jsodCompra){
-                c++; 
                 if(jsodCompra[item] == idCompra){
                     added = true; 
                 }
             }
             if(!added){
-                jsodCompra["producto"+c] = idCompra; 
+                jsodCompra["producto"+idCompra] = idCompra; 
             }
             localStorage.setItem("carritoCupones", JSON.stringify(jsodCompra))
 

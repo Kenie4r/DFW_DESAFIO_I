@@ -135,6 +135,7 @@ public class ClienteRegistroModel extends Conection{
             info.setIdEmpresa(rs.getString("Empresa_IdEmpresa"));
             info.setDUI(rs.getString("DUI"));
             info.setPassInit(rs.getString("passinit"));
+            System.out.print(info.getPassInit());
             info.setPassword("");
             info.seteMail(rs.getString("Email"));
             return info;
@@ -142,5 +143,15 @@ public class ClienteRegistroModel extends Conection{
             existe=false;
             return null;
         }
+	}
+	
+	public int setPassInitToVerify(String codigo) throws SQLException {
+		 	String sql="UPDATE usuarios SET passinit = NULL WHERE idUsuario = ?";
+	        this.conectar();
+	        int result = 0; 
+	        st=conexion.prepareStatement(sql);
+	        st.setString(1,codigo);
+	        result = st.executeUpdate(); 
+	        return result; 
 	}
 }

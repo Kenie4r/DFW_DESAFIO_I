@@ -30,9 +30,17 @@ public class ClienteRegistroController extends HttpServlet {
             case "login":
                 login(request,response);
                 break;
+            case "logout":
+            	logout(request,response);
+            	break; 
         }
     }
-    @Override
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+		request.getSession().invalidate();
+		response.sendRedirect("/LaCuponera");
+	}
+	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request,response);
     }

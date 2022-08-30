@@ -39,7 +39,8 @@
         		break; 
         }
 
-%>
+            
+          %>
 	
 <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
   <div class="container flex flex-wrap justify-between items-center mx-auto">
@@ -48,10 +49,12 @@
       <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">La Cuponera</span>
   </a>
   <input type='hidden' id='userRol' name='rolUser' value='<%=session.getAttribute("idRol")%>'>
+    <input type='hidden' id='userID' name='user' value='<%=session.getAttribute("idUsuario")%>'>
+    <input type='hidden' id='userToken' value='<%=session.getAttribute("passinit")%>'>
   <div class="flex items-center md:order-2">
       <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <span class="sr-only">Abrir menú</span>
-        <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
+        <img class="w-8 h-8 rounded-full" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="user photo">
       </button>
       <!-- Dropdown menu -->
       <div class="z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(585px, 82px);">
@@ -67,7 +70,7 @@
             <a href="${pageContext.request.contextPath}/inicio.jsp" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mi perfil</a>
           </li>
           <li>
-            <a href="logout" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Salir</a>
+            <a href="${pageContext.request.contextPath}/ClienteRegistroController?op=logout" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Salir</a>
           </li>
         </ul>
       </div>
@@ -123,6 +126,51 @@
 
 </script>
 <%
+
+if(session.getAttribute("passinit")!=null){
+%>
+		<script>
+		
+		
+		Swal.fire({
+				title: 'Código de verificación', 
+				input: 'text', 
+				icon: 'info', 
+				inputLabel: 'Ingrese el código de verificación (enviado a tu correo)',
+				inputValidator: (value)=>{
+					if(value.length>5 || !value){
+						return 'Ingrese el código enviado'
+					}
+				}, 
+				closeOnConfirm: 'false',
+				allowEscapeKey: false,
+				allowOutsideClick: false
+
+			}).then((result)=>{
+				if(result.isConfirmed){
+					if($("#swal2-input").val() == $("#userToken").val()){
+						$.post("http://localhost:8080/LaCuponera/usuario", {
+							"op": "passV",
+							"codigo": $("#userID").val() 
+						}, function(result){
+							Swal.fire(result)
+						})
+					}else{
+						Swal.fire({
+							title: 'Error',
+							text: 'Clave incorrtecta vuelve a intentarlo', 
+							allowEscapeKey: false,
+							allowOutsideClick: false
+						}).then((result)=>{
+							window.location.reload(); 
+						})
+					}
+				}
+			})
+		</script>
+<%
+           }
+
 	
 	
 	
