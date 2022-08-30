@@ -25,6 +25,7 @@ document.getElementById("btn_passch").addEventListener("click", (e)=>{
 						
 					}).then((result)=>{
 						if(result.isConfirmed){
+							console.log($('#newpass').val())
 							if($("#newpass").val() == $("#passconfirm").val()){
 								$.post('http://localhost:8080/LaCuponera/usuario', {
 									'op': 'passCH', 

@@ -174,7 +174,6 @@ public class ClienteRegistroModel extends Conection{
 	 	String sql="UPDATE usuarios SET Pass = ? WHERE idUsuario = ?";
         this.conectar();
         int result = 0; 
-        pass = cesarCipher.cipher(pass); 
         st=conexion.prepareStatement(sql);
         st.setString(1, pass);
         st.setString(2,codigo);
