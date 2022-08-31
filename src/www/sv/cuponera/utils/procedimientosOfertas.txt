@@ -1,0 +1,29 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarOferta`(IN `nombre` VARCHAR(30), IN `descripcion` VARCHAR(100), IN `precioRe` FLOAT, IN `precioOf` FLOAT, IN `inicio` VARCHAR(10), IN `fin` VARCHAR(10), IN `fechaLim` VARCHAR(10), IN `cupones` INT, IN `estado` VARCHAR(30), IN `idEmp` VARCHAR(6))
+INSERT INTO oferta(oferta.NombreOferta, oferta.Descripicon, oferta.PrecioRegular, oferta.PrecioOfertado, oferta.inicio, oferta.Fin, oferta.fechaLimite, oferta.limite, oferta.Estado, oferta.Empresa_IdEmpresa) VALUES(nombre, descripcion, precioRe, precioOf, inicio, fin, fechaLim, cupones, estado, idEmp)$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerOferta`(IN `id` INT)
+SELECT * FROM oferta INNER JOIN empresa ON oferta.Empresa_IdEmpresa = empresa.IdEmpresa WHERE oferta.idOferta = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listarOfertas`()
+SELECT * FROM oferta INNER JOIN empresa ON oferta.Empresa_IdEmpresa = empresa.IdEmpresa$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarOferta`(IN `id` INT)
+DELETE FROM oferta WHERE oferta.idOferta = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modificarOferta`(IN `id` INT, IN `nombre` VARCHAR(30), IN `descripcion` VARCHAR(100), IN `precioRe` FLOAT, IN `precioOf` FLOAT, IN `inicio` VARCHAR(10), IN `fin` VARCHAR(10), IN `fechaLim` VARCHAR(10), IN `cupones` INT, IN `estado` VARCHAR(30), IN `idEmp` VARCHAR(6))
+UPDATE oferta SET oferta.NombreOferta = nombre, oferta.Descripicon = descripcion, oferta.PrecioRegular = precioRe, oferta.PrecioOfertado = precioOf, oferta.inicio = inicio, oferta.Fin = fin, oferta.fechaLimite = fechaLim, oferta.limite = cupones, oferta.Estado = estado, oferta.Empresa_IdEmpresa = idEmp WHERE oferta.idOferta = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `aprobacion_rechazoOferta`(IN `id` INT, IN `observaciones` VARCHAR(100), IN `estado` VARCHAR(30))
+UPDATE oferta SET oferta.observaciones = observaciones, oferta.Estado = estado WHERE oferta.idOferta = id$$
+DELIMITER ;
