@@ -54,15 +54,15 @@
 						            <div class="flex flex-col justify-between ml-4 flex-grow"> 
 						              <span class="font-bold text-sm">${oferta.getNombreOferta()}</span> 
 						              <span class="text-red-500 text-xs">${oferta.getDescripcion()}</span> 
-						              <a href="#" id='eliminar_${oferta.getIdOferta()}'class="font-semibold hover:text-red-500 text-gray-500 text-xs">Eliminar</a> 
+						              <!-- <a href="#" id='eliminar_${oferta.getIdOferta()}'class="font-semibold hover:text-red-500 text-gray-500 text-xs">Eliminar</a>--> 
 						            </div> 
 						          </div> 
 						          <div class="flex justify-center w-1/5"> 
 						            <img src='https://www.svgrepo.com/show/25409/minus-sign-of-a-line-in-horizontal-position.svg ' id='minus_${oferta.getIdOferta()}' class=" object-contain	 cursor-pointer	 fill-current text-gray-600 w-4 mx-3"/> 
-									<input type='hidden' id='id_${oferta.getIdOferta()}' value='${oferta.getIdOferta()}'/> 
+									<input type='hidden' id='id_${oferta.getIdOferta()}' value='${oferta.getIdOferta()}' class='ofertasId'/> 
 									<input type='hidden'  id='precio_${oferta.getIdOferta()}' value='${oferta.getPrecioOfertado()}'/> 
 									<input type='hidden' id='total_${oferta.getIdOferta()}' value='${oferta.getPrecioOfertado()}' class='totales'>
-						            <input id='cantidad_${oferta.getIdOferta()}'class="mx-2 border text-center w-10" type="text" value="1" readonly>  
+						            <input id='cantidad_${oferta.getIdOferta()}'class="mx-2 border text-center w-10 cantidades" type="text" value="1" readonly>  
 						            <img src='https://www.freeiconspng.com/thumbs/plus-icon/plus-icon-black-2.png'  id='plus_${oferta.getIdOferta()}'  class=" object-contain	cursor-pointer	fill-current text-gray-600 w-4 mx-3"/>  
 						          </div> 
 						          <span class="text-center w-1/5 font-semibold text-sm">${oferta.getPrecioOfertado()}</span> 
@@ -83,7 +83,7 @@
 
         
 
-        <a href="#" class="flex font-semibold text-indigo-600 text-sm mt-10">
+        <a href="${pageContext.request.contextPath}/ofertas" class="flex font-semibold text-indigo-600 text-sm mt-10">
       
           <svg class="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z"/></svg>
           Continuar comprando

@@ -21,8 +21,13 @@ import com.google.gson.Gson;
 
 import www.sv.cuponera.beans.CuponBean;
 import www.sv.cuponera.beans.OfertaBean;
+import www.sv.cuponera.beans.UsuarioBeans;
+import www.sv.cuponera.modelo.ClienteRegistroModel;
 import www.sv.cuponera.modelo.Conection;
+import www.sv.cuponera.modelo.CuponModel;
 import www.sv.cuponera.modelo.OfertaModel;
+import www.sv.cuponera.modelo.randomCode;
+import www.sv.cuponera.utils.Email;
 
 /**
  * Servlet implementation class CarritoController
@@ -63,12 +68,86 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 
 protected void transaction(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
     response.setContentType("text/html;charset=UTF-8");
-    String name=request.getParameter("cardName");
-    String numeroCard=request.getParameter("cardNum");
-    String expDate=request.getParameter("expDate");
-    String Cvv=request.getParameter("Cvv");
-    Conection conection=new Conection();
+   try(PrintWriter out =  response.getWriter()){
+	    ClienteRegistroModel cmodel=new ClienteRegistroModel();
 
+	   UsuarioBeans usuario =  cmodel.getUsuarioCode(request.getParameter("user")); 
+	   String[] ofertasArray = request.getParameter("ofertas").split(",");
+	   String[] cantidadesArray = request.getParameter("cantidades").split(","); 
+	   if(ofertasArray.length>0) {
+		   OfertaModel ofertas = new OfertaModel(); 
+		   int hechas = 0; 
+		   int necesario = 0; 
+		   List<OfertaBean> listaOf = new ArrayList<>(); 
+		   for(String oferta : ofertasArray) {
+			   int compradas =0; 
+			   OfertaBean of = ofertas.obtenerOfertayEmpresa(Integer.parseInt(oferta)); //obtener datos para poder insertar cupones
+			   OfertaBean ofr = new OfertaBean(); 
+			   
+			   ofr.setNombreOferta(of.getNombreOferta());
+			   int idx = java.util.Arrays.asList(ofertasArray).indexOf(oferta); 
+
+			   if( Integer.parseInt(cantidadesArray[idx])<=of.getLimite()) {
+				   for(int index = 0; index < Integer.parseInt(cantidadesArray[idx]) ; index++ ) {
+					   
+					   CuponBean cupon = new CuponBean(); 
+					   String codigo = of.getNombreEmpresa() + randomCode.getRandomNumbers(7);  
+					   
+					   cupon.setUsuarioID(Integer.parseInt(request.getParameter("user")));
+					   cupon.setOfertaID(Integer.parseInt(oferta));
+					   cupon.setEstado("ACTIVO");
+					   cupon.setFechaUso("NULL");
+					   cupon.setCodigoCupon(codigo);
+					   
+					   
+					  
+					   CuponModel model = new CuponModel(); 
+					   int rs = model.newCuponeForUser(cupon); 
+					   necesario++; 
+					   if(rs>0) {
+						   compradas++; 
+						   hechas++; 
+					   }
+					   
+				   }
+			   }
+			   
+			   ofr.setLimite(compradas);
+			   if(ofr.getLimite()>0) {
+				   listaOf.add(ofr); 
+
+			   }
+			   
+			   
+			   
+			  
+		   }
+		   if(necesario>0) {
+			   Email.resumenCompra(usuario.geteMail(), listaOf, usuario.getUsername()); 
+		   }
+			   if(necesario==hechas) {
+				   out.print("exito"); 
+			   }else if(necesario>hechas && hechas!=0) {
+				   out.print("exito2"); 
+
+			     
+		   }
+		  else {
+			   out.print("fracaso"); 
+
+		   }
+		   
+		   
+	   }
+	   
+	   
+   } catch (NumberFormatException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 
 }
 protected void obtener(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{

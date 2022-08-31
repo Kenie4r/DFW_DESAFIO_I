@@ -34,6 +34,9 @@ public class Conection {
             Logger.getLogger(Conection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Conection.class.getName()).log(Level.SEVERE, null, ex);
+        }catch(Exception ex) {
+            Logger.getLogger(Conection.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
     public void desconectar() throws SQLException {
@@ -44,6 +47,9 @@ public class Conection {
         }
         if (st != null) {
             st.close();
+        }
+        if(conexion!=null) {
+        	conexion.close();
         }
 
     }

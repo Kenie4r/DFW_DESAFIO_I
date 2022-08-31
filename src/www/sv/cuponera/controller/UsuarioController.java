@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import www.sv.cuponera.modelo.ClienteRegistroModel;
+import www.sv.cuponera.modelo.randomCode;
+import www.sv.cuponera.utils.Email;
 import www.sv.cuponera.utils.cesarCipher;
 
 /**
@@ -58,8 +60,33 @@ public class UsuarioController extends HttpServlet {
 			case "passVer":
 				obtenerPass(request,response); 
 				break; 
+			case "recoverPass":
+				recoverPass(request, response); 
+			break; 
 		}
 	}
+	
+	private void recoverPass(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		try (PrintWriter out = response.getWriter()){
+			ClienteRegistroModel model = new ClienteRegistroModel(); 
+			String pass = randomCode.getRandomString(7); 
+			String temp = pass; 
+			pass = cesarCipher.cipher(pass); 
+			String email = request.getParameter("email"); 
+			int result = model.recoverPass(email, pass); 
+			if(result>0) {
+				Email.recuperarPass(email , temp); 
+				out.print("actualizado");
+			}else {
+				out.print("no se actualizo"); 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private void obtenerPass(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try (PrintWriter out = response.getWriter()) {
 			ClienteRegistroModel model = new ClienteRegistroModel(); 

@@ -1,33 +1,37 @@
 package www.sv.cuponera.beans;
 
 public class CuponBean {
-    String UsuarioID,OfertaID_CodigoCupon,FechaCompra,Estado,FechaUso,Cantidad;
+    String FechaCompra,Estado,FechaUso, CodigoCupon; 
+    int UsuarioID,OfertaID; 
+ 
 
-    public String getUsuarioID() {
-        return UsuarioID;
-    }
+    public int getUsuarioID() {
+		return UsuarioID;
+	}
 
-    public String getCantidad() {
-        return Cantidad;
-    }
+	public void setUsuarioID(int usuarioID) {
+		UsuarioID = usuarioID;
+	}
 
-    public void setCantidad(String cantidad) {
-        Cantidad = cantidad;
-    }
 
-    public void setUsuarioID(String usuarioID) {
-        UsuarioID = usuarioID;
-    }
 
-    public String getOfertaID_CodigoCupon() {
-        return OfertaID_CodigoCupon;
-    }
+	public String getCodigoCupon() {
+		return CodigoCupon;
+	}
 
-    public void setOfertaID_CodigoCupon(String ofertaID_CodigoCupon) {
-        OfertaID_CodigoCupon = ofertaID_CodigoCupon;
-    }
+	public void setCodigoCupon(String codigoCupon) {
+		CodigoCupon = codigoCupon;
+	}
 
-    public String getFechaCompra() {
+	public int getOfertaID() {
+		return OfertaID;
+	}
+
+	public void setOfertaID(int ofertaID) {
+		OfertaID = ofertaID;
+	}
+
+	public String getFechaCompra() {
         return FechaCompra;
     }
 

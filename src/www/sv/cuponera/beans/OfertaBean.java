@@ -10,6 +10,19 @@ public class OfertaBean {
 	private String fechaFin; 
 	private String fechaLimite; 
 	private int Limite;
+	private String NombreEmpresa; 
+	public int getLimite() {
+		return Limite;
+	}
+	public void setLimite(int limite) {
+		Limite = limite;
+	}
+	public String getNombreEmpresa() {
+		return NombreEmpresa;
+	}
+	public void setNombreEmpresa(String nombreEmpresa) {
+		NombreEmpresa = nombreEmpresa;
+	}
 	public OfertaBean(int idOferta, String nombreOferta, String descripcion, float precioRegular, float precioOfertado,
 			String inicio, String fechaFin, String fechaLimite, int limite) {
 		this.idOferta = idOferta;

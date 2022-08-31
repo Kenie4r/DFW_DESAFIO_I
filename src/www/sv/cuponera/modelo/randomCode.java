@@ -26,5 +26,30 @@ public class randomCode {
 
         return builder.toString(); 
     } 
+	
+	
+	public static String getRandomNumbers(int i) 
+    { 
+        String theAlphaNumericS;
+        StringBuilder builder;
+        
+        theAlphaNumericS = "0123456789"; 
+
+        //create the StringBuffer
+        builder = new StringBuilder(i); 
+
+        for (int m = 0; m < i; m++) { 
+
+            // generate numeric
+            int myindex 
+                = (int)(theAlphaNumericS.length() 
+                        * Math.random()); 
+
+            // add the characters
+            builder.append(myindex); 
+        } 
+
+        return builder.toString(); 
+    } 
 
 }

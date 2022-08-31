@@ -43,7 +43,7 @@ public class OfertaModel extends Conection {
 		try {
 			List<OfertaBean> lista = new ArrayList<>(); 
 			this.conectar(); 
-			String sql = "SELECT * FROM oferta WHERE Estado = 'ACEPTADO'"; 
+			String sql = "SELECT * FROM `oferta` WHERE inicio<= NOW() AND fin>=NOW() AND Estado = 'ACEPTADO' ORDER BY idOferta DESC"; 
 			st = conexion.prepareCall(sql); 
 			rs = st.executeQuery(); 
 			while ( rs.next()) {
@@ -58,6 +58,38 @@ public class OfertaModel extends Conection {
 				oferta.setFechaFin(rs.getString("Fin"));
 				oferta.setFechaLimite(rs.getString("fechaLimite"));
 				lista.add(oferta); 
+			}
+			this.desconectar();
+			return lista;
+			
+		}catch( SQLException ex) {
+			this.desconectar();
+			Logger.getLogger(OfertaModel.class.getName()).log(Level.SEVERE, null, ex );
+			return null; 
+		}
+	}
+	
+	public List<OfertaBean> listarOfertasClientesByRubro(int rubro) throws SQLException{
+		try {
+			List<OfertaBean> lista = new ArrayList<>(); 
+			this.conectar(); 
+			String sql = "SELECT * FROM `oferta` WHERE inicio<= NOW() AND fin>=NOW() AND Estado = 'ACEPTADO' and Empresa_IdEmpresa IN ((SELECT idEmpresa FROM empresa WHERE Rubros_IdRubros = ?)) ORDER BY idOferta DESC"; 
+			st = conexion.prepareCall(sql); 
+			st.setInt(1, rubro);
+			rs = st.executeQuery(); 
+			while ( rs.next()) {
+				OfertaBean oferta = new OfertaBean(); 
+			
+				oferta.setIdOferta(rs.getInt("idOferta"));
+				oferta.setNombreOferta(rs.getString("NombreOferta"));
+				oferta.setDescripcion(rs.getString("Descripicon"));
+				oferta.setPrecioRegular(rs.getFloat("PrecioRegular"));
+				oferta.setPrecioOfertado(rs.getFloat("PrecioOfertado")); 
+				oferta.setInicio(rs.getString("inicio"));
+				oferta.setFechaFin(rs.getString("Fin"));
+				oferta.setFechaLimite(rs.getString("fechaLimite"));
+				lista.add(oferta); 
+
 			}
 			this.desconectar();
 			return lista;
@@ -89,6 +121,33 @@ public class OfertaModel extends Conection {
 				this.desconectar();
 
 				return oferta; 
+			}
+			this.desconectar();
+			return null;
+		}catch(SQLException ex) {
+			this.desconectar();
+			Logger.getLogger(OfertaModel.class.getName()).log(Level.SEVERE, null, ex );
+			return null; 
+		}
+	}
+	
+	
+	public OfertaBean obtenerOfertayEmpresa(int codigo) throws SQLException{
+		try {
+			this.conectar(); 
+			String sql = "SELECT * FROM oferta WHERE idOferta = ?"; 
+			st = conexion.prepareCall(sql);
+			st.setInt(1, codigo);
+			rs = st.executeQuery(); 
+			while ( rs.next()) {
+				OfertaBean of = new OfertaBean(); 
+				of.setIdOferta(rs.getInt("idOferta"));
+				of.setNombreOferta(rs.getString("NombreOferta"));
+				of.setLimite(rs.getInt("limite"));
+				of.setNombreEmpresa(rs.getString("Empresa_IdEmpresa"));
+				this.desconectar();
+
+				return of; 
 			}
 			this.desconectar();
 			return null;
@@ -133,7 +192,7 @@ public class OfertaModel extends Conection {
 		try {
 			this.conectar(); 
 
-			String sql = "SELECT * FROM oferta WHERE idOferta =  ?"; 
+			String sql = "SELECT * FROM oferta WHERE idOferta =  ? AND inicio<=NOW() AND fin>=NOW()"; 
 			st = conexion.prepareCall(sql);
 			st.setString(1, inOption);
 			rs = st.executeQuery(); 
