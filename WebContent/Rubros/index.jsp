@@ -1,9 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    
-<c:choose>
-<c:when test="${session.getAttribute(idRol) == null}">
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<c:set var="initRol" scope="session" value="${pageContext.session.getAttribute('idRol') }" />
+<c:if test="${empty initRol || initRol != 1 }">
+		<c:redirect url="${pageContext.request.contextPath}/.."></c:redirect>
+</c:if>
+
 <!DOCTYPE html>
 <html>
 
@@ -109,12 +111,6 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
 </div>
 </body>
 </html>
-</c:when>
-
-<c:when test="${session.getAttribute(idUsuario) != null}">
-  <c:redirect url = "/index.jsp"/>
-</c:when>
-</c:choose>
 
 <script>
   function eliminar(id){

@@ -4,6 +4,9 @@
 //3-compras de carrito
 
 
+	let hechas = 0, necesarias = 0; 
+
+
 
 
 $(document).ready(function(){
@@ -21,7 +24,7 @@ $(document).ready(function(){
 		
 	}else{
 		
-		//lectura de todas las cosas
+		//lectura de todas las ofertas
 		/*for(let key in ofertasSelect ){
 			$.post("http://localhost:8080/LaCuponera/ofertas", {
 				"op": "obtenerCarro", 
@@ -36,6 +39,105 @@ $(document).ready(function(){
 
 	totalOriginal();
 
+})
+
+document.getElementById("pay").addEventListener("click", (e)=>{
+
+	let inputs = document.getElementsByClassName("totales"); 
+	let inputsArray = Array.from(inputs); 
+	if(inputsArray.length == 0){
+		Swal.fire({
+			icon : 'error',
+			title: '¡Error!', 
+			text: 'No existen ofertas seleccionadas, selecciona al menos una para poder continuar', 
+		})
+	}else{
+		let ofertasID = document.getElementsByClassName("ofertasId");
+		ofertasID = Array.from(ofertasID); 
+		let cantidades = document.getElementsByClassName("cantidades"); 
+		cantidades = Array.from(cantidades); 
+		Swal.fire({
+			icon : 'question',
+			text: '¿Quieres realizar la compra?',
+			showCancelButton: true, 
+			confirmButtonText: 'Realizar compra', 
+			cancelButtonText: 'Cancelar compra'
+		}).then( (result)=>{
+			Swal.fire({
+                title: 'Trabanjando en ello',
+                text: 'Estamos realizando la compra de manera segura ;)',
+                allowOutsideClick: false,
+                showConfirmButton: false, 
+                willOpen: () => {
+                    Swal.showLoading()
+                },
+            });
+			if(result.isConfirmed){
+				let codigosOfertas = new Array()
+				let cantidaSA = new Array(); 
+				for(let oferta  in ofertasID){
+					codigosOfertas.push(ofertasID[oferta].value); 
+					cantidaSA.push(cantidades[oferta].value); 
+					/*for(let veces = 0; veces<cantidades[oferta].value; veces++){
+						//console.log(ofertasID[oferta].value)
+				
+							$.post("/LaCuponera/carrito?op=transation", {
+								"ofertas": ofertasID[oferta].value,
+								"user": $("#userID").val()
+							}, function(rs){
+								console.log(rs)
+								if(rs=="Exito"){
+									hechas++; 
+									console.log(hechas)
+
+								}
+							})
+						
+						
+					}*/
+					
+				}
+				
+				
+				$.post("/LaCuponera/carrito?op=transation", {
+					"ofertas": codigosOfertas.join(","),
+					"cantidades":  cantidaSA.join(","), 
+					"user": $("#userID").val()
+				}, function(rs){
+					if(rs=="exito"){
+						Swal.fire({
+							icon: 'success',
+							text: 'Se han realizado todas las compras, ya puedes ver todos tus cupones en el apartado de mis compras', 
+							showDenyButton: true,
+							confirmButtonText: 'ir a mis compras', 
+							denyButtonText: 'Seguir comprando'
+						})
+
+					}else if(rs == "exito2"){
+						Swal.fire({
+							icon: 'success',
+							text: 'Se han realizado las compras, algunas ofertas ya no pueden ser compradas debido a que se acabaron sus existencias', 
+							showDenyButton: true,
+							confirmButtonText: 'ir a mis compras', 
+							denyButtonText: 'Seguir comprando'
+						})
+					}else if(rs == "fracaso"){
+						Swal.fire({
+							icon: 'error',
+							text: 'No se ha podido realizar las compras, vuelve a intentrarlo más tarde', 
+							showDenyButton: true,
+							confirmButtonText: 'Volver a ofertas', 
+							denyButtonText: 'Ir a mis compras'
+						})
+					}
+				})
+				
+			}
+		})
+	}
+	
+	
+	
 })
 
 document.addEventListener("click", (e)=>{
@@ -127,36 +229,17 @@ function sizeOfObj (obj) {
 	}
 
 
+function resultSWal(){
 
-
-
-
-
-
-function ofertaMolde (nombre, codigo, empresaN, precio ){
-	return ` <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-          <div class="flex w-2/5"> <!-- product -->
-            <div class="w-20">
-              <img class="h-24" src="https://static.vecteezy.com/system/resources/previews/002/620/855/non_2x/big-sale-offer-discount-coupon-market-over-white-background-free-vector.jpg" alt="oferta">
-            </div>
-            <div class="flex flex-col justify-between ml-4 flex-grow">
-              <span class="font-bold text-sm">${nombre}</span>
-              <span class="text-red-500 text-xs">${empresaN}</span>
-              <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Eliminar</a>
-            </div>
-          </div>
-          <div class="flex justify-center w-1/5">
-            <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
-            </svg>
-			<input type='hidden' id='id_${codigo}' value='${codigo}'/>
-			<input type='hidden'  id='precio_${codigo}' value'${precio}'/> 
-            <input class="mx-2 border text-center w-8" type="text" value="1">
-
-            <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
-              <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
-            </svg>
-          </div>
-          <span class="text-center w-1/5 font-semibold text-sm">$ ${precio}</span>
-          <span class="text-center w-1/5 font-semibold text-sm">$ ${precio}</span>
-        </div>`; 
+	
 }
+
+function payMethod(){
+	
+	return 0; 
+}
+
+
+
+
+

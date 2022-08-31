@@ -18,6 +18,8 @@
 	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 	
 	<link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.2/dist/flowbite.min.css" />
+   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 
 	<title>Página principal - La Cuponera</title>
 </head>
@@ -31,6 +33,7 @@
       <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">La cuponera</span>
   </a>
   <div class="flex md:order-2">
+  	<button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" id='recover'>Recuperar contraseña</button>
       <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" class="link-info" data-bs-toggle="modal" data-bs-target="#login">Iniciar Sesión</button>
       <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
         <span class="sr-only">Menú</span>
@@ -173,6 +176,8 @@
   </div>
 </div>
     <script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
+    	<script type="text/javascript" src="Resources/scripts/user_recover.js"></script>
+    
     
 </body>
 </html>

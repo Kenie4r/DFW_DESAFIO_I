@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import www.sv.cuponera.beans.OfertaBean;
+import www.sv.cuponera.beans.RubrosBean;
 import www.sv.cuponera.modelo.OfertaModel;
+import www.sv.cuponera.modelo.RubrosModel;
 
 /**
  * Servlet implementation class OfertaController
@@ -60,13 +62,19 @@ public class OfertaController extends HttpServlet {
 	private void listar(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		try {
-			OfertaModel ofertaModel = new OfertaModel(); 
-			List<OfertaBean> lista = ofertaModel.listarOfertasClientes() ; 
-			if(lista.isEmpty()) {
-				request.setAttribute("error", "No se ha encontrado ofertas");
+			OfertaModel ofertaModel = new OfertaModel();
+			RubrosModel rubrosModel = new RubrosModel(); 
+			List<OfertaBean> lista; 
+			if(request.getParameter("rubro")!=null) {
+				lista = ofertaModel.listarOfertasClientesByRubro(Integer.parseInt(request.getParameter("rubro"))); 
 			}else {
-				request.setAttribute("Listaofertas", lista);
+				lista = ofertaModel.listarOfertasClientes() ;
 			}
+			List<RubrosBean> rubros =  rubrosModel.listarRubros(); 
+		
+				
+			request.setAttribute("Listaofertas", lista);
+			request.setAttribute("rubros", rubros);
 			request.getRequestDispatcher("Ofertas/listaOfertas.jsp").forward(request, response);
 
 		}catch(IOException | ServletException | SQLException ex) {

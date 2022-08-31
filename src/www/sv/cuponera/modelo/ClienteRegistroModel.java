@@ -146,6 +146,35 @@ public class ClienteRegistroModel extends Conection{
         }
 	}
 	
+	public UsuarioBeans getUsuarioCode(String codigo) throws SQLException {
+		UsuarioBeans info= new UsuarioBeans();
+        boolean existe=false;
+        String sql="SELECT * FROM usuarios WHERE idUsuario =?";
+        this.conectar();
+        st=conexion.prepareStatement(sql);
+        st.setString(1,codigo);
+        rs= st.executeQuery();
+        if (rs.next()){
+            existe=true;
+            info.setIdUsuario(rs.getString("idUsuario"));
+            info.setUsername(rs.getString("Username"));
+            info.setNombre(rs.getString("Nombre"));
+            info.setApellido(rs.getString("Apellidos"));
+            info.setIdRol(rs.getString("Roles_idRoles"));
+            info.setIdEmpresa(rs.getString("Empresa_IdEmpresa"));
+            info.setDUI(rs.getString("DUI"));
+            info.setPassInit(rs.getString("passinit"));
+            System.out.print(info.getPassInit());
+            info.setPassword("");
+            info.seteMail(rs.getString("Email"));
+            return info;
+        }else {
+            existe=false;
+            return null;
+        }
+	}
+	
+	
 	public int setPassInitToVerify(String codigo) throws SQLException {
 		 	String sql="UPDATE usuarios SET passinit = NULL WHERE idUsuario = ?";
 	        this.conectar();
@@ -177,6 +206,16 @@ public class ClienteRegistroModel extends Conection{
         st=conexion.prepareStatement(sql);
         st.setString(1, pass);
         st.setString(2,codigo);
+        result = st.executeUpdate(); 
+        return result; 
+	}
+	public int recoverPass(String email, String pass) throws SQLException {
+		String sql="UPDATE usuarios SET Pass = ? WHERE Email= ?";
+        this.conectar();
+        int result = 0; 
+        st=conexion.prepareStatement(sql);
+        st.setString(1, pass);
+        st.setString(2,email);
         result = st.executeUpdate(); 
         return result; 
 	}

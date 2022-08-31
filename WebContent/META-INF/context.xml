@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/InventarioLibro">
+<Context path="/LaCuponera">
     <Resource name="jdbc/mysql" auth="Container" type="javax.sql.DataSource"
-              maxActive="20" maxIdle="10" maxWait="5000"
+              maxActive="10" maxIdle="90" maxWait="50000"
               username="root" password="" driverClassName="com.mysql.jdbc.Driver"
               url="jdbc:mysql://localhost/desafio_java"/>
 </Context>

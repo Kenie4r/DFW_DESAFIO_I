@@ -61,15 +61,19 @@
         <img class="w-8 h-8 rounded-full" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="user photo">
       </button>
       <!-- Dropdown menu -->
-      <div class="z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(585px, 82px);">
+      <div class="z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 hidden" id="user-dropdown" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(585px, 82px);">
         <div class="py-3 px-4">
           <span class="block text-sm text-gray-900 dark:text-white"><%=session.getAttribute("username") %></span>
           <span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400"><%=session.getAttribute("email") %></span>
         </div>
         <ul class="py-1" aria-labelledby="user-menu-button">
-          <li>
-            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" id='cart_btn'>Mis carrito</a>
-          </li>
+<%		if(rol==3){ %>
+        	<li>
+           	 	<a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" id='cart_btn'>Mi carrito</a>
+         	</li>
+        
+<%} %>
+        
           <li>
             <a href="${pageContext.request.contextPath}/inicio.jsp" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mi perfil</a>
           </li>

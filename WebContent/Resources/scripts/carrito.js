@@ -7,8 +7,8 @@ document.getElementById("ofertas").addEventListener("click", (e)=>{
         let added = false; 
        // let localStorageCart = window.localStorage();  
         if(localStorage.getItem("carritoCupones")===null){
-        	let aName = "producto"+idCompra; 
-            let jsodCompra = {aName: idCompra}
+            let jsodCompra = {}
+            jsodCompra["producto"+idCompra] = idCompra
             localStorage.setItem("carritoCupones", JSON.stringify(jsodCompra))
         }else{
             let c = 1; 
