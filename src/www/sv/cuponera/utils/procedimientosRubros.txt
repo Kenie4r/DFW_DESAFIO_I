@@ -20,5 +20,5 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerRubro`(IN `id` INT)
-SELECT * FROM rubro WHERE rubros.IdRubros = id$$
+SELECT * FROM rubros WHERE rubros.IdRubros = id$$
 DELIMITER ;
