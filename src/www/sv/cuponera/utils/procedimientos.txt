@@ -17,3 +17,8 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `modificarRubro`(IN `id` INT(11), IN `nombre` VARCHAR(30), IN `descripcion` VARCHAR(100))
 UPDATE rubros r SET r.Nombre = nombre, r.Descripcion = descripcion WHERE r.IdRubros = id$$
 DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerRubro`(IN `id` INT)
+SELECT * FROM rubro WHERE rubros.IdRubros = id$$
+DELIMITER ;
