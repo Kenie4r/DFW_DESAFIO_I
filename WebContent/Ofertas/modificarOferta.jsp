@@ -1,10 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
     
-    <c:set var="idRol" value="2"> </c:set>
-<c:choose>
-<c:when test="${idRol == 2}">
+<c:set var="initRol" scope="session" value="${pageContext.session.getAttribute('idRol') }" />
+<c:if test="${empty initRol || initRol != 2 }">
+		<c:redirect url="${pageContext.request.contextPath}/.."></c:redirect>
+</c:if>
+
 <!DOCTYPE html>
 <html>
 
@@ -48,10 +50,10 @@
 </c:if>
 
 <div style="margin-left: 5vw; margin-right: 20vw; ">
-<h1 class="text-left" style="font-size: 35px"><b>Modificar informaci髇 de la oferta</b></h1>
+<h1 class="text-left" style="font-size: 35px"><b>Modificar informaci贸n de la oferta</b></h1>
 <br>
 <div class="p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
-  Complete toda la informaci髇 solicitada, los campos (*) son obligatorios.
+  Complete toda la informaci贸n solicitada, los campos (*) son obligatorios.
 </div>
 
 
@@ -70,7 +72,7 @@
 <br>
 
 <div class="flex">
-  <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"><span style="color: red">*</span>Descripci髇:</span>
+  <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"><span style="color: red">*</span>Descripci贸n:</span>
   <textarea  class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-
   blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="descripcion" rows="5" >${oferta.descripcion}</textarea>
 </div>
@@ -109,7 +111,7 @@
 
 <div class="grid md:grid-cols-2 md:gap-6">
 <div class="flex">
-  <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"><span style="color: red">*</span>fecha lim韙e para uso de cupones:</span>
+  <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"><span style="color: red">*</span>fecha lim铆te para uso de cupones:</span>
   <input class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-
   blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="date" name="fechaLim" value="${oferta.fechaLimite}" >
 </div>
@@ -123,7 +125,7 @@
 <br>
 
 <input type="submit" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 
-font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" value="Modificar informaci髇" style="cursor: pointer">
+font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" value="Modificar informaci贸n" style="cursor: pointer">
  <a class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg 
  text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" href="${pageContext.request.contextPath}/ofertas.do?op=listar">Cancelar</a>
 </form>
@@ -131,9 +133,3 @@ font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hove
 </div>
 </body>
 </html>
-</c:when>
-
-<c:when test="${idRol != 2}">
-  <c:redirect url = "/index.jsp"/>
-</c:when>
-</c:choose>

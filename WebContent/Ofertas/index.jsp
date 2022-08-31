@@ -1,10 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     
-     <c:set var="idRol" value="2"> </c:set>
-<c:choose>
-<c:when test="${idRol == 1 || idRol == 2}">
+<c:set var="initRol" scope="session" value="${pageContext.session.getAttribute('idRol') }" />
+<c:set var="initEmpresa" scope="session" value="${pageContext.session.getAttribute('idEmpresa') }" />
+<c:if test="${empty initRol || (initRol != 1 && initRol != 2)}">
+		<c:redirect url="${pageContext.request.contextPath}/.."></c:redirect>
+</c:if>
+
 <!DOCTYPE html>
 <html>
 
@@ -43,7 +45,7 @@ rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-7
  <div class="flex">
   <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">Nombre:</span>
   <input type="text" class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-
-  blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" Placeholder="Escribe aquí..." name="nombre">
+  blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" Placeholder="Escribe aquÃ­..." name="nombre">
 </div>
 <div class="flex">
   <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">Estado:</span>
@@ -74,9 +76,9 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
     <tr style="background-color: #ffd88e">
       <th scope="col" class="py-3 px-6 rounded-l-lg">ID</th>
       <th scope="col" class="py-3 px-6">Nombre</th>
-      <th scope="col" class="py-3 px-6">Descripción</th>
+      <th scope="col" class="py-3 px-6">DescripciÃ³n</th>
       <th scope="col" class="py-3 px-6">Cupones disponibles</th>
-      <c:if test="${idRol == 1}">
+      <c:if test="${initRol == 1}">
       <th scope="col" class="py-3 px-6">Empresa</th>
       </c:if>
        <th scope="col" class="py-3 px-6">Observaciones</th>
@@ -87,6 +89,7 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
   <tbody>
   <c:set var="cont" value="${0}"></c:set>
   
+  <c:if test="${initRol == 1}"><!-- ADMIN LA CUPONERA -->
    <c:forEach var="ofertas" items="${requestScope.listaOfertas}">
    
      <c:if test="${param.op == 'listar'}">
@@ -96,16 +99,16 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       <td class="py-4 px-6">${ofertas.nombre}</td>
       <td class="py-4 px-6">${ofertas.descripcion}</td>
       <td class="py-4 px-6">${ofertas.cupones}</td>
-      <c:if  test="${idRol == 1}">
+      <c:if  test="${initRol == 1}">
       <td class="py-4 px-6">${ofertas.empresa}</td>
       </c:if>
       <td class="py-4 px-6">${ofertas.observaciones}</td>
       <td class="py-4 px-6">${ofertas.estado}</td>
       <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/ofertas.do?op=revisar&id=${ofertas.idOferta}"><i class="fas fa-eye"  style="color: blue; cursor: pointer;"></i> Ver</a></td>
-      <c:if test="${idRol == 2 && ofertas.estado == 'RECHAZADA'}">
+      <c:if test="${initRol == 2 && ofertas.estado == 'RECHAZADA'}">
       <td class="py-4 px-6"><a href="javascript:descartar('${ofertas.idOferta}','${ofertas.observaciones}')"><i class="fas fa-ban"  style="color: red; cursor: pointer;"></i> Descartar</a></td>
       </c:if>
-     <!--  --> <c:if test="${idRol == 2 && ofertas.estado == 'DESCARTADA'}">
+     <!--  --> <c:if test="${initRol == 2 && ofertas.estado == 'DESCARTADA'}">
       <td class="py-4 px-6"><a href="javascript:eliminar('${ofertas.idOferta}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
       </c:if>    
     </tr>
@@ -118,16 +121,16 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       <td class="py-4 px-6">${ofertas.nombre}</td>
       <td class="py-4 px-6">${ofertas.descripcion}</td>
       <td class="py-4 px-6">${ofertas.cupones}</td>
-      <c:if  test="${idRol == 1}">
+      <c:if  test="${initRol == 1}">
       <td class="py-4 px-6">${ofertas.empresa}</td>
       </c:if>
       <td class="py-4 px-6">${ofertas.observaciones}</td>
       <td class="py-4 px-6">${ofertas.estado}</td>
       <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/ofertas.do?op=revisar&id=${ofertas.idOferta}"><i class="fas fa-eye"  style="color: blue; cursor: pointer;"></i> Ver</a></td>
-      <c:if test="${idRol == 2 && ofertas.estado == 'RECHAZADA'}">
+      <c:if test="${initRol == 2 && ofertas.estado == 'RECHAZADA'}">
       <td class="py-4 px-6"><a href="javascript:descartar('${ofertas.idOferta}','${ofertas.observaciones}')"><i class="fas fa-ban"  style="color: red; cursor: pointer;"></i> Descartar</a></td>
       </c:if>
-      <c:if test="${idRol == 2 && ofertas.estado == 'DESCARTADA'}">
+      <c:if test="${initRol == 2 && ofertas.estado == 'DESCARTADA'}">
       <td class="py-4 px-6"><a href="javascript:eliminar('${ofertas.idOferta}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
       </c:if>    
     </tr>
@@ -140,33 +143,113 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       <td class="py-4 px-6">${ofertas.nombre}</td>
       <td class="py-4 px-6">${ofertas.descripcion}</td>
       <td class="py-4 px-6">${ofertas.cupones}</td>
-      <c:if  test="${idRol == 1}">
+      <c:if  test="${initRol == 1}">
       <td class="py-4 px-6">${ofertas.empresa}</td>
       </c:if>
       <td class="py-4 px-6">${ofertas.observaciones}</td>
       <td class="py-4 px-6">${ofertas.estado}</td>
       <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/ofertas.do?op=revisar&id=${ofertas.idOferta}"><i class="fas fa-eye"  style="color: blue; cursor: pointer;"></i> Ver</a></td>    
-    <c:if test="${idRol == 2 && ofertas.estado == 'RECHAZADA'}">
+    <c:if test="${initRol == 2 && ofertas.estado == 'RECHAZADA'}">
       <td class="py-4 px-6"><a href="javascript:descartar('${ofertas.idOferta}','${ofertas.observaciones}')"><i class="fas fa-ban"  style="color: red; cursor: pointer;"></i> Descartar</a></td>
       </c:if>
-      <c:if test="${idRol == 2 && ofertas.estado == 'DESCARTADA'}">
+      <c:if test="${initRol == 2 && ofertas.estado == 'DESCARTADA'}">
       <td class="py-4 px-6"><a href="javascript:eliminar('${ofertas.idOferta}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
       </c:if>    
     </tr>
     </c:if>
     
     </c:forEach>
+ </c:if>
+ 
+ <c:if test="${initRol == 2}"><!-- ADMIN EMPRESA -->
+   <c:forEach var="ofertas" items="${requestScope.listaOfertas}">
+   
+     <c:if test="${param.op == 'listar'}">
+      <c:if test="${ofertas.empresaID == initEmpresa}">
+     <c:set var="cont" value="${cont + 1}"></c:set>
+    <tr class="bg-white dark:bg-gray-800">
+      <td class="py-4 px-6"><b>${ofertas.idOferta}</b></td>
+      <td class="py-4 px-6">${ofertas.nombre}</td>
+      <td class="py-4 px-6">${ofertas.descripcion}</td>
+      <td class="py-4 px-6">${ofertas.cupones}</td>
+      <c:if  test="${initRol == 1}">
+      <td class="py-4 px-6">${ofertas.empresa}</td>
+      </c:if>
+      <td class="py-4 px-6">${ofertas.observaciones}</td>
+      <td class="py-4 px-6">${ofertas.estado}</td>
+      <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/ofertas.do?op=revisar&id=${ofertas.idOferta}"><i class="fas fa-eye"  style="color: blue; cursor: pointer;"></i> Ver</a></td>
+      <c:if test="${initRol == 2 && ofertas.estado == 'RECHAZADA'}">
+      <td class="py-4 px-6"><a href="javascript:descartar('${ofertas.idOferta}','${ofertas.observaciones}')"><i class="fas fa-ban"  style="color: red; cursor: pointer;"></i> Descartar</a></td>
+      </c:if>
+     <!--  --> <c:if test="${initRol == 2 && ofertas.estado == 'DESCARTADA'}">
+      <td class="py-4 px-6"><a href="javascript:eliminar('${ofertas.idOferta}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
+      </c:if>    
+    </tr>
+      </c:if>
+      </c:if>
+      
+      <c:if test="${param.nombre == ofertas.nombre}">
+      <c:if test="${ofertas.empresaID == initEmpresa}">
+      <c:set var="cont" value="${cont + 1}"></c:set>
+    <tr class="bg-white dark:bg-gray-800">
+      <td class="py-4 px-6"><b>${ofertas.idOferta}</b></td>
+      <td class="py-4 px-6">${ofertas.nombre}</td>
+      <td class="py-4 px-6">${ofertas.descripcion}</td>
+      <td class="py-4 px-6">${ofertas.cupones}</td>
+      <c:if  test="${initRol == 1}">
+      <td class="py-4 px-6">${ofertas.empresa}</td>
+      </c:if>
+      <td class="py-4 px-6">${ofertas.observaciones}</td>
+      <td class="py-4 px-6">${ofertas.estado}</td>
+      <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/ofertas.do?op=revisar&id=${ofertas.idOferta}"><i class="fas fa-eye"  style="color: blue; cursor: pointer;"></i> Ver</a></td>
+      <c:if test="${initRol == 2 && ofertas.estado == 'RECHAZADA'}">
+      <td class="py-4 px-6"><a href="javascript:descartar('${ofertas.idOferta}','${ofertas.observaciones}')"><i class="fas fa-ban"  style="color: red; cursor: pointer;"></i> Descartar</a></td>
+      </c:if>
+      <c:if test="${initRol == 2 && ofertas.estado == 'DESCARTADA'}">
+      <td class="py-4 px-6"><a href="javascript:eliminar('${ofertas.idOferta}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
+      </c:if>    
+    </tr>
+    </c:if>
+    </c:if>
+    
+    <c:if test="${ofertas.estado == param.estado}">
+    <c:if test="${ofertas.empresaID == initEmpresa}">
+    <c:set var="cont" value="${cont + 1}"></c:set>
+    <tr class="bg-white dark:bg-gray-800">
+      <td class="py-4 px-6"><b>${ofertas.idOferta}</b></td>
+      <td class="py-4 px-6">${ofertas.nombre}</td>
+      <td class="py-4 px-6">${ofertas.descripcion}</td>
+      <td class="py-4 px-6">${ofertas.cupones}</td>
+      <c:if  test="${initRol == 1}">
+      <td class="py-4 px-6">${ofertas.empresa}</td>
+      </c:if>
+      <td class="py-4 px-6">${ofertas.observaciones}</td>
+      <td class="py-4 px-6">${ofertas.estado}</td>
+      <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/ofertas.do?op=revisar&id=${ofertas.idOferta}"><i class="fas fa-eye"  style="color: blue; cursor: pointer;"></i> Ver</a></td>    
+    <c:if test="${initRol == 2 && ofertas.estado == 'RECHAZADA'}">
+      <td class="py-4 px-6"><a href="javascript:descartar('${ofertas.idOferta}','${ofertas.observaciones}')"><i class="fas fa-ban"  style="color: red; cursor: pointer;"></i> Descartar</a></td>
+      </c:if>
+      <c:if test="${initRol == 2 && ofertas.estado == 'DESCARTADA'}">
+      <td class="py-4 px-6"><a href="javascript:eliminar('${ofertas.idOferta}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
+      </c:if>    
+    </tr>
+    </c:if>
+    </c:if>
+    
+    </c:forEach>
+ </c:if>
+ 
  
   <c:if test="${param.nombre == '' && param.estado == 'Seleccionar'}">
       <c:set var="cont" value="${cont + 1}"></c:set>
         <tr>
-        <td class="py-4 px-6" colspan="4">No ha ingresado ningún valor. Intente de nuevo</td>
+        <td class="py-4 px-6" colspan="4">No ha ingresado ningÃºn valor. Intente de nuevo</td>
         </tr>
    </c:if>
    
    <c:if test="${cont == 0}">
     <tr class="bg-white dark:bg-gray-800">
-      <td class="py-4 px-6" colspan="4">No se ha encontrado ningún resultado. Intente de nuevo</td>
+      <td class="py-4 px-6" colspan="4">No se ha encontrado ningÃºn resultado. Intente de nuevo</td>
       </tr>
     </c:if>
         
@@ -176,21 +259,15 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
 </div>
 </body>
 </html>
-</c:when>
-
-<c:when test="${idRol != 1 || idRol != 2}">
-  <c:redirect url = "/index.jsp"/>
-</c:when>
-</c:choose>
 
 <script>
   function eliminar(id){
-    if(confirm('¿Desea eliminar el elemento seleccionado?')){
+    if(confirm('Â¿Desea eliminar el elemento seleccionado?')){
     	 location.href = 'ofertas.do?op=eliminar&id='+id;
     }
   }
   function descartar(id, observaciones){
-	    if(confirm('¿Desea descartar el elemento seleccionado?')){
+	    if(confirm('Â¿Desea descartar el elemento seleccionado?')){
 	    	 location.href = 'ofertas.do?op=descartar&id='+id+'&obs='+observaciones;
 	    }
 	  }
