@@ -105,21 +105,37 @@ document.getElementById("pay").addEventListener("click", (e)=>{
 					"user": $("#userID").val()
 				}, function(rs){
 					if(rs=="exito"){
+						eliminarOfertaAll()
 						Swal.fire({
 							icon: 'success',
 							text: 'Se han realizado todas las compras, ya puedes ver todos tus cupones en el apartado de mis compras', 
 							showDenyButton: true,
 							confirmButtonText: 'ir a mis compras', 
 							denyButtonText: 'Seguir comprando'
+						}).then((result)=>{
+							if(result.isConfirmed){
+								location.href = "/LaCuponera/Miscompras"; 
+							}else{
+								location.href = "/LaCuponera/ofertas"; 
+							}
 						})
 
 					}else if(rs == "exito2"){
+						eliminarOfertaAll()
 						Swal.fire({
 							icon: 'success',
 							text: 'Se han realizado las compras, algunas ofertas ya no pueden ser compradas debido a que se acabaron sus existencias', 
 							showDenyButton: true,
 							confirmButtonText: 'ir a mis compras', 
-							denyButtonText: 'Seguir comprando'
+							denyButtonText: 'Seguir comprando',
+							allowEscapeKey: false,
+							allowOutsideClick: false,
+						}).then((result)=>{
+							if(result.isConfirmed){
+								location.href = "/LaCuponera/Miscompras"; 
+							}else{
+								location.href = "/LaCuponera/ofertas"; 
+							}
 						})
 					}else if(rs == "fracaso"){
 						Swal.fire({
@@ -127,7 +143,15 @@ document.getElementById("pay").addEventListener("click", (e)=>{
 							text: 'No se ha podido realizar las compras, vuelve a intentrarlo más tarde', 
 							showDenyButton: true,
 							confirmButtonText: 'Volver a ofertas', 
-							denyButtonText: 'Ir a mis compras'
+							denyButtonText: 'Ir a mis compras', 
+							allowEscapeKey: false,
+							allowOutsideClick: false,
+						}).then((result)=>{
+							if(result.isConfirmed){
+								location.href = "/LaCuponera/Miscompras"; 
+							}else{
+								location.href = "/LaCuponera/ofertas"; 
+							}
 						})
 					}
 				})
@@ -210,6 +234,17 @@ function eliminarOferta(codigo){
 		if(ofertasSelect[key] == codigo){
 			delete ofertasSelect[key]
 		}
+	}
+	
+	localStorage.setItem("carritoCupones", JSON.stringify(ofertasSelect))
+}
+
+function eliminarOfertaAll(){
+	let ofertasSelect = JSON.parse(localStorage.getItem("carritoCupones")); 
+
+	for(const key in ofertasSelect ){
+			delete ofertasSelect[key]
+		
 	}
 	
 	localStorage.setItem("carritoCupones", JSON.stringify(ofertasSelect))

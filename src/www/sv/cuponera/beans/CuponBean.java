@@ -1,11 +1,23 @@
 package www.sv.cuponera.beans;
 
+import www.sv.cuponera.modelo.OfertaModel;
+
 public class CuponBean {
     String FechaCompra,Estado,FechaUso, CodigoCupon; 
     int UsuarioID,OfertaID; 
- 
+    OfertaBean ofertaD; 
 
-    public int getUsuarioID() {
+   
+
+	public OfertaBean getOfertaD() {
+		return ofertaD;
+	}
+
+	public void setOfertaD(OfertaBean ofertaD) {
+		this.ofertaD = ofertaD;
+	}
+
+	public int getUsuarioID() {
 		return UsuarioID;
 	}
 

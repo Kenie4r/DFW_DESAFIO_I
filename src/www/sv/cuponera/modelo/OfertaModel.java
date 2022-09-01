@@ -43,7 +43,7 @@ public class OfertaModel extends Conection {
 		try {
 			List<OfertaBean> lista = new ArrayList<>(); 
 			this.conectar(); 
-			String sql = "SELECT * FROM `oferta` WHERE inicio<= NOW() AND fin>=NOW() AND Estado = 'ACEPTADO' ORDER BY idOferta DESC"; 
+			String sql = "SELECT * FROM `oferta`  INNER JOIN empresa ON empresa.idEmpresa = Empresa_IdEmpresa  WHERE inicio<= NOW() AND fin>=NOW() AND Estado = 'APROBADA' AND limite >0 ORDER BY idOferta DESC"; 
 			st = conexion.prepareCall(sql); 
 			rs = st.executeQuery(); 
 			while ( rs.next()) {
@@ -57,6 +57,8 @@ public class OfertaModel extends Conection {
 				oferta.setInicio(rs.getString("inicio"));
 				oferta.setFechaFin(rs.getString("Fin"));
 				oferta.setFechaLimite(rs.getString("fechaLimite"));
+				oferta.setNombreEmpresa(rs.getString("NombreEmpresa"));
+
 				lista.add(oferta); 
 			}
 			this.desconectar();
@@ -73,7 +75,7 @@ public class OfertaModel extends Conection {
 		try {
 			List<OfertaBean> lista = new ArrayList<>(); 
 			this.conectar(); 
-			String sql = "SELECT * FROM `oferta` WHERE inicio<= NOW() AND fin>=NOW() AND Estado = 'ACEPTADO' and Empresa_IdEmpresa IN ((SELECT idEmpresa FROM empresa WHERE Rubros_IdRubros = ?)) ORDER BY idOferta DESC"; 
+			String sql = "SELECT *, empresa.NombreEmpresa FROM `oferta` INNER JOIN empresa ON empresa.idEmpresa = Empresa_IdEmpresa  WHERE inicio<= NOW() AND fin>=NOW() AND Estado = 'APROBADA' AND limite >0  and Empresa_IdEmpresa IN ((SELECT idEmpresa FROM empresa WHERE Rubros_IdRubros = ?)) ORDER BY idOferta DESC"; 
 			st = conexion.prepareCall(sql); 
 			st.setInt(1, rubro);
 			rs = st.executeQuery(); 
@@ -88,6 +90,7 @@ public class OfertaModel extends Conection {
 				oferta.setInicio(rs.getString("inicio"));
 				oferta.setFechaFin(rs.getString("Fin"));
 				oferta.setFechaLimite(rs.getString("fechaLimite"));
+				oferta.setNombreEmpresa(rs.getString("NombreEmpresa"));
 				lista.add(oferta); 
 
 			}
@@ -192,7 +195,7 @@ public class OfertaModel extends Conection {
 		try {
 			this.conectar(); 
 
-			String sql = "SELECT * FROM oferta WHERE idOferta =  ? AND inicio<=NOW() AND fin>=NOW()"; 
+			String sql = "SELECT * FROM oferta WHERE idOferta =  ? AND inicio<=NOW() AND fin>=NOW() AND Estado = 'APROBADA'"; 
 			st = conexion.prepareCall(sql);
 			st.setString(1, inOption);
 			rs = st.executeQuery(); 

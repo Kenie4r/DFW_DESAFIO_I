@@ -12,7 +12,7 @@
 		 int[] casos = {
                     1, -1 , -1, -1, -1, -1, -1, -1, -1, -1 , -1
             }; 
-		String url = "http://localhost:8080/LaCuponera/"; 
+		String url = "http://localhost:8080/LaCuponera"; 
             String[] titulos = {
                     "Inicio" , "Mis ofertas", "Empresas","Usuarios de empresa", "Ofertas",
                     "Mis compras", "Validar ofertas", "Busqueda de Cupones", "Busqueda de Ofertas","Usuarios", 
@@ -20,9 +20,9 @@
 
             };
             String[] Links = {
-                    url + "/inicio.jsp",  url +"/ofertas/misOfertas.jsp",
+                    url + "/inicio.jsp",  url +"/ofertas.do",
                     url +"/empresas/index.jsp",   url +"/empresas/UsuariosEmpresa.jsp",
-                    url +"/ofertas/index.jsp",   url +"/compras/misCompras.jsp",
+                    url +"/ofertas.do",   url +"/Miscompras",
                     url +"/ofertas/index.jsp",   url +"/cupones/cupones",  url + "/ofertas", 
                     url+ "/usuarios.do", url+"/rubros.do?op=listar"
             };

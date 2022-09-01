@@ -5,6 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<c:set var="initRol" scope="session" value="${pageContext.session.getAttribute('idRol') }" />
+<c:if test="${empty initRol}">
+		<c:redirect url="${pageContext.request.contextPath}/.."></c:redirect>
+</c:if>
 	<meta charset="ISO-8859-1">
 	<title>Listado de Ofertas</title>
 	<link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.2/dist/flowbite.min.css" />
@@ -41,25 +45,76 @@
 		</aside>
 	
 	
-		<div class="flex flex-col gap-4 w-full h-screen overflow-hidden" id='ofertas'>
+		<div class="flex flex-col gap-4 w-full h-screen overflow-hidden " id='ofertas'>
 				<h1 class="font-medium leading-tight text-xl mt-0 mb-2 mx-10 ">Listado de ofertas activas</h1>	
-				<div class=' overflow-y-scroll h-full '>
-					<c:forEach  items="${requestScope.Listaofertas}" var="oferta">
-					<div class="flex w-8/12  my-4 mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800" style='height: 200px; '>
-    					<div class="w-1/3 bg-cover" style="background-image: url('https://static.vecteezy.com/system/resources/previews/002/620/855/non_2x/big-sale-offer-discount-coupon-market-over-white-background-free-vector.jpg')"></div>
-
-						    <div class="w-2/3 p-4 md:p-4">
-						        <h1 class="text-xl font-bold text-gray-800 dark:text-white">${oferta.getNombreOferta() }</h1>
-						
-						        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400"> ${oferta.getDescripcion()}</p>
-						
-						        <div class="flex justify-between mt-3 item-center">
-						     		<span class="text-sm font-bold text-gray-900 dark:text-white">Precio Regular:$ ${oferta.getPrecioRegular()} <br > Oferta:$ ${oferta.getPrecioOfertado() }</span>
-						            <button id='cart_${oferta.getIdOferta()}' class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Add to Cart</button>
-						        </div>
-   							 </div>
+				<div class=' overflow-y-scroll h-full  '>
+				<c:if test="${empty Listaofertas}">
+					<div id="alert-additional-content-2" class="p-4 mb-4 border border-red-300 rounded-lg bg-red-50 dark:bg-red-200" role="alert">
+						  <div class="flex items-center">
+						    <svg aria-hidden="true" class="w-5 h-5 mr-2 text-red-900 dark:text-red-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+						    <span class="sr-only">Información</span>
+						    <h3 class="text-lg font-medium text-red-900 dark:text-red-800">No hay ofertas activas</h3>
+						  </div>
+						  <div class="mt-2 mb-4 text-sm text-red-900 dark:text-red-800">
+								No existen ofertas activas para este filtro, vuelve más tarde para poder obtener las mejores ofertas dentro de nuestra aplicación, 
+								La Cuponera, tu lugar de cupones :)
+						  </div>
+						  <div class="flex">
+						    
+						  </div>
 						</div>
-	
+				
+				</c:if>
+					<c:forEach  items="${requestScope.Listaofertas}" var="oferta">
+					
+					<section class="text-gray-600 body-font ">
+			                    <div class="container px-5 my-5 mx-auto">
+			                        <div class="p-5 bg-white flex items-center mx-auto border-b  mb-10 border-gray-200 rounded-lg sm:flex-row flex-col">
+				                        <div class="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center flex-shrink-0">
+				                            <img
+				                              src="https://cdn.iconscout.com/icon/free/png-256/discount-1942889-1644351.png"/>
+				                        </div>
+			                        	<div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
+			                            	<h1 class="text-black text-2xl title-font font-bold mb-2">${oferta.getNombreOferta() }</h1>
+			                            	<p class="leading-relaxed text-base">${oferta.getDescripcion()}</p>
+			                        
+				                            <div class="md:flex font-bold text-gray-800">
+				                                <div class="w-full md:w-1/2 flex space-x-3">
+				                                    <div class="w-1/2">
+				                                        <h2 class="text-gray-500">Fecha de inicio</h2>
+				                                        <p >${oferta.getInicio()}</p>
+				                                    </div>
+				                                    <div class="w-1/2">
+				                                        <h2 class="text-gray-500">Fecha final</h2>
+				                                        <p>${oferta.getFechaFin()}</p>
+				                                    </div>
+				                                </div>
+				                                <div class="w-full md:w-1/2 flex space-x-3">
+				                                    <div class="w-1/2">
+				                                        <h2 class="text-gray-500">Precio regular</h2>
+				                                        <p>$ ${oferta.getPrecioRegular()}</p>
+				                                    </div>
+				                                    <div class="w-1/2">
+				                                        <h2 class="text-gray-500">Precio ofertado</h2>
+				                                        <p>$ ${oferta.getPrecioOfertado() }</p>
+				                                    </div>
+				                                </div>
+				                            </div>
+										<div class="flex justify-between items-center">
+											<p class="text-gray-400">
+												Oferta por ${oferta.getNombreEmpresa() }
+											</p>
+										
+											<button id='cart_${oferta.getIdOferta()}' class="px-2 py-3 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Añadir al carrito</button>
+											
+										</div>
+
+			                        </div>
+			                        </div>
+			                    </div>
+			                </section>
+					
+
 		
 	
 						</c:forEach>
