@@ -27,7 +27,7 @@
 <jsp:include page="/menu.jsp"></jsp:include>
 </header>
 <br>
-<div style="margin-left: 5vw; margin-right: 20vw; ">
+<div style="margin-left: 5vw; margin-right: 18vw; ">
 <h1 class="text-left" style="font-size: 35px"><b>Lista de rubros</b></h1>
 <br>
 <a class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium 
