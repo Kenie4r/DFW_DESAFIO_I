@@ -16,21 +16,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 import www.sv.cuponera.utils.Validaciones;
 import www.sv.cuponera.beans.EmpresaBean;
+import www.sv.cuponera.modelo.RubroModel;
 import www.sv.cuponera.modelo.EmpresaModel;
 
 /**
  * Servlet implementation class EmpresaController
  */
-@WebServlet(name="/EmpresaController", urlPatterns="/empresas.do")
+@WebServlet(name="EmpresaController", urlPatterns="/empresas.do")
 public class EmpresaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ArrayList<String> listaErrores = new ArrayList<>();
 	EmpresaModel modeloEmpresa = new EmpresaModel();
-
+	RubroModel modeloRubros = new RubroModel();
 	/**
      * @see HttpServlet#HttpServlet()
      */
@@ -52,21 +51,21 @@ public class EmpresaController extends HttpServlet {
 	    		case "listar": 
 	    			listar(request, response); 
 	    			break; 
+	    		case "nuevo": 
+	    			nuevo(request, response);
+	    			break;  
+	    		case "insertar": 
+	    			insertar(request, response); 
+	    			break;
 	    		case "obtener": 
 	    			obtener(request, response); 
 	    			break; 
 	    		case "eliminar": 
 	    			Eliminar(request, response); 
-	    			break; 
-	    		case "insertar": 
-	    			insertar(request, response); 
-	    			break; 
+	    			break;  
 	    		case "editar": 
 	    			Editar(request, response); 
 	    			break;
-	    		case "nuevo": 
-	    			request.getRequestDispatcher("empresas/nuevoEmpresa.jsp").forward(request, response);;
-	    			break;  
     			default: 
 					request.getRequestDispatcher("/error404.jsp").forward(request, response);
 					break;
@@ -75,8 +74,7 @@ public class EmpresaController extends HttpServlet {
 		
 	}
 
-	
-    private void listar(HttpServletRequest request, HttpServletResponse response) {
+	private void listar(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		 try {
 			 request.setAttribute("listaEmpresas", modeloEmpresa.listarEmpresas());
@@ -86,11 +84,22 @@ public class EmpresaController extends HttpServlet {
 		 }	
 	}
 
+    private void nuevo(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		try {
+			 request.setAttribute("listaRubros", modeloRubros.listaRubros());
+			 request.getRequestDispatcher("empresas/nuevoEmpresa.jsp").forward(request, response);			 
+		} catch (ServletException | IOException ex) {
+			 Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+    
 	private void insertar(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 
 		 try{
 			 listaErrores.clear();
+			 EmpresaBean Empresa = new EmpresaBean();
 			 if(Validaciones.isEmpty(request.getParameter("codigo"))){
 				 listaErrores.add("El codigo del libro es obligatorio");
 			 }else if(!Validaciones.esCodigoEmpresa(request.getParameter("codigo"))){
@@ -113,22 +122,30 @@ public class EmpresaController extends HttpServlet {
 			 if(Validaciones.isEmpty(request.getParameter("correo"))){
 				 listaErrores.add("El correo de la empresa es obligatorio");
 			 }
-			 if(!Validaciones.esDecimalPositivo(request.getParameter("ganancias"))){
-				 listaErrores.add("El porcentaje de ganancias deber ser un numero mayor o igual a 0");
+			 if(Validaciones.isEmpty(request.getParameter("ganancias"))){
+				 listaErrores.add("El porcentaje de ganancias de la empresa es obligatorio");
+			 }else if(!Validaciones.esDecimalPositivo(request.getParameter("ganancias"))){
+				 listaErrores.add("El porcentaje de ganancias deber ser un numero mayor a 0");
 			 }
-			 /*if(Validaciones.isEmpty(request.getParameter("rubro"))){
+			 if(Validaciones.isEmpty(request.getParameter("rubro"))){
 				 listaErrores.add("El rubro de la empresa es obligatorio");
-			 }*/
-			 EmpresaBean Empresa = new EmpresaBean();
-			 Empresa.setIdEmpresa(request.getParameter("codigo"));
-			 Empresa.setNombreEmpresa(request.getParameter("nombre"));
-			 Empresa.setUbicacion(request.getParameter("ubicacion"));
-			 Empresa.setContacto(request.getParameter("contacto"));
-			 Empresa.setTelefono(request.getParameter("telefono"));
-			 Empresa.setCorreo(request.getParameter("correo"));
-			 Empresa.setPorcentajeGanancias(Float.parseFloat(request.getParameter("ganancias")));
-			 //Empresa.setRubros_IdRubros(Integer.parseInt(request.getParameter("rubro")));	 
+			 }
+
+				 Empresa.setIdEmpresa(request.getParameter("codigo"));
+				 Empresa.setNombreEmpresa(request.getParameter("nombre"));
+				 Empresa.setUbicacion(request.getParameter("ubicacion"));
+				 Empresa.setContacto(request.getParameter("contacto"));
+				 Empresa.setTelefono(request.getParameter("telefono"));
+				 Empresa.setCorreo(request.getParameter("correo"));
+				 try {
+				 Empresa.setPorcentajeGanancias(Float.parseFloat(request.getParameter("ganancias")));
+				 Empresa.setRubros_IdRubros(Integer.parseInt(request.getParameter("rubro")));	
+				 }catch(NumberFormatException ex){
+					 Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+					 listaErrores.add("No se selecciono un dato valido en los campos de ganancias o rubros.");
+				 }
 			 if(listaErrores.size() == 0){
+
 					if(modeloEmpresa.insertarEmpresa(Empresa)>0) {
 						request.setAttribute("exito", "Empresa registrada exitosamente");
 					}else {
@@ -138,7 +155,7 @@ public class EmpresaController extends HttpServlet {
 			 }else{
 				 request.setAttribute("empresa", Empresa);
 				 request.setAttribute("listaErrores", listaErrores);
-				 request.getRequestDispatcher("empresas.do?op=listar").forward(request, response);
+				 request.getRequestDispatcher("empresas.do?op=nuevo").forward(request, response);
 			 }
 		 } catch (ServletException ex) {
 			 Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,7 +172,8 @@ public class EmpresaController extends HttpServlet {
 			String ID = request.getParameter("id");
 			 EmpresaBean Empresa = modeloEmpresa.obtenerEmpresa(ID);
 			if(Empresa !=null){
-				request.setAttribute("empresa", Empresa);
+				request.setAttribute("empresa", Empresa);	
+				request.setAttribute("listaRubros", modeloRubros.listaRubros());
 				request.getRequestDispatcher("empresas/editarEmpresa.jsp").forward(request, response);
 			}else {
 				response.sendRedirect(request.getContextPath() + "/error404.jsp");
@@ -169,6 +187,7 @@ public class EmpresaController extends HttpServlet {
 		// TODO Auto-generated method stub
 		 try{
 			 listaErrores.clear();
+			 EmpresaBean Empresa = new EmpresaBean();
 			 if(Validaciones.isEmpty(request.getParameter("codigo"))){
 				 listaErrores.add("El codigo del libro es obligatorio");
 			 }else if(!Validaciones.esCodigoEmpresa(request.getParameter("codigo"))){
@@ -191,34 +210,41 @@ public class EmpresaController extends HttpServlet {
 			 if(Validaciones.isEmpty(request.getParameter("correo"))){
 				 listaErrores.add("El correo de la empresa es obligatorio");
 			 }
-			 if(!Validaciones.esDecimalPositivo(request.getParameter("ganancias"))){
-				 listaErrores.add("El porcentaje de ganancias deber ser un numero mayor o igual a 0");
+			 if(Validaciones.isEmpty(request.getParameter("ganancias"))){
+				 listaErrores.add("El porcentaje de ganancias de la empresa es obligatorio");
 			 }
-			 /*if(Validaciones.isEmpty(request.getParameter("rubro"))){
+			 if(Validaciones.isEmpty(request.getParameter("rubro"))){
 				 listaErrores.add("El rubro de la empresa es obligatorio");
-			 }*/
-	 
-			 if(listaErrores.size() == 0){
-				 EmpresaBean Empresa = new EmpresaBean();
-				 Empresa.setIdEmpresa(request.getParameter("codigo"));
-				 Empresa.setNombreEmpresa(request.getParameter("nombre"));
-				 Empresa.setUbicacion(request.getParameter("ubicacion"));
-				 Empresa.setContacto(request.getParameter("contacto"));
-				 Empresa.setTelefono(request.getParameter("telefono"));
-				 Empresa.setCorreo(request.getParameter("correo"));
-				 Empresa.setPorcentajeGanancias(Float.parseFloat(request.getParameter("ganancias")));
-				 //Empresa.setRubros_IdRubros(Integer.parseInt(request.getParameter("rubro")));
-					
+			 }
+			 if(Validaciones.isEmpty(request.getParameter("ganancias"))){
+				 listaErrores.add("El porcentaje de ganancias de la empresa es obligatorio");
+			 }else if(!Validaciones.esDecimalPositivo(request.getParameter("ganancias"))){
+				 listaErrores.add("El porcentaje de ganancias deber ser un numero mayor a 0");
+			 }
+			 Empresa.setIdEmpresa(request.getParameter("codigo"));
+			 Empresa.setNombreEmpresa(request.getParameter("nombre"));
+			 Empresa.setUbicacion(request.getParameter("ubicacion"));
+			 Empresa.setContacto(request.getParameter("contacto"));
+			 Empresa.setTelefono(request.getParameter("telefono"));
+			 Empresa.setCorreo(request.getParameter("correo"));
+			 try {
+			 Empresa.setPorcentajeGanancias(Float.parseFloat(request.getParameter("ganancias")));
+			 Empresa.setRubros_IdRubros(Integer.parseInt(request.getParameter("rubro")));	
+			 }catch(NumberFormatException ex){
+				 Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex);
+				 listaErrores.add("No se selecciono un dato valido en los campos de ganancias o rubros.");
+			 }	
+			 if(listaErrores.size() == 0){				
 				 if(modeloEmpresa.editarEmpresa(Empresa)>0) {		
 					 request.setAttribute("exito", "Se modifico la empresa de manera correcta");
 				 }else {
-					 request.setAttribute("fracaso", "No se ha podido ingresar la empresa de manera correcta");					 
+					 request.setAttribute("fracaso", "No se ha podido modificar la empresa de manera correcta");					 
 				 }				 
 				 request.getRequestDispatcher("/empresas.do?op=listar").forward(request, response);
 			 }else{
 				 String razones = ""; 
 					for(int indexz = 0; indexz<listaErrores.size(); indexz++) {
-						razones = "\n" + (indexz+1) + ". " + listaErrores.get(indexz);  
+						razones = (indexz+1) + ". " + listaErrores.get(indexz);  
 					}
 					request.setAttribute("fracaso", "No se ha podido realizar el registro de manera correcta, por favor revisar: " + razones);
 					request.getRequestDispatcher("/empresas.do?op=listar").forward(request, response);

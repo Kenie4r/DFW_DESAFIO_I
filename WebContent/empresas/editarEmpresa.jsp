@@ -3,6 +3,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
     
 <!DOCTYPE html>
+<c:set var="initRol" scope="session" value="${pageContext.session.getAttribute('idRol') }" />
+<c:if test="${empty initRol}">
+        <c:redirect url="${pageContext.request.contextPath}/.."></c:redirect>
+</c:if>
 <html>
 <head>
 	<meta charset="ISO-8859-1">
@@ -13,6 +17,9 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>    
 </head>
 <body>
+	<nav>
+            <jsp:include page="/menu.jsp"/>
+    </nav>
 	    <div class="container">
         <div class="row">
             <h2>Editar Empresa</h2>
@@ -35,52 +42,63 @@
                    					<div class="form-group">
 				                        <label for="codigo">Codigo de empresa</label>
 				                        <div class="input-group">
-                           					<input type="text" class="form-control" name="codigo" id="codigo" value="${empresas.IdEmpresa}" placeholder="Ingresa el codigo de la Empresa">
+                           					<input type="text" readonly class="form-control" name="codigo" id="codigo" value="${empresa.getIdEmpresa()}" placeholder="Ingresa el codigo de la Empresa">
                            					<span class="input-group-addon"><span class="glyphiconglyphicon-asterisk"></span></span>
                        					</div>
                    					</div>
                    					<div class="form-group">
                        					<label for="nombre">Nombre de empresa</label>
                        					<div class="input-group">
-                           					<input type="text" class="form-control" name="nombre" id="nombre" value="${empresas.NombreEmpresa}" placeholder="Ingresa el nombre de la Empresa">
+                           					<input type="text" class="form-control" name="nombre" id="nombre" value="${empresa.getNombreEmpresa()}" placeholder="Ingresa el nombre de la Empresa">
                            					<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                        					</div>
                   					</div>
                    					<div class="form-group">
                        					<label for="contacto">Ubicacion de empresa:</label>
                        					<div class="input-group">
-                          					 <input type="text" class="form-control" name="ubicacion" id="ubicacion" value="${empresas.Ubicacion}"  placeholder="Ingresa la ubicacion de la Empresa">
+                          					 <input type="text" class="form-control" name="ubicacion" id="ubicacion" value="${empresa.getUbicacion()}"  placeholder="Ingresa la ubicacion de la Empresa">
                           					 <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                       					</div>
                    					</div>
                    					<div class="form-group">
                        					<label for="nombre">Nombre de contacto</label>
                        					<div class="input-group">
-                           					<input type="text" class="form-control" name="contacto" id="contacto" value="${empresas.Contacto}" placeholder="Ingresa el nombre de contacto de la Empresa">
+                           					<input type="text" class="form-control" name="contacto" id="contacto" value="${empresa.getContacto()}" placeholder="Ingresa el nombre de contacto de la Empresa">
                            					<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                        					</div>
                   					</div>                   					
 									<div class="form-group">
 	                       				<label for="telefono">Telefono de la empresa:</label>
 	                       				<div class="input-group">
-	                          				 <input type="text" class="form-control" name="telefono" id="telefono" value="${empresas.Telefono}" placeholder="Ingresa el telefono de la Empresa">
+	                          				 <input type="text" class="form-control" name="telefono" id="telefono" value="${empresa.getTelefono()}" placeholder="Ingresa el telefono de la Empresa">
 	                          				 <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 	                      				</div>	                   				
 	                   				</div>
                    					<div class="form-group">
-                       					<label for="nombre">Correo de empresa</label>
+                       					<label for="correo">Correo de empresa</label>
                        					<div class="input-group">
-                           					<input type="text" class="form-control" name="correo" id="correo" value="${empresas.Correo}" placeholder="Ingresa el correo de la Empresa">
+                           					<input type="text" class="form-control" name="correo" id="correo" value="${empresa.getCorreo()}" placeholder="Ingresa el correo de la Empresa">
                            					<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                        					</div>
                   					</div>	     
 				                    <div class="form-group">
-				                        <label for="precio">Porcentaje de ganancias:</label>
+				                        <label for="ganancias">Porcentaje de ganancias:</label>
 				                        <div class="input-group">
-				                            <input type="number" step="0.1" min="0" class="form-control" name="ganancias" id="ganancias" value="${empresas.PorcentajeGanancias}" placeholder="Ingresa el porcentaje de Ganancias de la Empresa">
+				                            <input type="number" step="0.1" min="0" class="form-control" name="ganancias" id="ganancias" value="${empresa.getPorcentajeGanancias()}" placeholder="Ingresa el porcentaje de Ganancias de la Empresa">
 				                            <span class="input-group-addon"><span class="glyphicon glyphiconasterisk"></span></span>
 				                        </div>
-				                    </div>                  					              				
+				                    </div>            
+				                    <div class="form-group">
+				                        <label for="rubro">Rubro:</label>
+				                        <div class="input-group">
+				                            <select name="rubro" id="rubro" class="form-control">
+				                                <c:forEach var="rubrosBean" items="${requestScope.listaRubros}">
+				                                    <option value="${rubrosBean.idRubro}">${rubrosBean.nombre}</option>
+				                                </c:forEach>
+				                            </select>
+				                            <span class="input-group-addon"><span class="glyphicon glyphiconasterisk"></span></span>
+				                        </div>
+				                    </div>				                          					              				
                    					<input type="submit" class="btn btn-info" value="Guardar" name="Guardar">
                    					<a class="btn btn-danger" href="${pageContext.request.contextPath}/empresas.do?op=listar">Cancelar</a>
                 </form>                                        

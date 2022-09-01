@@ -4,6 +4,15 @@ public class RubrosBean {
 	String nombre, descripcion;
 	int idRubro;
 
+	public RubrosBean() {
+		this.nombre = "";
+		
+	}
+	
+	public RubrosBean(String nombre) {
+		this.nombre = nombre;
+		
+	}
 	public int getIdRubro() {
 		return idRubro;
 	}

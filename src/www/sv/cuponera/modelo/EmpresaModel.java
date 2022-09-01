@@ -29,7 +29,7 @@ public class EmpresaModel extends Conection{
 				 Empresa.setTelefono(rs.getString("Telefono"));
 				 Empresa.setCorreo(rs.getString("Correo"));
 				 Empresa.setPorcentajeGanancias(rs.getFloat("PorcentajeGanancias"));
-
+				 Empresa.setRubrosBean(new RubrosBean(rs.getString("Nombre")));
 				 lista.add(Empresa);
 			 }
 			 this.desconectar();
@@ -44,7 +44,7 @@ public class EmpresaModel extends Conection{
 	 public int insertarEmpresa(EmpresaBean Empresa) throws SQLException{
 		 try {
 			 int filasAfectadas =0;
-			 String sql = "CALL pa_insertarEmpresa(?,?,?,?,?,?,?,1)";
+			 String sql = "CALL pa_insertarEmpresa(?,?,?,?,?,?,?,?)";
 			 this.conectar();
 			 cs = conexion.prepareCall(sql);
 			 cs.setString(1, Empresa.getIdEmpresa());
@@ -54,7 +54,7 @@ public class EmpresaModel extends Conection{
 			 cs.setString(5, Empresa.getTelefono());
 			 cs.setString(6, Empresa.getCorreo());
 			 cs.setFloat(7, Empresa.getPorcentajeGanancias());			 	
-			 //cs.setInt(8, Empresa.getRubros_IdRubros());
+			 cs.setInt(8, Empresa.getRubros_IdRubros());
 			 filasAfectadas = cs.executeUpdate();
 			 this.desconectar();
 			 return filasAfectadas;
@@ -99,7 +99,7 @@ public class EmpresaModel extends Conection{
 				 Empresa.setTelefono(rs.getString("Telefono"));
 				 Empresa.setCorreo(rs.getString("Correo"));
 				 Empresa.setPorcentajeGanancias(rs.getFloat("PorcentajeGanancias"));
-				 //Empresa.setRubrosBean(new RubrosBean(rs.getInt("Rubros_IdRubros")));				 						 
+				 Empresa.setRubros_IdRubros(rs.getInt("Rubros_IdRubros"));
 				 this.desconectar();
 				 return Empresa;
 			 }
@@ -115,7 +115,7 @@ public class EmpresaModel extends Conection{
 	 public int editarEmpresa(EmpresaBean Empresa) throws SQLException{
 		 try {
 			 int filasAfectadas =0;
-			 String sql = "CALL pa_modificarEmpresa(?,?,?,?,?,?,?,1)";
+			 String sql = "CALL pa_modificarEmpresa(?,?,?,?,?,?,?,?)";
 			 this.conectar();
 			 cs = conexion.prepareCall(sql);
 			 cs = conexion.prepareCall(sql);
@@ -126,7 +126,7 @@ public class EmpresaModel extends Conection{
 			 cs.setString(5, Empresa.getTelefono());
 			 cs.setString(6,Empresa.getCorreo());
 			 cs.setFloat(7, Empresa.getPorcentajeGanancias());
-			 //cs.setInt(8, Empresa.getRubros_IdRubros());			 
+			 cs.setInt(8, Empresa.getRubros_IdRubros());			 
 			 filasAfectadas = cs.executeUpdate();			 
 			 this.desconectar();
 			 return filasAfectadas;			 	
