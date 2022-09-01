@@ -63,10 +63,13 @@ rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-7
 </div>
 
 <br>
+
+<div class="flex">
 <input type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 
 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" value="Buscar" style="cursor: pointer">
 <a class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg 
 text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" href="${pageContext.request.contextPath}/ofertas.do?op=listar">Restablecer</a>
+</div>
 </form>
 <br>
 
@@ -164,8 +167,7 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
  <c:if test="${initRol == 2}"><!-- ADMIN EMPRESA -->
    <c:forEach var="ofertas" items="${requestScope.listaOfertas}">
    
-     <c:if test="${param.op == 'listar'}">
-      <c:if test="${ofertas.empresaID == initEmpresa}">
+     <c:if test="${param.op == 'listar' && ofertas.empresaID == initEmpresa}">
      <c:set var="cont" value="${cont + 1}"></c:set>
     <tr class="bg-white dark:bg-gray-800">
       <td class="py-4 px-6"><b>${ofertas.idOferta}</b></td>
@@ -186,10 +188,8 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       </c:if>    
     </tr>
       </c:if>
-      </c:if>
       
-      <c:if test="${param.nombre == ofertas.nombre}">
-      <c:if test="${ofertas.empresaID == initEmpresa}">
+      <c:if test="${param.nombre == ofertas.nombre && ofertas.empresaID == initEmpresa}">
       <c:set var="cont" value="${cont + 1}"></c:set>
     <tr class="bg-white dark:bg-gray-800">
       <td class="py-4 px-6"><b>${ofertas.idOferta}</b></td>
@@ -210,10 +210,8 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       </c:if>    
     </tr>
     </c:if>
-    </c:if>
     
-    <c:if test="${ofertas.estado == param.estado}">
-    <c:if test="${ofertas.empresaID == initEmpresa}">
+    <c:if test="${ofertas.estado == param.estado && ofertas.empresaID == initEmpresa}">
     <c:set var="cont" value="${cont + 1}"></c:set>
     <tr class="bg-white dark:bg-gray-800">
       <td class="py-4 px-6"><b>${ofertas.idOferta}</b></td>
@@ -233,7 +231,6 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       <td class="py-4 px-6"><a href="javascript:eliminar('${ofertas.idOferta}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
       </c:if>    
     </tr>
-    </c:if>
     </c:if>
     
     </c:forEach>
