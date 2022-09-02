@@ -75,15 +75,27 @@ public class ReportesController extends HttpServlet {
         
       
 	 }
-	 public void reporteCuponTest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	 public void reporteCuponRecibo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 response.setContentType("application/pdf");
          response.setHeader("Content-Disposition","inline; attachment;filename=\"ReporteCupon.pdf\";");
          String pdfRuta="";
-         pdfRuta=getServletContext().getRealPath("Reportes/testJasper.jasper");
+         HttpSession session=request.getSession();
+         pdfRuta=getServletContext().getRealPath("Reportes/testJasperUsuarioRecibo.jasper");
+         String idCupon=request.getParameter("idCupon");
+         String idUsuario=(String) session.getAttribute("idUsuario");
+         Map parametros=new HashMap();
          try {
 			Connection conn= ConeccionJasperModel.getConnection();
 			JasperReport report= (JasperReport) JRLoader.loadObjectFromFile(pdfRuta);
 			ServletOutputStream out= response.getOutputStream();
+			 parametros.put("idUsuario", idUsuario);
+			 parametros.put("CodigoCupon", idCupon);
+	             //imprimir reporte
+	             JasperPrint print= JasperFillManager.fillReport(report,parametros,conn);
+	             JRPdfExporter exporter=new JRPdfExporter();
+	             exporter.setExporterInput(new SimpleExporterInput(print));
+	             exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
+	             exporter.exportReport();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
