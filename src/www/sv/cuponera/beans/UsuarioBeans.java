@@ -1,8 +1,16 @@
 package www.sv.cuponera.beans;
 
 public class UsuarioBeans {
-    String idUsuario,Username,Nombre,Apellido,Password,IdRol,IdEmpresa,eMail, passInit, DUI;
+    String idUsuario,Username,Nombre,Apellido,Password,IdRol,IdEmpresa,eMail, passInit, DUI, empresa;
 
+	public String getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
+	}
+	
     public String getDUI() {
 		return DUI;
 	}
