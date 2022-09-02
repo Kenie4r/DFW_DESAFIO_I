@@ -58,6 +58,51 @@ public class Email {
 		}
 		
 	}
+	public static boolean adminEmpPass(String receptor, String usuario, String codigo, String empresa) {
+		try {
+			String html = "<h2 style='text-align:center; gap: 10px; '><img style='width: 25px'src='https://cdn-icons-png.flaticon.com/512/3706/3706131.png'> LA CUPONERA </h2>"
+					+ " <p>Se ha creado un nuevo usuario de parte de la empresa <b>"+empresa+"</b>, para poder acceder a tu cuenta de administrador de sucursal, usa los siguiente datos. (Si existe error al ingresar contactarse con el admnistrador del sitio) </p>"
+					+ "<h3>Datos para inicio de sesión:  </h3><br>"
+					+ "<h4 style='padding=1.5em; background-color: gray; color: black; font-weight: bolder; text-aling: center; '>"
+					+ "Usuario: tu correo<br>Contraseña: "+codigo+"</h4>"; 
+			Mensaje(receptor, "Nuevo usuario creado para administrador de la empresa" , html); 
+			
+			return true; 
+		}catch(Exception ex) {
+			return false; 
+		}
+		
+	}
+	public static boolean adminPass(String receptor, String usuario, String codigo) {
+		try {
+			String html = "<h2 style='text-align:center; gap: 10px; '><img style='width: 25px'src='https://cdn-icons-png.flaticon.com/512/3706/3706131.png'> LA CUPONERA </h2>"
+					+ " <p>Se ha creado un nuevo usuario de parte del sitio web <b>La cuponera</b>, para poder acceder a tu cuenta de administrador del sitio, usa los siguientes datos. (Si existe error al ingresar contactarse con la persona encarga de registrate) </p>"
+					+ "<h3>Datos para inicio de sesión:  </h3><br>"
+					+ "<h4 style='padding=1.5em; background-color: gray; color: black; font-weight: bolder; text-aling: center; '>"
+					+ "Usuario: tu correo<br>Contraseña: "+codigo+"</h4>"; 
+			Mensaje(receptor, "Nuevo usuario creado para administrador del sitio" , html); 
+			
+			return true; 
+		}catch(Exception ex) {
+			return false; 
+		}
+		
+	}
+	public static boolean clientePass(String receptor, String usuario, String codigo) {
+		try {
+			String html = "<h2 style='text-align:center; gap: 10px; '><img style='width: 25px'src='https://cdn-icons-png.flaticon.com/512/3706/3706131.png'> LA CUPONERA </h2>"
+					+ " <p>Se ha creado un nuevo usuario de parte del sitio web <b>La cuponera</b>, para poder acceder a tu cuenta de cliente activo del sitio, usa los siguiente datos. (Si existe error al ingresar contactarse con el admnistrador del sitio) </p>"
+					+ "<h3>Datos para inicio de sesión:  </h3><br>"
+					+ "<h4 style='padding=1.5em; background-color: gray; color: black; font-weight: bolder; text-aling: center; '>"
+					+ "Usuario: tu correo<br>Contraseña: "+codigo+"</h4>"; 
+			Mensaje(receptor, "Nuevo usuario creado para cliente" , html); 
+			
+			return true; 
+		}catch(Exception ex) {
+			return false; 
+		}
+		
+	}
 	public static boolean recuperarPass(String receptor, String codigo) {
 		try {
 			String html = "<h2 style='text-align:center; gap: 5px; '><img style='width: 50px'src='https://cdn-icons-png.flaticon.com/512/3706/3706131.png'> LA CUPONERA </h2> <p>Se ha cambiado la contraseña ha una de respaldo, si tu no has pedido la contraseña, por favor verificar todos tus datos. </p>"
