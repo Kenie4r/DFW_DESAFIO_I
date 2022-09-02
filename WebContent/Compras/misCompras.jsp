@@ -57,7 +57,8 @@
 						  </div>
 						</div>
 					</c:if>
-				
+		<c:if test="${not empty list}">	<a href="${pageContext.request.contextPath}/ReportesController" class="px-6 py-3 text-blue-100 no-underline bg-blue-500 rounded hover:bg-blue-600 hover:underline hover:text-blue-200">Ver mis recibos</a></c:if>	
+
 					<c:forEach  items="${requestScope.list}" var="cupon">
 					
 						
