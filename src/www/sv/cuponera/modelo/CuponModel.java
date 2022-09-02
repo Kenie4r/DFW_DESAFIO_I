@@ -65,7 +65,7 @@ public class CuponModel extends Conection{
 	public List<CuponBean> listarCuponesForUserF(String codigo, String filter) throws SQLException{
 		try {
 			List<CuponBean> lista = new ArrayList<>(); 
-			String sql  = " CALL `obtenerCuponesUserF`(?, 2)"; 
+			String sql  = " CALL `obtenerCuponesUserF`(?, ?)"; 
 			this.conectar();
 			st = conexion.prepareStatement(sql); 
 			st.setInt(1, Integer.parseInt(codigo));

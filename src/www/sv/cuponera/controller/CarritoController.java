@@ -21,11 +21,13 @@ import com.google.gson.Gson;
 
 import www.sv.cuponera.beans.CuponBean;
 import www.sv.cuponera.beans.OfertaBean;
+import www.sv.cuponera.beans.PagoBean;
 import www.sv.cuponera.beans.UsuarioBeans;
 import www.sv.cuponera.modelo.ClienteRegistroModel;
 import www.sv.cuponera.modelo.Conection;
 import www.sv.cuponera.modelo.CuponModel;
 import www.sv.cuponera.modelo.OfertaModel;
+import www.sv.cuponera.modelo.pagosModel;
 import www.sv.cuponera.modelo.randomCode;
 import www.sv.cuponera.utils.Email;
 
@@ -161,7 +163,12 @@ protected void listar(HttpServletRequest request, HttpServletResponse response)t
 	OfertaModel ofertas = new OfertaModel(); 
 	try {
 		List<OfertaBean> lista = new ArrayList<>();
-
+		String codigo2 = request.getSession().getAttribute("idUsuario").toString(); 
+		List<PagoBean> pagos = null; 
+		pagosModel model = new pagosModel(); 
+		if(!codigo2.isEmpty()) {
+			pagos = model.listarPagosUserA(codigo2); 
+		}
 		if(codes.length()!=0) {
 			String[] codesSplit = codes.split(","); 
 			for(String codigo : codesSplit) {
@@ -170,6 +177,7 @@ protected void listar(HttpServletRequest request, HttpServletResponse response)t
 			}
 		}
 		System.out.print(lista.size());
+		request.setAttribute("tarjetas", pagos);
 		request.setAttribute("componentes", lista);
 		request.getRequestDispatcher("Carrito/index.jsp").forward(request, response);
 	} catch (SQLException e) {
