@@ -57,7 +57,7 @@
 						  </div>
 						</div>
 					</c:if>
-		<c:if test="${not empty list}">	<a href="${pageContext.request.contextPath}/ReportesController" class="px-6 py-3 text-blue-100 no-underline bg-blue-500 rounded hover:bg-blue-600 hover:underline hover:text-blue-200">Ver mis recibos</a></c:if>	
+		<c:if test="${not empty list}">	<a href="${pageContext.request.contextPath}/ReportesController?op=" class="px-6 py-3 text-blue-100 no-underline bg-blue-500 rounded hover:bg-blue-600 hover:underline hover:text-blue-200">Ver mis recibos</a></c:if>	
 
 					<c:forEach  items="${requestScope.list}" var="cupon">
 					
@@ -106,7 +106,7 @@
 				                                    </div>
 				                                </div>
 				                            </div>
-			                            <a class="mt-3 text-indigo-500 inline-flex items-center">Obtener mi PDF
+			                            <a class="mt-3 text-indigo-500 inline-flex items-center" href="${pageContext.request.contextPath}/ReportesController?op=recibo&idCupon=${cupon.getCodigoCupon()}" >Obtener mi PDF
 			                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
 			                                <path d="M5 12h14M12 5l7 7-7 7"></path>
 			                            </svg>

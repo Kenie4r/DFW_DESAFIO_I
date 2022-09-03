@@ -65,13 +65,7 @@ public class ReportesController extends HttpServlet {
 			e.printStackTrace();
 		}
         
-         //Connection conectado=conn.conectar();
-         
-         
-        	 
-        	
-        	 
-     
+         //Connection conectado=conn.conectar();	
         
       
 	 }
@@ -110,9 +104,22 @@ public class ReportesController extends HttpServlet {
 		
          
 	 }
+	 
+	 public void processReport(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+		String op=request.getParameter("op");
+		switch (op) {
+		case "recibo":
+			reporteCuponRecibo(request, response);
+			break;
+			
+		default:
+			reporteCupon1(request, response);
+			break;
+		}
+	 }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		reporteCupon1(request,response);
+		processReport(request, response);
 	}
 
 	/**
@@ -120,7 +127,7 @@ public class ReportesController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		reporteCupon1(request,response);
+		processReport(request, response);
 	}
 
 }

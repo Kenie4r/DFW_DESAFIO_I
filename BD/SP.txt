@@ -1,0 +1,135 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `aprobacion_rechazoOferta`(IN `id` INT, IN `observaciones` VARCHAR(100), IN `estado` VARCHAR(30))
+UPDATE oferta SET oferta.observaciones = observaciones, oferta.Estado = estado WHERE oferta.idOferta = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `crearCupon`(IN `usuario` INT, IN `oferta` INT, IN `codigoCupon` VARCHAR(45))
+BEGIN
+    INSERT INTO cupon(Usuarios_idUsuario, Oferta_idOferta, CodigoCupon, FechaCompra) VALUES ( usuario,oferta,codigoCupon,NOW());
+    UPDATE oferta SET limite = limite-1 WHERE idOferta = oferta;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarOferta`(IN `id` INT)
+DELETE FROM oferta WHERE oferta.idOferta = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarRubro`(IN `id` INT(11))
+DELETE FROM rubros WHERE idRubros = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarUsuario`(IN `id` INT)
+DELETE FROM usuarios WHERE usuarios.idUsuario = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarOferta`(IN `nombre` VARCHAR(30), IN `descripcion` VARCHAR(100), IN `precioRe` FLOAT, IN `precioOf` FLOAT, IN `inicio` VARCHAR(10), IN `fin` VARCHAR(10), IN `fechaLim` VARCHAR(10), IN `cupones` INT, IN `estado` VARCHAR(30), IN `idEmp` VARCHAR(6))
+INSERT INTO oferta(oferta.NombreOferta, oferta.Descripicon, oferta.PrecioRegular, oferta.PrecioOfertado, oferta.inicio, oferta.Fin, oferta.fechaLimite, oferta.limite, oferta.Estado, oferta.Empresa_IdEmpresa) VALUES(nombre, descripcion, precioRe, precioOf, inicio, fin, fechaLim, cupones, estado, idEmp)$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarRubro`(IN `nombre` VARCHAR(30), IN `descripcion` VARCHAR(100))
+INSERT INTO rubros(Nombre, Descripcion) VALUES(nombre, descripcion)$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarUsuario`(IN `usuario` VARCHAR(10), IN `nombre` VARCHAR(30), IN `apellido` VARCHAR(30), IN `contrasena` VARCHAR(100), IN `correo` VARCHAR(50), IN `rol` INT, IN `empresa` VARCHAR(6), IN `dui` VARCHAR(9), IN `codigoV` VARCHAR(5))
+INSERT INTO usuarios(usuarios.Username, usuarios.Nombre, usuarios.Apellidos, usuarios.Pass, usuarios.Email, usuarios.Roles_idRoles, usuarios.Empresa_IdEmpresa, usuarios.DUI, usuarios.passinit) VALUES(usuario, nombre, apellido, contrasena, correo, rol, empresa, dui, codigoV)$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listarEmpresas`()
+SELECT * FROM empresa$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listarOfertas`()
+SELECT * FROM oferta INNER JOIN empresa ON oferta.Empresa_IdEmpresa = empresa.IdEmpresa$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listarRubros`()
+SELECT * FROM rubros$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listarUsuarios`()
+SELECT * FROM usuarios INNER JOIN roles ON roles.idRoles = usuarios.Roles_idRoles INNER JOIN empresa ON empresa.IdEmpresa = usuarios.Empresa_IdEmpresa$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modificarOferta`(IN `id` INT, IN `nombre` VARCHAR(30), IN `descripcion` VARCHAR(100), IN `precioRe` FLOAT, IN `precioOf` FLOAT, IN `inicio` VARCHAR(10), IN `fin` VARCHAR(10), IN `fechaLim` VARCHAR(10), IN `cupones` INT, IN `estado` VARCHAR(30), IN `idEmp` VARCHAR(6))
+UPDATE oferta SET oferta.NombreOferta = nombre, oferta.Descripicon = descripcion, oferta.PrecioRegular = precioRe, oferta.PrecioOfertado = precioOf, oferta.inicio = inicio, oferta.Fin = fin, oferta.fechaLimite = fechaLim, oferta.limite = cupones, oferta.Estado = estado, oferta.Empresa_IdEmpresa = idEmp WHERE oferta.idOferta = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modificarRubro`(IN `id` INT(11), IN `nombre` VARCHAR(30), IN `descripcion` VARCHAR(100))
+UPDATE rubros r SET r.Nombre = nombre, r.Descripcion = descripcion WHERE r.IdRubros = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modificarUsuario`(IN `id` INT, IN `usuario` VARCHAR(10), IN `nombre` VARCHAR(30), IN `apellido` VARCHAR(30), IN `dui` VARCHAR(9))
+UPDATE usuarios SET usuarios.Username = usuario, usuarios.Nombre = nombre, usuarios.Apellidos = apellido, usuarios.DUI = dui WHERE usuarios.idUsuario = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerCuponesUser`(IN `iduser` INT)
+SELECT c.* ,e.NombreEmpresa, o.NombreOferta, o.Descripicon, o.fechaLimite FROM cupon as c INNER JOIN oferta as o ON c.Oferta_idOferta = o.idOferta INNER JOIN empresa as e ON o.Empresa_IdEmpresa = e.IdEmpresa WHERE c.Usuarios_idUsuario = iduser ORDER BY c.FechaCompra DESC$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerCuponesUserF`(IN `iduser` INT, IN `estadoa` VARCHAR(45))
+SELECT c.* ,e.NombreEmpresa, o.NombreOferta, o.Descripicon, o.fechaLimite FROM cupon as c INNER JOIN oferta as o ON c.Oferta_idOferta = o.idOferta INNER JOIN empresa as e ON o.Empresa_IdEmpresa = e.IdEmpresa WHERE c.Usuarios_idUsuario = iduser AND c.Estado = estadoa ORDER BY c.FechaCompra DESC$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerOferta`(IN `id` INT)
+SELECT * FROM oferta INNER JOIN empresa ON oferta.Empresa_IdEmpresa = empresa.IdEmpresa WHERE oferta.idOferta = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerRubro`(IN `id` INT)
+SELECT * FROM rubros WHERE rubros.IdRubros = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_eliminarEmpresa`(IN _idempresa VARCHAR(6))
+    NO SQL
+DELETE FROM empresa WHERE IdEmpresa=_idempresa$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_insertarEmpresa`(IN _idempresa VARCHAR(6), IN _nombre_empresa VARCHAR(45), IN _ubicacion LONGTEXT, IN _contacto VARCHAR(50), IN _telefono VARCHAR(9), IN _correo VARCHAR(50), IN _porcentaje_ganancias FLOAT(10,2), IN _rubros_idrubros INT(11))
+    NO SQL
+INSERT INTO empresa
+VALUES (_idempresa,_nombre_empresa,_ubicacion,_contacto,_telefono,_correo,_porcentaje_ganancias,_rubros_idrubros)$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_listarEmpresas`()
+    NO SQL
+BEGIN
+SELECT e.IdEmpresa, e.NombreEmpresa, e.Ubicacion, e.Contacto, e.Telefono, e.Correo, e.PorcentajeGanancias, r.Nombre FROM empresa e 
+INNER JOIN rubros r
+ON e.Rubros_IdRubros = r.IdRubros;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_modificarEmpresa`(IN _idempresa VARCHAR(6), IN _nombre_empresa VARCHAR(45), IN _ubicacion LONGTEXT, IN _contacto VARCHAR(50), IN _telefono VARCHAR(9), IN _correo VARCHAR(50), IN _porcentaje_ganancias FLOAT(10,2), IN _rubros_idrubros INT(11))
+    NO SQL
+UPDATE empresa e
+SET
+e.NombreEmpresa=_nombre_empresa, e.Ubicacion=_ubicacion, e.Contacto=_contacto, e.Telefono=_telefono, e.Correo=_correo, e.PorcentajeGanancias=_porcentaje_ganancias, e.Rubros_IdRubros=_rubros_idrubros
+WHERE e.IdEmpresa=_idempresa$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pa_obtenerEmpresa`(IN _idempresa VARCHAR(6))
+    NO SQL
+SELECT * FROM empresa WHERE IdEmpresa = _idempresa$$
+DELIMITER ;
