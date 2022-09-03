@@ -120,7 +120,7 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       </c:if>
       <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuarios.do?op=obtener&id=${usuarios.idUsuario}"><i class="fas fa-edit"  style="color: blue; cursor: pointer;"></i> Editar</a></td>
       <td class="py-4 px-6"><a href="javascript:eliminar('${usuarios.idUsuario}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
-      <td class="py-4 px-6"><a href="#"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
+      <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuario?op=recoverPass&email=${usuarios.eMail}"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
     </tr>
     </c:if>
     
@@ -144,7 +144,7 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       <td class="py-4 px-6">${usuarios.empresa}</td>
       <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuarios.do?op=obtener&id=${usuarios.idUsuario}"><i class="fas fa-edit"  style="color: blue; cursor: pointer;"></i> Editar</a></td>
       <td class="py-4 px-6"><a href="javascript:eliminar('${usuarios.idUsuario}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
-      <td class="py-4 px-6"><a href="#"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
+      <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuario?op=recoverPass&email=${usuarios.eMail}"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
     </tr>
     </c:if>
     
@@ -168,7 +168,7 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       </c:if>
       <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuarios.do?op=obtener&id=${usuarios.idUsuario}"><i class="fas fa-edit"  style="color: blue; cursor: pointer;"></i> Editar</a></td>
       <td class="py-4 px-6"><a href="javascript:eliminar('${usuarios.idUsuario}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
-      <td class="py-4 px-6"><a href="#"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
+      <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuario?op=recoverPass&email=${usuarios.eMail}"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
     </tr>
     </c:if>
     
@@ -192,7 +192,7 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       </c:if>
       <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuarios.do?op=obtener&id=${usuarios.idUsuario}"><i class="fas fa-edit"  style="color: blue; cursor: pointer;"></i> Editar</a></td>
       <td class="py-4 px-6"><a href="javascript:eliminar('${usuarios.idUsuario}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
-      <td class="py-4 px-6"><a href="#"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
+      <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuario?op=recoverPass&email=${usuarios.eMail}"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
     </tr>
     </c:if>
     
@@ -210,7 +210,7 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       <td class="py-4 px-6">${usuarios.eMail}</td>
       <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuarios.do?op=obtener&id=${usuarios.idUsuario}"><i class="fas fa-edit"  style="color: blue; cursor: pointer;"></i> Editar</a></td>
       <td class="py-4 px-6"><a href="javascript:eliminar('${usuarios.idUsuario}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
-      <td class="py-4 px-6"><a href="#"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
+      <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuario?op=recoverPass&email=${usuarios.eMail}"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
     </tr>
     </c:if>
     
@@ -222,7 +222,7 @@ text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus
       <td class="py-4 px-6">${usuarios.eMail}</td>
       <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuarios.do?op=obtener&id=${usuarios.idUsuario}"><i class="fas fa-edit"  style="color: blue; cursor: pointer;"></i> Editar</a></td>
       <td class="py-4 px-6"><a href="javascript:eliminar('${usuarios.idUsuario}')"><i class="fas fa-trash-alt" style="color: red; cursor: pointer;"></i> Eliminar</a></td>
-      <td class="py-4 px-6"><a href="#"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
+      <td class="py-4 px-6"><a href="${pageContext.request.contextPath}/usuario?op=recoverPass&email=${usuarios.eMail}"><i class="fas fa-lock" style="color: black; cursor: pointer;"></i> Cambiar Contraseña</a></td>
     </tr>
     </c:if>
       
