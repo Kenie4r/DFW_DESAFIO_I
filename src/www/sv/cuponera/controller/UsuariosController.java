@@ -48,7 +48,7 @@ public class UsuariosController extends HttpServlet {
  insertar(request, response);
  break;
  
- /*case "obtener":
+ case "obtener":
  obtener(request, response);
  break;
  
@@ -58,7 +58,7 @@ public class UsuariosController extends HttpServlet {
  
  case "eliminar":
  eliminar(request, response);
- break;*/
+ break;
  
  }
  }
@@ -153,9 +153,9 @@ usuario.setPassword(randomCode.getRandomString(5));
 usuario.setPassInit(randomCode.getRandomString(5));
  if (modelo1.insertarCliente(usuario) > 0) {
  listaOK.clear();
- listaOK.add("El usuario ha sido ingresado con éxito, favor notificar al usuario para que revise su correo.");
+ listaOK.add("La información ha sido ingresada con éxito, favor notificar al usuario para que revise su correo.");
  request.setAttribute("listaOK", listaOK);
- 
+
  Email.tokenUsuario(usuario.geteMail(), usuario.getPassInit()); 
  if(usuario.getIdRol().equals("1")){
  Email.adminPass(usuario.geteMail(), usuario.getUsername(), usuario.getPassword());
@@ -183,13 +183,13 @@ usuario.setPassInit(randomCode.getRandomString(5));
  }
  }
 
- /*private void obtener(HttpServletRequest request, HttpServletResponse response) {
+ private void obtener(HttpServletRequest request, HttpServletResponse response) {
  try {
  int id = Integer.parseInt(request.getParameter("id"));
- RubrosBean rubro = modelo.obtenerRubro(id);
- if (rubro != null) {
- request.setAttribute("rubro", rubro);
- request.getRequestDispatcher("/Rubros/modificarRubro.jsp").forward(request, response);
+ UsuarioBeans usuario = modelo.obtenerUsuario(id);
+ if (usuario != null) {
+ request.setAttribute("usuario", usuario);
+ request.getRequestDispatcher("/Usuarios/modificarUsuario.jsp").forward(request, response);
  } else {
  response.sendRedirect(request.getContextPath() + "/error404.jsp");
  }
@@ -198,35 +198,35 @@ usuario.setPassInit(randomCode.getRandomString(5));
  }
  }
  
- private void modificar(HttpServletRequest request, HttpServletResponse response) {
+private void modificar(HttpServletRequest request, HttpServletResponse response) {
  try {
  listaErrores.clear();
- RubrosBean rubro = new RubrosBean();
- rubro.setIdRubro(Integer.parseInt(request.getParameter("id")));
- rubro.setNombre(request.getParameter("nombre"));
- rubro.setDescripcion(request.getParameter("descripcion"));
+ UsuarioBeans usuario = new UsuarioBeans();
+ usuario.setIdUsuario(request.getParameter("id"));
+ usuario.setApellido(request.getParameter("apellido"));
+ usuario.setNombre(request.getParameter("name"));
 
- if (rubro.getNombre().isEmpty()) {
- listaErrores.add("El nombre es obligatorio");
+ if (usuario.getNombre().isEmpty()) {
+ listaErrores.add("El nombres es obligatorio");
  }
- if (rubro.getDescripcion().isEmpty()) {
- rubro.setDescripcion("Sin registros");
+ if (usuario.getApellido().isEmpty()) {
+	 listaErrores.add("El apellido es obligatorio");
  }
  
  if (listaErrores.size() > 0) {
 	 request.setAttribute("listaErrores", listaErrores);
-	 request.getRequestDispatcher("rubros.do?op=obtener&id="+rubro.getIdRubro()).forward(request, response);
+	 request.getRequestDispatcher("usuarios.do?op=obtener&id="+usuario.getIdUsuario()).forward(request, response);
 	 } else {
-	 if (modelo.modificarRubro(rubro) > 0) {
+	 if (modelo.modificarUsuario(usuario) > 0) {
 		 listaOK.clear();
-		 listaOK.add("El elemento ha sido modificado con éxito.");
+		 listaOK.add("La información del usuario ha sido modificada con éxito.");
 		 request.setAttribute("listaOK", listaOK);
-		 request.getRequestDispatcher("rubros.do?op=obtener&id="+rubro.getIdRubro()).forward(request, response);
+		 request.getRequestDispatcher("usuarios.do?op=obtener&id="+usuario.getIdUsuario()).forward(request, response);
 	 } else {
 		 listaErrores.clear();
 		 listaErrores.add("Ocurrio un error. Intente de nuevo");
 		 request.setAttribute("listaErrores", listaErrores);
-		 request.getRequestDispatcher("rubros.do?op=obtener&id="+rubro.getIdRubro()).forward(request, response);
+		 request.getRequestDispatcher("usuarios.do?op=obtener&id="+usuario.getIdUsuario()).forward(request, response);
 	 }
 	 }
  } catch (IOException | SQLException | ServletException ex) {
@@ -247,6 +247,6 @@ usuario.setPassInit(randomCode.getRandomString(5));
  } catch (SQLException | ServletException | IOException ex) {
  Logger.getLogger(RubrosController.class.getName()).log(Level.SEVERE, null, ex);
  }
- }*/
+ }
 }
 
