@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import www.sv.cuponera.utils.Validaciones;
 import www.sv.cuponera.beans.EmpresaBean;
 import www.sv.cuponera.modelo.RubroModel;
+import www.sv.cuponera.modelo.RubrosModel;
 import www.sv.cuponera.modelo.EmpresaModel;
 
 /**
@@ -30,6 +31,7 @@ public class EmpresaController extends HttpServlet {
 	ArrayList<String> listaErrores = new ArrayList<>();
 	EmpresaModel modeloEmpresa = new EmpresaModel();
 	RubroModel modeloRubros = new RubroModel();
+	RubrosModel modelosRubros = new RubrosModel();
 	/**
      * @see HttpServlet#HttpServlet()
      */
@@ -78,6 +80,7 @@ public class EmpresaController extends HttpServlet {
 		// TODO Auto-generated method stub
 		 try {
 			 request.setAttribute("listaEmpresas", modeloEmpresa.listarEmpresas());
+			 request.setAttribute("listaRubros", modelosRubros.listarRubros());
 			 request.getRequestDispatcher("empresas/listaEmpresas.jsp").forward(request, response);
 		 }catch(SQLException | ServletException | IOException  ex) {		
 			 Logger.getLogger(EmpresaController.class.getName()).log(Level.SEVERE, null, ex); 			
