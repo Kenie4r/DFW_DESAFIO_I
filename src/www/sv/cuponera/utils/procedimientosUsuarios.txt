@@ -19,6 +19,11 @@ SELECT * FROM usuarios INNER JOIN roles ON roles.idRoles = usuarios.Roles_idRole
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `modificarUsuario`(IN `id` INT, IN `usuario` VARCHAR(10), IN `nombre` VARCHAR(30), IN `apellido` VARCHAR(30), IN `dui` VARCHAR(9))
-UPDATE usuarios SET usuarios.Username = usuario, usuarios.Nombre = nombre, usuarios.Apellidos = apellido, usuarios.DUI = dui WHERE usuarios.idUsuario = id$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerUsuario`(IN `id` INT)
+SELECT * FROM usuarios INNER JOIN roles ON roles.idRoles = usuarios.Roles_idRoles INNER JOIN empresa ON empresa.IdEmpresa = usuarios.Empresa_IdEmpresa WHERE usuarios.idUsuario = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modificarUsuario`(IN `id` INT, IN `nombre` VARCHAR(30), IN `apellido` VARCHAR(30))
+UPDATE usuarios SET usuarios.Nombre = nombre, usuarios.Apellidos = apellido WHERE usuarios.idUsuario = id$$
 DELIMITER ;
