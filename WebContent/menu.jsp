@@ -20,11 +20,11 @@
 
             };
             String[] Links = {
-                    url + "/inicio.jsp",  url +"/ofertas.do",
-                    url +"/empresas/index.jsp",   url +"/empresas/UsuariosEmpresa.jsp",
+                    url + "/inicio.jsp",  url +"/ofertas.do?op=listar",
+                    url +"/empresas.do",   url +"/usuarios.do?op=listar",
                     url +"/ofertas.do",   url +"/Miscompras",
                     url +"/ofertas/index.jsp",   url +"/cupones/cupones",  url + "/ofertas", 
-                    url+ "/usuarios.do", url+"/rubros.do?op=listar"
+                    url+ "/usuarios.do?op=listar", url+"/rubros.do?op=listar"
             };
             switch (rol){
         	case 1: 

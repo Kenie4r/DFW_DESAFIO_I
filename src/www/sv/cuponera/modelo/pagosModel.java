@@ -173,4 +173,30 @@ public class pagosModel extends Conection {
 			return null; 
 		}
 	}
+	
+	public int confirmPago(String codigo, String cv) throws SQLException {
+		try {
+			this.conectar();
+			String sql = "SELECT COUNT(*) FROM pagos WHERE IdPagos = ? AND CV = ?";
+			st = conexion.prepareStatement(sql); 
+			st.setInt(1, Integer.parseInt(codigo));
+			st.setString(2, cv);
+			rs = st.executeQuery();
+			int result = 0; 
+			while(rs.next()) {
+				result = rs.getInt("COUNT(*)"); 
+				this.desconectar();
+				return result;
+			}
+			
+			this.desconectar();
+			
+			return 0 ; 
+		}catch(SQLException ex) {
+			
+			this.desconectar();
+			Logger.getLogger(pagosModel.class.getName()).log(Level.SEVERE , null, ex);
+			return 0; 
+		}
+	}
 }

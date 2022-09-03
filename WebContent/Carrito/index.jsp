@@ -98,7 +98,7 @@
         </div>
         <div>
           <label class="font-medium inline-block mb-3 text-sm uppercase">Metodo de Pago</label>
-          <select class="block p-2 text-gray-600 w-full text-sm">
+          <select class="block p-2 text-gray-600 w-full text-sm" id="card">
           	<c:choose>
           		<c:when test="${empty tarjetas }">
           		            <option value="null">No existen Tarjetas seleccionadas</option>

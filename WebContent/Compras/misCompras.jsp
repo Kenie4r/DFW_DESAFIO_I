@@ -39,7 +39,17 @@
 	
 	
 		<div class="flex flex-col gap-4 w-full h-screen overflow-hidden" id='ofertas'>
-				<h1 class="font-medium leading-tight text-xl mt-0 mb-2 mx-10  col-span-2">Cupones comprados</h1>	
+				<div class="font-medium leading-tight text-xl mt-0 mb-2 mx-10  col-span-2  flex flex-row jutify-between items-center">
+					<h1 >Cupones comprados </h1>
+									
+									
+			 		<c:if test="${not empty list}">	
+			 			<a href="${pageContext.request.contextPath}/ReportesController" class="px-6 py-3 text-blue-100 no-underline bg-blue-500 rounded hover:bg-blue-600 hover:underline hover:text-blue-200">Ver mis recibos</a>
+			 		</c:if>	
+					
+				
+				</div>
+				</h1>	
 				<div class=' overflow-y-scroll h-full  col-span-2 	'>
 				
 					<c:if test="${empty list}">
@@ -57,7 +67,7 @@
 						  </div>
 						</div>
 					</c:if>
-		<c:if test="${not empty list}">	<a href="${pageContext.request.contextPath}/ReportesController?op=" class="px-6 py-3 text-blue-100 no-underline bg-blue-500 rounded hover:bg-blue-600 hover:underline hover:text-blue-200">Ver mis recibos</a></c:if>	
+
 
 					<c:forEach  items="${requestScope.list}" var="cupon">
 					

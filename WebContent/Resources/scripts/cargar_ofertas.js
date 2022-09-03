@@ -42,6 +42,8 @@ $(document).ready(function(){
 })
 
 document.getElementById("pay").addEventListener("click", (e)=>{
+	
+	
 
 	let inputs = document.getElementsByClassName("totales"); 
 	let inputsArray = Array.from(inputs); 
@@ -52,114 +54,56 @@ document.getElementById("pay").addEventListener("click", (e)=>{
 			text: 'No existen ofertas seleccionadas, selecciona al menos una para poder continuar', 
 		})
 	}else{
-		let ofertasID = document.getElementsByClassName("ofertasId");
-		ofertasID = Array.from(ofertasID); 
-		let cantidades = document.getElementsByClassName("cantidades"); 
-		cantidades = Array.from(cantidades); 
-		Swal.fire({
-			icon : 'question',
-			text: '¿Quieres realizar la compra?',
-			showCancelButton: true, 
-			confirmButtonText: 'Realizar compra', 
-			cancelButtonText: 'Cancelar compra'
-		}).then( (result)=>{
+		let card = document.getElementById("card").value; 
+		if(card=="null"){
+			
 			Swal.fire({
-                title: 'Trabanjando en ello',
-                text: 'Estamos realizando la compra de manera segura ;)',
-                allowOutsideClick: false,
-                showConfirmButton: false, 
-                willOpen: () => {
-                    Swal.showLoading()
-                },
-            });
-			if(result.isConfirmed){
-				let codigosOfertas = new Array()
-				let cantidaSA = new Array(); 
-				for(let oferta  in ofertasID){
-					codigosOfertas.push(ofertasID[oferta].value); 
-					cantidaSA.push(cantidades[oferta].value); 
-					/*for(let veces = 0; veces<cantidades[oferta].value; veces++){
-						//console.log(ofertasID[oferta].value)
-				
-							$.post("/LaCuponera/carrito?op=transation", {
-								"ofertas": ofertasID[oferta].value,
-								"user": $("#userID").val()
-							}, function(rs){
-								console.log(rs)
-								if(rs=="Exito"){
-									hechas++; 
-									console.log(hechas)
-
-								}
-							})
-						
-						
-					}*/
+				icon: 'error',
+				title: 'Error', 
+				text : 'No se puede continuar, por favor ingresa o selecciona un metodo de pago'
+			})
+		}else{
+			let ofertasID = document.getElementsByClassName("ofertasId");
+			ofertasID = Array.from(ofertasID); 
+			let cantidades = document.getElementsByClassName("cantidades"); 
+			cantidades = Array.from(cantidades); 
+			Swal.fire({
+				icon : 'question',
+				text: '¿Quieres realizar la compra?',
+				showCancelButton: true, 
+				confirmButtonText: 'Realizar compra', 
+				cancelButtonText: 'Cancelar compra'
+			}).then( (result)=>{
+				Swal.fire({
+					icon: 'question', 
+					html : '<label class="swal2-label">Ingrese el CVV de su tarjeta</label><br><input class="swal2-input" id="cv" type="text" placheholder="Ingrese el CVV aqui">', 
 					
-				}
-				
-				
-				$.post("/LaCuponera/carrito?op=transation", {
-					"ofertas": codigosOfertas.join(","),
-					"cantidades":  cantidaSA.join(","), 
-					"user": $("#userID").val()
-				}, function(rs){
-					if(rs=="exito"){
-						eliminarOfertaAll()
-						Swal.fire({
-							icon: 'success',
-							text: 'Se han realizado todas las compras, ya puedes ver todos tus cupones en el apartado de mis compras', 
-							showDenyButton: true,
-							confirmButtonText: 'ir a mis compras', 
-							denyButtonText: 'Seguir comprando'
-						}).then((result)=>{
-							if(result.isConfirmed){
-								location.href = "/LaCuponera/Miscompras"; 
+				}).then((rs)=>{
+					if(rs.isConfirmed){
+						$.post("/LaCuponera/MetodosPago", {
+							op: "verificar",
+							codigo: card, 
+							cv: $("#cv").val()
+						}, 
+						function (postR){
+							if(postR=="Confirmado"){
+								payMethod(rs)
 							}else{
-								location.href = "/LaCuponera/ofertas"; 
+								Swal.fire({
+									title: 'Error', 
+									icon: 'error', 
+									text: 'El codigo de seguridad de la tarjeta no es correcto, vuelve a intentarlo más tarde'
+								})
 							}
-						})
-
-					}else if(rs == "exito2"){
-						eliminarOfertaAll()
-						Swal.fire({
-							icon: 'success',
-							text: 'Se han realizado las compras, algunas ofertas ya no pueden ser compradas debido a que se acabaron sus existencias', 
-							showDenyButton: true,
-							confirmButtonText: 'ir a mis compras', 
-							denyButtonText: 'Seguir comprando',
-							allowEscapeKey: false,
-							allowOutsideClick: false,
-						}).then((result)=>{
-							if(result.isConfirmed){
-								location.href = "/LaCuponera/Miscompras"; 
-							}else{
-								location.href = "/LaCuponera/ofertas"; 
-							}
-						})
-					}else if(rs == "fracaso"){
-						Swal.fire({
-							icon: 'error',
-							text: 'No se ha podido realizar las compras, vuelve a intentrarlo más tarde', 
-							showDenyButton: true,
-							confirmButtonText: 'Volver a ofertas', 
-							denyButtonText: 'Ir a mis compras', 
-							allowEscapeKey: false,
-							allowOutsideClick: false,
-						}).then((result)=>{
-							if(result.isConfirmed){
-								location.href = "/LaCuponera/Miscompras"; 
-							}else{
-								location.href = "/LaCuponera/ofertas"; 
-							}
+						
 						})
 					}
 				})
 				
-			}
-		})
+				
+			})
+		}
 	}
-	
 	
 	
 })
@@ -264,14 +208,89 @@ function sizeOfObj (obj) {
 	}
 
 
-function resultSWal(){
 
-	
-}
+function payMethod(result){
+	let ofertasID = document.getElementsByClassName("ofertasId");
+	ofertasID = Array.from(ofertasID); 
+	let cantidades = document.getElementsByClassName("cantidades"); 
+	cantidades = Array.from(cantidades); 
+	Swal.fire({
+		title: 'Trabanjando en ello',
+		text: 'Estamos realizando la compra de manera segura ;)',
+		allowOutsideClick: false,
+		showConfirmButton: false, 
+		willOpen: () => {
+			Swal.showLoading()
+		},
+	});
+	if(result.isConfirmed){
+		let codigosOfertas = new Array()
+		let cantidaSA = new Array(); 
+		for(let oferta  in ofertasID){
+			codigosOfertas.push(ofertasID[oferta].value); 
+			cantidaSA.push(cantidades[oferta].value); 
+		}
+		
+		
+		$.post("/LaCuponera/carrito?op=transation", {
+			"ofertas": codigosOfertas.join(","),
+			"cantidades":  cantidaSA.join(","), 
+			"user": $("#userID").val()
+		}, function(rs){
+			if(rs=="exito"){
+				eliminarOfertaAll()
+				Swal.fire({
+					icon: 'success',
+					text: 'Se han realizado todas las compras, ya puedes ver todos tus cupones en el apartado de mis compras', 
+					showDenyButton: true,
+					confirmButtonText: 'ir a mis compras', 
+					denyButtonText: 'Seguir comprando'
+				}).then((result)=>{
+					if(result.isConfirmed){
+						location.href = "/LaCuponera/Miscompras"; 
+					}else{
+						location.href = "/LaCuponera/ofertas"; 
+					}
+				})
 
-function payMethod(){
+			}else if(rs == "exito2"){
+				eliminarOfertaAll()
+				Swal.fire({
+					icon: 'success',
+					text: 'Se han realizado las compras, algunas ofertas ya no pueden ser compradas debido a que se acabaron sus existencias', 
+					showDenyButton: true,
+					confirmButtonText: 'ir a mis compras', 
+					denyButtonText: 'Seguir comprando',
+					allowEscapeKey: false,
+					allowOutsideClick: false,
+				}).then((result)=>{
+					if(result.isConfirmed){
+						location.href = "/LaCuponera/Miscompras"; 
+					}else{
+						location.href = "/LaCuponera/ofertas"; 
+					}
+				})
+			}else if(rs == "fracaso"){
+				Swal.fire({
+					icon: 'error',
+					text: 'No se ha podido realizar las compras, vuelve a intentrarlo más tarde', 
+					showDenyButton: true,
+					confirmButtonText: 'Volver a ofertas', 
+					denyButtonText: 'Ir a mis compras', 
+					allowEscapeKey: false,
+					allowOutsideClick: false,
+				}).then((result)=>{
+					if(result.isConfirmed){
+						location.href = "/LaCuponera/Miscompras"; 
+					}else{
+						location.href = "/LaCuponera/ofertas"; 
+					}
+				})
+			}
+		})
+		
+	}
 	
-	return 0; 
 }
 
 

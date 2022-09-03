@@ -1,6 +1,7 @@
 package www.sv.cuponera.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import www.sv.cuponera.beans.PagoBean;
 import www.sv.cuponera.modelo.pagosModel;
 import www.sv.cuponera.utils.Validaciones;
+import www.sv.cuponera.utils.cesarCipher;
 
 /**
  * Servlet implementation class PagoController
@@ -51,6 +53,9 @@ public class PagoController extends HttpServlet {
 		String op = (request.getParameter("op") !=null)? request.getParameter("op"): ""; 
 		switch(op) {
 		
+		case "verificar":
+			verificar(request, response); 
+			break; 
 			case "listar": 
 				listar(request, response); 
 				
@@ -71,6 +76,24 @@ public class PagoController extends HttpServlet {
 				listar(request, response); 
 				break;
 		}
+	}
+
+	private void verificar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try(PrintWriter out = response.getWriter()){
+			String codigoPago = request.getParameter("codigo").toString();
+			String cvpass = request.getParameter("cv").toString(); 
+			cvpass = cesarCipher.cipher(cvpass); 
+			pagosModel model = new pagosModel(); 
+			if(model.confirmPago(codigoPago, cvpass)>0) {
+				out.print("Confirmado");
+			}else {
+				out.print("No confirmado");
+			}
+		}catch(SQLException ex) {
+			Logger.getLogger(PagoController.class.getName()).log(Level.SEVERE, null, ex); 				
+
+		}
+	
 	}
 
 	private void nuevo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -132,7 +155,8 @@ public class PagoController extends HttpServlet {
 					request.getRequestDispatcher("/MetodosPago?op=listar").forward(request, response);
 				} catch (SQLException  e) {
 					// TODO Auto-generated catch bloc
-					Logger.getLogger(PagoController.class.getName()).log(Level.SEVERE, null, e); 				} 
+					Logger.getLogger(PagoController.class.getName()).log(Level.SEVERE, null, e); 				
+				} 
 				
 			}
 			
