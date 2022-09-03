@@ -1,0 +1,29 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarUsuario`(IN `id` INT)
+DELETE FROM usuarios WHERE usuarios.idUsuario = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarUsuario`(IN `usuario` VARCHAR(10), IN `nombre` VARCHAR(30), IN `apellido` VARCHAR(30), IN `contrasena` VARCHAR(100), IN `correo` VARCHAR(50), IN `rol` INT, IN `empresa` VARCHAR(6), IN `dui` VARCHAR(9), IN `codigoV` VARCHAR(5))
+INSERT INTO usuarios(usuarios.Username, usuarios.Nombre, usuarios.Apellidos, usuarios.Pass, usuarios.Email, usuarios.Roles_idRoles, usuarios.Empresa_IdEmpresa, usuarios.DUI, usuarios.passinit) VALUES(usuario, nombre, apellido, contrasena, correo, rol, empresa, dui, codigoV)$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listarEmpresas`()
+SELECT * FROM empresa$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listarUsuarios`()
+SELECT * FROM usuarios INNER JOIN roles ON roles.idRoles = usuarios.Roles_idRoles INNER JOIN empresa ON empresa.IdEmpresa = usuarios.Empresa_IdEmpresa$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerUsuario`(IN `id` INT)
+SELECT * FROM usuarios INNER JOIN roles ON roles.idRoles = usuarios.Roles_idRoles INNER JOIN empresa ON empresa.IdEmpresa = usuarios.Empresa_IdEmpresa WHERE usuarios.idUsuario = id$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modificarUsuario`(IN `id` INT, IN `nombre` VARCHAR(30), IN `apellido` VARCHAR(30))
+UPDATE usuarios SET usuarios.Nombre = nombre, usuarios.Apellidos = apellido WHERE usuarios.idUsuario = id$$
+DELIMITER ;

@@ -65,25 +65,31 @@ public class ReportesController extends HttpServlet {
 			e.printStackTrace();
 		}
         
-         //Connection conectado=conn.conectar();
-         
-         
-        	 
-        	
-        	 
-     
+         //Connection conectado=conn.conectar();	
         
       
 	 }
-	 public void reporteCuponTest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	 public void reporteCuponRecibo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 response.setContentType("application/pdf");
          response.setHeader("Content-Disposition","inline; attachment;filename=\"ReporteCupon.pdf\";");
          String pdfRuta="";
-         pdfRuta=getServletContext().getRealPath("Reportes/testJasper.jasper");
+         HttpSession session=request.getSession();
+         pdfRuta=getServletContext().getRealPath("Reportes/testJasperUsuarioRecibo.jasper");
+         String idCupon=request.getParameter("idCupon");
+         String idUsuario=(String) session.getAttribute("idUsuario");
+         Map parametros=new HashMap();
          try {
 			Connection conn= ConeccionJasperModel.getConnection();
 			JasperReport report= (JasperReport) JRLoader.loadObjectFromFile(pdfRuta);
 			ServletOutputStream out= response.getOutputStream();
+			 parametros.put("idUsuario", idUsuario);
+			 parametros.put("CodigoCupon", idCupon);
+	             //imprimir reporte
+	             JasperPrint print= JasperFillManager.fillReport(report,parametros,conn);
+	             JRPdfExporter exporter=new JRPdfExporter();
+	             exporter.setExporterInput(new SimpleExporterInput(print));
+	             exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
+	             exporter.exportReport();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -98,9 +104,22 @@ public class ReportesController extends HttpServlet {
 		
          
 	 }
+	 
+	 public void processReport(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+		String op=request.getParameter("op");
+		switch (op) {
+		case "recibo":
+			reporteCuponRecibo(request, response);
+			break;
+			
+		default:
+			reporteCupon1(request, response);
+			break;
+		}
+	 }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		reporteCupon1(request,response);
+		processReport(request, response);
 	}
 
 	/**
@@ -108,7 +127,7 @@ public class ReportesController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		reporteCupon1(request,response);
+		processReport(request, response);
 	}
 
 }

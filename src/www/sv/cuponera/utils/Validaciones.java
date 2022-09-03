@@ -56,4 +56,19 @@ public class Validaciones {
         Matcher mat = pat.matcher(cadena);
         return mat.matches();
     }
+    public static boolean isCodigoTarjeta(String cadena) {
+    	   Pattern pat = Pattern.compile("^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$");
+           Matcher mat = pat.matcher(cadena);
+           return mat.matches();
+    }
+    public static boolean isCodigoV(String cadena) {
+ 	   Pattern pat = Pattern.compile("[0-9]{3,4}");
+        Matcher mat = pat.matcher(cadena);
+        return mat.matches();
+    }
+    public static boolean isFechaVe(String cadena) {
+  	   Pattern pat = Pattern.compile("^(0[1-9]|1[0-2])/?([0-9]{4}|[0-9]{2})$");
+         Matcher mat = pat.matcher(cadena);
+         return mat.matches();
+     }
 }
